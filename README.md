@@ -1,3 +1,3 @@
 # mobile-dev-finals
-# Important
+## Important
 Change the baseUrl in config.js
