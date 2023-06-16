@@ -2,7 +2,7 @@ import { baseUrl } from './config.js';
 import { myPlantsData, allPlantsData, plantParentsPosts, userData } from './data.js';
 import { getWaterReminder } from './utils.js';
 
-function showMyPlants() {
+function displayMyPlants() {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
@@ -36,9 +36,9 @@ function showMyPlants() {
   }
 }
 
-showMyPlants()
+displayMyPlants()
 
-function showAllPlants() {
+function displayAllPlants() {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("explore-plants");
 
@@ -64,7 +64,7 @@ function showAllPlants() {
   }
 }
 
-showAllPlants()
+displayAllPlants()
 
 function displayPlantParentsPosts() {
   const postTemplate = document.getElementById("post-template");
