@@ -1,0 +1,138 @@
+.navbar {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  z-index: 2;
+
+  position: sticky;
+  top: 0;
+}
+
+.navbar img {
+  height: 50px;
+  width: auto;
+}
+
+.go-back {
+  background-color: rgb(var(--green-1-rgb));
+  padding: 10px 20px;
+
+  display: flex;
+  align-items: center;
+}
+
+.go-back img {
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
+.plant-image-wrapper {
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.plant-image-wrapper img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  vertical-align: top;
+  object-fit: cover;
+}
+
+.reminder {
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  padding-left: 20px;
+
+  display: flex;
+  gap: 18px;
+  align-items: center;
+
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(var(--green-2-rgb), 0.5);
+}
+
+.reminder img {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.reminder .details h5 {
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.reminder .details h2 {
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.plant-details {
+  padding: 20px;
+}
+
+.plant-details h2, .plant-details h5 {
+  color: rgba(var(--green-2-rgb));
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.plant-details h2 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 38px;
+}
+
+.plant-details h5 {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.plant-details p {
+  font-family: 'Barlow', sans-serif;
+}
+
+.water-details {
+  margin-top: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.water-details p {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: rgb(var(--green-1-rgb));
+}
+
+#plant-description, #plant-guide {
+  margin-top: 20px;
+
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: justify;
+}
+
+#plant-guide {
+  margin-bottom: 80px;
+}
+
+#plant-guide-label {
+  margin-top: 20px;
+
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 32px;
+  color: rgb(var(--green-1-rgb));
+}

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 12px;
+
+  --green-1-rgb: 76, 175, 80;
+  --green-2-rgb: 5, 77, 59; 
+  --red-rgb: 173, 52, 62;
+  --gray-rgb: 236, 236, 236;
+}
+
+.navbar {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  z-index: 2;
+
+  position: sticky;
+  top: 0;
+}
+
+.navbar img {
+  height: 50px;
+  width: auto;
+}
+
+.add-plant {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgb(var(--green-1-rgb));
+  border: 2px solid rgb(var(--green-2-rgb));
+  padding: 20px;
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-plant img {
+  width: 23.33px;
+  height: 23.33px;
+  object-fit: cover;
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}

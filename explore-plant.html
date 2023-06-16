@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Plant</title>
+  <link rel="stylesheet" href="./styles/own-plant.css">
+  <link rel="stylesheet" href="./styles/globals.css">
+</head>
+<body>
+  <div class="navbar">
+    <img src="./assets/logo.png" alt="logo">
+    <img src="./assets/profile.png" alt="profile" id="profile-img">
+  </div>
+
+  <div class="go-back">
+    <img src="./assets/go-back-icon.svg" alt="go back icon" id="go-back-image">
+  </div>
+
+  <div class="plant-image-wrapper">
+    <img src="./assets/missing-image.png" alt="plant's image" id="plant-image">
+  </div>
+
+  <div class="plant-details">
+    <h2 id="plant-name">Plant Name</h2>
+    <h5 id="scientific-name">Scientific name</h5>
+
+    <div class="water-details">
+      <img src="./assets/watering-can-icon.svg" alt="watering can icon">
+      <p id="water-frequency">Water every _ days</p>
+    </div>
+
+    <p id="plant-description">
+      Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia.
+    </p>
+
+    <h3 id="plant-guide-label">How to take care (Plant Name)</h3>
+
+    <p id="plant-guide">
+      Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia.
+    </p>
+  </div>
+
+  <button class="add-plant">
+    <img src="./assets/plus-icon.svg" alt="add plant button">
+  </button>
+
+  <script src="./scripts/explore-plant.js" type="module"></script>
+</body>
+</html>
