@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./styles/edit-profile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles/globals.css" />
+    <title>My Profile</title>
+  </head>
+  <body>
+    <div class="profile">
+      <div class="profile-picture">
+        <div class="profile-image-container">
+          <img src="./assets/profile.svg" alt="profile" id="profile-image" />
+
+          <div class="change-photo-button">
+            <label class="change-photo-custom-button">
+              <img src="./assets/camera.png" alt="camera" id="camera-icon" />
+              <input type="file" id="change-photo-file" />
+            </label>
+          </div>
+        </div>
+
+        <label class="label-profile-image">Choose Photo</label>
+      </div>
+
+      <div class="top">
+        <label class="label-about-you">About You</label>
+      </div>
+
+      <div class="credentials-container">
+        <div class="labels-credentials">
+          <label class="label-name">Name</label>
+          <label class="label-username">Username</label>
+          <label class="label-email-address">Email Address</label>
+          <label class="label-password">Password</label>
+        </div>
+
+        <div class="actual-credentials">
+          <input class="actual-name-input" type="text" placeholder="Name" />
+          <input
+            class="actual-username-input"
+            type="text"
+            placeholder="Username"
+          />
+          <input
+            class="actual-email-address-input"
+            type="text"
+            placeholder="email@email.com"
+          />
+          <input
+            class="actual-password-input"
+            type="text"
+            placeholder="**********"
+          />
+        </div>
+      </div>
+
+      <div class="save-button-container">
+        <button class="save-button">Save</button>
+      </div>
+
+      <button class="add-plant">
+        <img src="./assets/plus-icon.svg" alt="add plant button" />
+      </button>
+    </div>
+
+    <script src="./scripts/edit-profile.js"></script>
+  </body>
+</html>
