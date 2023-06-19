@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+}
+.profile {
+  max-width: 360px;
+  width: 100%;
+  background: rgba(255, 255, 255, 1);
+  padding: 0 20px;
+}
+.profile-picture {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.profile-picture img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right;
+}
+.top {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+.label-about-you {
+  color: rgba(5, 77, 59, 1);
+  font-family: Rajdhani;
+  font-weight: bold;
+  font-size: 20px;
+}
+.label-edit-button {
+  color: rgba(76, 175, 80, 1);
+  font-family: Barlow;
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: auto;
+}
+.label-edit-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(76, 175, 80, 1);
+}
+.credentials-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-top: 15px;
+}
+.labels-credentials,
+.actual-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.label-name,
+.label-username,
+.label-email-address,
+.label-password,
+.actual-name,
+.actual-username,
+.actual-email-address,
+.actual-password {
+  font-family: Barlow;
+  font-size: 15px;
+}
+.label-name,
+.label-username,
+.label-email-address,
+.label-password {
+  color: rgba(76, 175, 80, 1);
+}
+.actual-name,
+.actual-username,
+.actual-email-address,
+.actual-password {
+  color: rgba(5, 77, 59, 1);
+  text-align: right;
+}
