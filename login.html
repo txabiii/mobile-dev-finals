@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./styles/login.css" rel="stylesheet" />
+    <title>Login</title>
+  </head>
+
+  <body>
+    <div class="login">
+      <div class="top">
+        <label class="label-welcome">Welcome!</label>
+        <label class="label-signin">Sign in to continue</label>
+      </div>
+
+      <div class="form-fields">
+        <div class="username">
+          <input
+            class="username-input"
+            type="text"
+            placeholder="Username or email address"
+          />
+          <img src="./assets/user.svg" alt="user" />
+        </div>
+
+        <div class="password">
+          <input
+            class="password-input"
+            type="password"
+            placeholder="Password"
+          />
+          <img src="./assets/password.svg" alt="password" />
+        </div>
+      </div>
+
+      <div class="remember-forgot-password">
+        <div class="remember-password">
+          <input type="checkbox" class="remember-password-checkbox" />
+          <label class="label-remember-password">Remember Password</label>
+        </div>
+
+        <div class="forgot-password">
+          <label class="label-forgot-password">Forgot Password?</label>
+        </div>
+      </div>
+
+      <div class="login-button-div">
+        <button class="login-button" type="button">Login</button>
+      </div>
+
+      <div class="separator">
+        <div class="left-line"></div>
+        <label class="label-or">OR</label>
+        <div class="right-line"></div>
+      </div>
+
+      <div class="social-media-links">
+        <div class="google">
+          <img src="./assets/google.svg" alt="google" />
+        </div>
+
+        <div class="facebook">
+          <img src="./assets/facebook.svg" alt="facebook" />
+        </div>
+
+        <div class="apple">
+          <img src="./assets/apple.svg" alt="apple" />
+        </div>
+      </div>
+
+      <div class="bottom">
+        <label class="label-no-account">Don't have account?</label>
+        <label class="label-sign-up">Sign Up</label>
+      </div>
+    </div>
+
+    <script src="./login.js"></script>
+  </body>
+</html>
