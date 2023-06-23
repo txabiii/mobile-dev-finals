@@ -21,26 +21,41 @@
         <label class="label-new-account">Create new account</label>
       </div>
 
-      <div class="form-fields">
-        <div class="username">
-          <input class="username-input" type="text" placeholder="Username" />
-          <img src="./assets/user.svg" alt="user" />
-        </div>
+      <form action="">
+        <div class="form-fields">
+          <div class="username">
+            <input class="username-input" type="text" placeholder="Username" />
+            <img src="./assets/user.svg" alt="user" />
+          </div>
 
-        <div class="email">
-          <input class="email-input" type="email" placeholder="Email Address" />
-          <img src="./assets/email.svg" alt="email" />
-        </div>
+          <div class="email">
+            <input
+              class="email-input"
+              type="email"
+              placeholder="Email Address"
+            />
+            <img src="./assets/email.svg" alt="email" />
+          </div>
 
-        <div class="password">
-          <img src="./assets/password.svg" alt="password" />
-          <input
-            class="password-input"
-            type="password"
-            placeholder="Password"
-          />
+          <div class="password">
+            <img src="./assets/password.svg" alt="password" />
+            <input
+              class="password-input"
+              type="password"
+              placeholder="Password"
+            />
+          </div>
+
+          <div class="confirm-password">
+            <img src="./assets/password.svg" alt="confirm-password" />
+            <input
+              class="confirm-password-input"
+              type="password"
+              placeholder="Confirm Password"
+            />
+          </div>
         </div>
-      </div>
+      </form>
 
       <div class="signup-button-div">
         <button class="signup-button" type="button">Sign Up</button>
@@ -68,7 +83,7 @@
 
       <div class="bottom">
         <label class="label-already-account">Already have an account?</label>
-        <label class="label-sign-in">Sign In</label>
+        <label class="label-sign-in" id="sign-in">Sign In</label>
       </div>
     </div>
 
