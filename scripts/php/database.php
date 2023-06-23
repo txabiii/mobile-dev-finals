@@ -5,16 +5,16 @@ $password = "gQTInbDjfubfKlSVcrxsjSql";
 $database = "s9206_mobdevdb";  
 
 // Create a connection
-$conn = new mysqli($servername, $username, $password, $database);
+$connection = new mysqli($servername, $username, $password, $database);
 
 // Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
 }
 
 // Connection successful
 echo "Connected to the database successfully.";
 
 // Close the connection
-$conn->close();
+$connection->close();
 ?>
