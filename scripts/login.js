@@ -1,27 +1,7 @@
-// var forgotPassword = document.querySelectorAll(".label-forgot-password");
-// var signUp = document.querySelectorAll(".label-sign-up");
-
-// forgotPassword.forEach(function (label) {
-//   label.addEventListener("click", function () {
-//     // Custom action to perform when label is clicked
-//     alert("Label clicked!");
-//   });
-// });
-
-// signUp.forEach(function (label) {
-//   label.addEventListener("click", function () {
-//     // Custom action to perform when label is clicked
-//     alert("Label clicked!");
-//   });
-// });
-
-var clickableLabels = document.querySelectorAll(".label-sign-up");
-
-clickableLabels.forEach(function (label) {
-  label.addEventListener("click", function () {
-    // Custom action to perform when label is clicked
-    alert("Label clicked!");
-  });
+document.addEventListener("click", function (event) {
+  if (event.target.matches("#sign-up")) {
+    window.location.href = "signup.html";
+  }
 });
 
 var socialMediaLinks = document.querySelectorAll(".social-media-links img");
