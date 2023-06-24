@@ -42,9 +42,9 @@ class API
 
 
 		if ($result) {
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'success'));
+			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created.'));
 		} else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'failed'));
+			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
 		}
 
         $connection->close();
