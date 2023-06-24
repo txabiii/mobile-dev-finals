@@ -13,8 +13,6 @@ if ($connection->connect_error) {
 }
 
 // Connection successful
-echo "Connected to the database successfully.";
+json_encode("Connected to the database successfully.") ;
 
-// Close the connection
-$connection->close();
 ?>
