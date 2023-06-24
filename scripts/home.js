@@ -1,4 +1,3 @@
-import { baseUrl } from './config.js';
 import { myPlantsData, allPlantsData, plantParentsPosts, userData } from './data.js';
 import { getWaterReminder } from './utils.js';
 
@@ -29,7 +28,7 @@ function displayMyPlants() {
     imageElement.src = plant.image_url;
 
     nameElement.addEventListener("click", function() {
-      window.location.href = baseUrl + "/own-plant.html?plant_id=" + plant.id;
+      window.location.href = "/own-plant.html?plant_id=" + plant.id;
     });
 
     container.appendChild(plantItem);
@@ -57,7 +56,7 @@ function displayAllPlants() {
     imageElement.src = plant.image_url;
 
     nameElement.addEventListener("click", function() {
-      window.location.href = baseUrl + "/explore-plant.html?plant_id=" + plant.id;
+      window.location.href = "/explore-plant.html?plant_id=" + plant.id;
     });
 
     container.appendChild(plantItem);

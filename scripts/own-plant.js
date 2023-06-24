@@ -14,8 +14,8 @@ if (!isNaN(plantId)) {
     const waterScheduleElement = document.getElementById('water-schedule')
     waterScheduleElement.innerText = getWaterReminder(plantId)
   } else {
-    window.location.href = baseUrl + "/index.html";
+    window.location.href = "/home.html";
   }
 } else {
-  window.location.href = baseUrl + "/index.html";
+  window.location.href = "/home.html";
 }

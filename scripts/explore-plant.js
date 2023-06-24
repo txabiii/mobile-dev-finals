@@ -1,10 +1,9 @@
-import { baseUrl } from './config.js';
 import { allPlantsData } from './data.js';
 
 const goBackImage = document.getElementById("go-back-image");
 
 goBackImage.addEventListener("click", function() {
-  window.location.href = baseUrl + "/index.html";
+  window.location.href = "/home.html";
 });
 
 const urlParameters = new URLSearchParams(window.location.search);
@@ -41,9 +40,9 @@ if (!isNaN(plantId)) {
     plantImageElement.src = plant.image_url;
     plantImageElement.alt = `${plant.name}'s image`;
   } else {
-    window.location.href = baseUrl + "/index.html";
+    window.location.href = "/home.html";
   }
 } else {
-  window.location.href = baseUrl + "/index.html";
+  window.location.href = "/home.html";
 }
 
