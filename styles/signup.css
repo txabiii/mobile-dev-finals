@@ -67,6 +67,12 @@ body {
 .confirm-password-input:focus {
   border: 2px solid rgba(5, 77, 59, 1);
 }
+.username-input.error,
+.email-input.error,
+.password-input.error,
+.confirm-password-input.error {
+  border: 2px solid red;
+}
 .username img,
 .email img,
 .password img,
