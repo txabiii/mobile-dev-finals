@@ -1,4 +1,3 @@
 # mobile-dev-finals
-## Important
-* Change the baseUrl in config.js
+## note
 * Refer to data.js file for data
