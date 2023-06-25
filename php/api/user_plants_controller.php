@@ -30,7 +30,9 @@ class UserPlantController extends DB {
   }
   
   public function getUserPlants($userId) {
-    $sql = "SELECT * FROM user_plants_tb WHERE user_id = ?";
+    $sql = "SELECT up.plant_id, p.name, p.image_url, up.datetime_added FROM user_plants_tb AS up
+            JOIN plants_tb AS p ON up.plant_id = p.plant_id
+            WHERE up.user_id = ?";
     $stmt = $this->connection->prepare($sql);
     
     $stmt->bind_param("i", $userId);
@@ -45,7 +47,7 @@ class UserPlantController extends DB {
     }
     
     return $userPlants;
-  }
+  }  
 }
 
 $userPlantController = new UserPlantController();

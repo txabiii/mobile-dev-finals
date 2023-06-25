@@ -1,42 +1,54 @@
-import { SERVER_URL } from "../config";
+import { SERVER_URL } from "../config.js";
 
 export function getAllPlants() {
-  return $.ajax({
-    url: SERVER_URL + '/api/plants',
-    method: 'GET',
-    dataType: 'json'
+  return new Promise((resolve, reject) => {
+    fetch(SERVER_URL + '/api/plants')
+      .then(response => response.json())
+      .then(data => resolve(data))
+      .catch(error => reject(error));
   });
 }
 
 export function createPlant(plantData) {
-  return $.ajax({
-    url: '/api/plants',
-    method: 'POST',
-    dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify(plantData)
+  return new Promise((resolve, reject) => {
+    fetch('/api/plants', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(plantData)
+    })
+    .then(response => response.json())
+    .then(data => resolve(data))
+    .catch(error => reject(error));
   });
 }
 
-// Remind to self: Sa Admin app lang applicable itong operations na ito. The end-user will not delete or edit the overall plants
+export function updatePlant(plantId, updatedData) {
+  return new Promise((resolve, reject) => {
+    fetch(`/api/plants/${plantId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedData)
+    })
+    .then(response => response.json())
+    .then(data => resolve(data))
+    .catch(error => reject(error));
+  });
+}
 
-// // Function to update a plant
-// function updatePlant(plantId, updatedData) {
-//   return $.ajax({
-//     url: `/api/plants/${plantId}`,
-//     method: 'PUT',
-//     dataType: 'json',
-//     contentType: 'application/json',
-//     data: JSON.stringify(updatedData)
-//   });
-// }
-
-// // Function to delete a plant
-// function deletePlant(plantId) {
-//   return $.ajax({
-//     url: `/api/plants/${plantId}`,
-//     method: 'DELETE',
-//     dataType: 'json',
-//     contentType: 'application/json'
-//   });
-// }
+export function deletePlant(plantId) {
+  return new Promise((resolve, reject) => {
+    fetch(`/api/plants/${plantId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => resolve(data))
+    .catch(error => reject(error));
+  });
+}
