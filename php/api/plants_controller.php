@@ -9,7 +9,7 @@ class PlantController extends DB {
       $description = $this->connection->real_escape_string($description);
       $guide = $this->connection->real_escape_string($guide);
 
-      $query = "INSERT INTO plants (name, scientific_name, watering_frequency, image_url, description, guide)
+      $query = "INSERT INTO plants_tb (name, scientific_name, watering_frequency, image_url, description, guide)
                 VALUES ('$name', '$scientificName', '$wateringFrequency', '$imageUrl', '$description', '$guide')";
 
       if ($this->connection->query($query) === TRUE) {
@@ -20,7 +20,7 @@ class PlantController extends DB {
   }
 
   public function getAllPlants() {
-      $query = "SELECT * FROM plants";
+      $query = "SELECT * FROM plants_tb";
       $result = $this->connection->query($query);
 
       $plants = [];
@@ -40,7 +40,7 @@ class PlantController extends DB {
       $description = $this->connection->real_escape_string($description);
       $guide = $this->connection->real_escape_string($guide);
 
-      $query = "UPDATE plants SET name='$name', scientific_name='$scientificName',
+      $query = "UPDATE plants_tb SET name='$name', scientific_name='$scientificName',
                 watering_frequency='$wateringFrequency', image_url='$imageUrl',
                 description='$description', guide='$guide' WHERE id=$id";
 
@@ -52,7 +52,7 @@ class PlantController extends DB {
   }
 
   public function removePlant($id) {
-      $query = "DELETE FROM plants WHERE id=$id";
+      $query = "DELETE FROM plants_tb WHERE id=$id";
 
       if ($this->connection->query($query) === TRUE) {
           return true;
