@@ -15,6 +15,7 @@ document.addEventListener("click", function (event) {
 
 function getFormInputValues() {
   return {
+    action: "signup",
     username: document.getElementById("username-input").value.trim(),
     email: document.getElementById("email-input").value.trim(),
     password: document.getElementById("password-input").value.trim(),
