@@ -36,7 +36,7 @@ class API extends DB
 			$new_account = $this->connection->query($add_user_account);
 
 			if ($new_account) {
-				echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created.'));
+				echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created. You may now proceed to login.'));
 			} else {
 				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
 			}
