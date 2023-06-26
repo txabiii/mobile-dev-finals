@@ -2,34 +2,13 @@
 require_once '../db.php';
 
 class PostsController extends DB {
-  public function createPost($userId, $content, $datetimePosted) {        
-    $sql = "INSERT INTO posts_tb (user_id, content, datetime_posted) VALUES (?, ?, ?)";
-    $stmt = $this->connection->prepare($sql);
-    
-    $stmt->bind_param("iss", $userId, $content, $datetimePosted);
-    
-    if ($stmt->execute()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public function getPosts($limit = null, $offset = null) {
-    $sql = "SELECT p.id, p.user_id, u.profile_image_url, u.username, p.content 
+  public function getPosts() {
+    $sql = "SELECT p.id, p.user_id, u.profile_image_url, u.username, p.content
             FROM posts_tb p 
             JOIN user_accounts_tb u ON p.user_id = u.user_id 
-            ORDER BY p.datetime_posted DESC";
-  
-    if ($limit !== null && $offset !== null) {
-        $sql .= " LIMIT ?, ?";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bind_param("ii", $offset, $limit);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    } else {
-        $result = $this->connection->query($sql);
-    }
+            ORDER BY p.datetime_posted DESC LIMIT 10";
+
+    $result = $this->connection->query($sql);
   
     $posts = array();
     while ($row = $result->fetch_assoc()) {
@@ -37,6 +16,19 @@ class PostsController extends DB {
     }
   
     return $posts;
+  }
+
+  public function createPost($userId, $content, $datetime) {        
+    $sql = "INSERT INTO posts_tb (user_id, content, datetime_posted) VALUES (?, ?, ?)";
+    $stmt = $this->connection->prepare($sql);
+    
+    $stmt->bind_param("iss", $userId, $content, $datetime);
+    
+    if ($stmt->execute()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public function updatePost($postId, $content) {
@@ -68,35 +60,30 @@ class PostsController extends DB {
 
 $postsController = new PostsController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $userId = $_POST['user_id'];
-  $content = $_POST['content'];
-  
-  $result = $postsController->createPost($userId, $content);
-  
-  if ($result) {
-    $response = array('success' => true, 'message' => 'Post created successfully');
-    echo json_encode($response);
-  } else {
-    $response = array('success' => false, 'message' => 'Failed to create post');
-    echo json_encode($response);
-  }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  if (isset($_GET['limit']) && isset($_GET['offset'])) {
-    $limit = $_GET['limit'];
-    $offset = $_GET['offset'];
-  } else {
-    $limit = null;
-    $offset = null;
-  }
-  
-  $result = $postsController->getPosts($limit, $offset);
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $result = $postsController->getPosts();
   
   if ($result) {
     $response = array('success' => true, 'data' => $result);
     echo json_encode($response);
   } else {
     $response = array('success' => false, 'message' => 'Failed to fetch posts');
+    echo json_encode($response);
+  }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $postData = json_decode(file_get_contents('php://input'), true);
+
+  $userId = $postData['user_id'];
+  $content = $postData['content'];
+  $date_time = $postData['dateTime'];
+  
+  $result = $postsController->createPost($userId, $content, $date_time);
+  
+  if ($result) {
+    $response = array('success' => true, 'message' => 'Post created successfully');
+    echo json_encode($response);
+  } else {
+    $response = array('success' => false, 'message' => 'Failed to create post');
     echo json_encode($response);
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
