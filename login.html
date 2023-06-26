@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <div class="login">
+    <div class="login" id="login">
       <div class="top">
         <label class="label-welcome">Welcome!</label>
         <label class="label-signin">Sign in to continue</label>
@@ -25,6 +25,7 @@
         <div class="username">
           <input
             class="username-input"
+            id="username-input"
             type="text"
             placeholder="Username or email address"
           />
@@ -34,6 +35,7 @@
         <div class="password">
           <input
             class="password-input"
+            id="password-input"
             type="password"
             placeholder="Password"
           />
@@ -43,17 +45,25 @@
 
       <div class="remember-forgot-password">
         <div class="remember-password">
-          <input type="checkbox" class="remember-password-checkbox" />
+          <input
+            class="remember-password-checkbox"
+            id="remember-password-checkbox"
+            type="checkbox"
+          />
           <label class="label-remember-password">Remember Password</label>
         </div>
 
         <div class="forgot-password">
-          <label class="label-forgot-password">Forgot Password?</label>
+          <label class="label-forgot-password" id="label-forgot-password"
+            >Forgot Password?</label
+          >
         </div>
       </div>
 
       <div class="login-button-div">
-        <button class="login-button" type="button">Login</button>
+        <button class="login-button" id="login-button" type="button">
+          Login
+        </button>
       </div>
 
       <div class="separator">
