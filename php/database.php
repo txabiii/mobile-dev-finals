@@ -11,8 +11,8 @@ $connection = new mysqli($servername, $username, $password, $database);
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
-
-// Connection successful
-json_encode("Connected to the database successfully.") ;
-
+else {
+    // Connection successful
+    json_encode("Connected to the database successfully.") ;
+}
 ?>
