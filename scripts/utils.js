@@ -1,5 +1,10 @@
 import { myPlantsData, allPlantsData } from "./data.js";
 
+/**
+ * Computes the amount of time between now and the next water scheduling
+ * @param {string} plantId - The string id of the plant 
+ * @returns {string} A string containing the remaining time before the next water schedule
+ */
 export function getWaterReminder(plantId) {
   const parsedPlantId = parseInt(plantId)
 

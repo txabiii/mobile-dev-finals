@@ -1,13 +1,13 @@
 import { SERVER_URL } from "../config.js";
 
-export function createPost(userId, content) {
+export function createPost(userId, content, dateTime) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/posts_controller.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_id: userId, content: content }),
+      body: JSON.stringify({ user_id: userId, content: content, dateTime: dateTime}),
     })
     .then(response => response.json())
     .then(data => {
@@ -50,12 +50,9 @@ export function deletePost(postId) {
   });
 }
 
-const MAX_POSTS = 10;
-let currentOffset = 0;
-
 export function getPosts() {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts_controller.php?limit=${MAX_POSTS}&offset=${currentOffset}`, {
+    fetch(`${SERVER_URL}/api/posts_controller.php`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -64,8 +61,6 @@ export function getPosts() {
     .then(response => response.json())
     .then(data => {
       const posts = data.data;
-
-      currentOffset += MAX_POSTS;
 
       resolve({ posts });
     })
