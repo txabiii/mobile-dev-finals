@@ -1,6 +1,8 @@
 <?php
 
-require_once('database.php');
+// require_once('database.php');
+
+require_once('db.php');
 
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 
@@ -10,44 +12,37 @@ header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
 
 header("Access-Control-Allow-Headers: Content-Type");
 
-class API
+class API extends DB
 {
 	public function httpGet()
 	{
-        global $connection;
 
-        $query = "SELECT * FROM test_tb";
-        $result = $connection->query($query);
-
-
-		if ($result) {
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'success'));
-		} else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'failed'));
-		}
-
-        $connection->close();
 	}
 
 	public function httpPost($payload)
-	{  
-        global $connection;
-
-        $username = $payload['username'];
+	{  	
+		$username = $payload['username'];
         $email = $payload['email'];
         $password = $payload['password'];
+		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "INSERT INTO `user_accounts_tb`( `username`, `email`, `password`) VALUES ('$username', '$email', '$password')";
-        $result = $connection->query($query);
+		$search_existing_email = "SELECT email FROM `user_accounts_tb` WHERE email = '".$email."'";
+		$result = $this->connection->query($search_existing_email);
 
-
-		if ($result) {
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created.'));
+		if ($result->num_rows > 0) {
+			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Email is already existing.'));
 		} else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+			$add_user_account = "INSERT INTO user_accounts_tb (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+			$new_account = $this->connection->query($add_user_account);
+
+			if ($new_account) {
+				echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created.'));
+			} else {
+				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+			}
 		}
 
-        $connection->close();
+        $this->connection->close();
 	}
 
 	public function httpPut($payload)
