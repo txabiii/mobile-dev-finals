@@ -1,10 +1,8 @@
 <?php
 
-// require_once('database.php');
+session_start();
 
 require_once('db.php');
-
-header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 
 header("Access-Control-Allow-Credentials: true");
 
@@ -16,30 +14,80 @@ class API extends DB
 {
 	public function httpGet()
 	{
+		$get_all_users = "SELECT * FROM user_accounts_tb WHERE user_id = '".$_SESSION['user_id']."'";
+		$result = $this->connection->query($get_all_users);
 
+		if ($result) {
+			$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+			$specificUsers = array_map(function ($user) {
+				return array(
+					'user_id' => $user['user_id'],
+					'username' => $user['username'],
+					'email' => $user['email']
+				);
+			}, $users);
+			
+			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => $specificUsers));
+		  } else {
+			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Failed to retrieve users.'));
+		  }
 	}
 
 	public function httpPost($payload)
 	{  	
-		$username = $payload['username'];
-        $email = $payload['email'];
-        $password = $payload['password'];
-		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+		if ($payload['action'] === 'signup') {
 
-		$search_existing_email = "SELECT email FROM `user_accounts_tb` WHERE email = '".$email."'";
-		$result = $this->connection->query($search_existing_email);
+			$username = $payload['username'];
+			$email = $payload['email'];
+			$password = $payload['password'];
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-		if ($result->num_rows > 0) {
-			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Email is already existing.'));
-		} else {
-			$add_user_account = "INSERT INTO user_accounts_tb (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
-			$new_account = $this->connection->query($add_user_account);
+			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = '".$email."' OR username = '".$username."'";
+			$result = $this->connection->query($search_existing_user);
 
-			if ($new_account) {
-				echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created. You may now proceed to login.'));
+			if ($result->num_rows > 0) {
+				$existing_user = $result->fetch_assoc();
+
+				if ($existing_user['email'] === $email) {
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Email is already existing.'));
+				} else if ($existing_user['username'] === $username) {
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Username is already taken.'));
+				}
 			} else {
-				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+				$add_user_account = "INSERT INTO user_accounts_tb (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+				$new_account = $this->connection->query($add_user_account);
+
+				if ($new_account) {
+					echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created. You may now proceed to login.'));
+				} else {
+					echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+				}
 			}
+		} else if ($payload['action'] === 'login') {
+			$usernameOrEmail = $payload['usernameOrEmail'];
+			$password = $payload['password'];
+
+			$search_user = "SELECT * FROM user_accounts_tb WHERE (username = '".$usernameOrEmail."' OR email = '".$usernameOrEmail."')";
+			$result = $this->connection->query($search_user);
+
+			if ($result->num_rows > 0) {
+				$user = $result->fetch_assoc();
+
+				if (password_verify($password, $user['password'])) {
+
+					$_SESSION['user_id'] = $user['user_id'];
+					$_SESSION['username'] = $user['username'];
+
+					echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Login successful.', 'username' => $_SESSION['username']));
+				} else {
+					echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Incorrect username/email address or password.'));
+				}
+			} else {
+				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'User not found.'));
+			}
+		} else {
+			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Unknown action.'));
 		}
 
         $this->connection->close();
