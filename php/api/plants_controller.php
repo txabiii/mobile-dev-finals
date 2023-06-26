@@ -3,26 +3,30 @@ require_once '../db.php';
 
 class PlantController extends DB {
   public function createPlant($name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
-      $name = $this->connection->real_escape_string($name);
-      $scientificName = $this->connection->real_escape_string($scientificName);
-      $imageUrl = $this->connection->real_escape_string($imageUrl);
-      $description = $this->connection->real_escape_string($description);
-      $guide = $this->connection->real_escape_string($guide);
+    $query = "INSERT INTO plants_tb (name, scientific_name, watering_frequency, image_url, description, guide)
+              VALUES (?, ?, ?, ?, ?, ?)";
 
-      $query = "INSERT INTO plants_tb (name, scientific_name, watering_frequency, image_url, description, guide)
-                VALUES ('$name', '$scientificName', '$wateringFrequency', '$imageUrl', '$description', '$guide')";
-
-      if ($this->connection->query($query) === TRUE) {
-          return true;
-      } else {
-          return false;
-      }
+    $stmt = $this->connection->prepare($query);
+    $stmt->bind_param("ssisss", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
   }
 
-  public function getAllPlants() {
-      $query = "SELECT * FROM plants_tb";
-      $result = $this->connection->query($query);
-
+  public function getPlant($plantId = null) {
+      if ($plantId !== null) {
+        $query .= " WHERE plant_id = ?";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bind_param("i", $plantId);
+        $result = $this->connection->query($query);
+      } else {
+        $query = "SELECT * FROM plants_tb";
+        $result = $this->connection->query($query);
+      }
+    
       $plants = [];
       if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
@@ -34,39 +38,51 @@ class PlantController extends DB {
   }
 
   public function updatePlant($id, $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
-      $name = $this->connection->real_escape_string($name);
-      $scientificName = $this->connection->real_escape_string($scientificName);
-      $imageUrl = $this->connection->real_escape_string($imageUrl);
-      $description = $this->connection->real_escape_string($description);
-      $guide = $this->connection->real_escape_string($guide);
+    $query = "UPDATE plants_tb SET name=?, scientific_name=?,
+              watering_frequency=?, image_url=?,
+              description=?, guide=? WHERE id=?";
 
-      $query = "UPDATE plants_tb SET name='$name', scientific_name='$scientificName',
-                watering_frequency='$wateringFrequency', image_url='$imageUrl',
-                description='$description', guide='$guide' WHERE id=$id";
-
-      if ($this->connection->query($query) === TRUE) {
-          return true;
-      } else {
-          return false;
-      }
+    $stmt = $this->connection->prepare($query);
+    $stmt->bind_param("ssisssi", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide, $id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
   }
 
   public function removePlant($id) {
-      $query = "DELETE FROM plants_tb WHERE id=$id";
+    $query = "DELETE FROM plants_tb WHERE id=?";
 
-      if ($this->connection->query($query) === TRUE) {
-          return true;
-      } else {
-          return false;
-      }
+    $stmt = $this->connection->prepare($query);
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
   }
 }
 
 $plantController = new PlantController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  $plants = $plantController->getAllPlants();
-  echo json_encode($plants);
+  if (isset($_GET['plant_id'])) {
+      $plantId = $_GET['plant_id'];
+      $plant = $plantController->getPlant($plantId);
+      
+      if ($plant) {
+          echo json_encode($plant);
+      } else {
+          http_response_code(404);
+          echo json_encode(['message' => 'Plant not found']);
+      }
+  } else {
+      $plants = $plantController->getPlant();
+      echo json_encode($plants);
+  }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $requestData = json_decode(file_get_contents('php://input'), true);
   $result = $plantController->createPlant(
