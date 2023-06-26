@@ -110,6 +110,7 @@ function addUserAccount(payload) {
         if (data.status === "success") {
           alert(data.data);
           resetFormInputValues();
+          window.location.href = "login.html";
         } else {
           alert(data.data);
         }
