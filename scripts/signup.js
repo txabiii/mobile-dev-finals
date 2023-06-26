@@ -1,3 +1,5 @@
+import { addUserAccount } from "./api/userAccountAPI.js";
+
 const signUpButton = document.getElementById("signup-button");
 
 const formFields = {
@@ -97,37 +99,18 @@ Object.values(formFields).forEach((field) => {
   });
 });
 
-function addUserAccount(payload) {
-  return new Promise((resolve, reject) => {
-    fetch("./php/user-account.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success") {
-          alert(data.data);
-          resetFormInputValues();
-          window.location.href = "login.html";
-        } else {
-          alert(data.data);
-        }
-
-        resolve(data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
 signUpButton.addEventListener("click", function () {
   if (validateRegistrationForm()) {
     const form = getFormInputValues();
-    addUserAccount(form);
+    addUserAccount(form).then((data) => {
+      if (data.status === "success") {
+        alert(data.data);
+        resetFormInputValues();
+        window.location.href = "login.html";
+      } else {
+        alert(data.data);
+      }
+    });
   }
 });
 
