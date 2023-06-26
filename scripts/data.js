@@ -49,23 +49,9 @@ export const allPlantsData = [
   }
 ]
 
-export const plantParentsPosts = [
-  {
-    id: 0,
-    user_id: 0,
-    profile_image_url: './assets/users/user-1.png',
-    content: `Hi, Plant Lovers! I'm excited to share that my pothos plant just produced a new leaf! It's thriving in its new hanging pot. 🌿`
-  },
-  {
-    id: 1,
-    user_id: 1,
-    profile_image_url: './assets/users/user-2.png',
-    content: `That's fantastic, PlantParenting101! Pothos plants are great for beginners. Remember to water it when the top inch of soil feels dry, and consider giving it a light misting to keep the leaves hydrated.`
-  }
-]
-
 export const userData = {
-  id: 3,
-  name: 'Juan Dela Cruz',
-  profile_image_url : './assets/profile.png'
+  id: 2,
+  username: 'txabsss',
+  email: 'txabsss@example.com',
+  profile_image_url : './assets/users/user-2.png'
 }

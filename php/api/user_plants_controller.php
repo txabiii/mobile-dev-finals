@@ -3,6 +3,26 @@ require_once '../db.php';
 
 class UserPlantController extends DB {
   
+  public function getUserPlants($userId) {
+    $sql = "SELECT up.plant_id, p.name, p.image_url, up.datetime_added FROM user_plants_tb AS up
+            JOIN plants_tb AS p ON up.plant_id = p.plant_id
+            WHERE up.user_id = ?";
+    $stmt = $this->connection->prepare($sql);
+    
+    $stmt->bind_param("i", $userId);
+    
+    $stmt->execute();
+    
+    $result = $stmt->get_result();
+    
+    $userPlants = array();
+    while ($row = $result->fetch_assoc()) {
+      $userPlants[] = $row;
+    }
+    
+    return $userPlants;
+  }  
+  
   public function createUserPlant($plantId, $userId, $dateAdded) { 
     $sql = "INSERT INTO user_plants_tb (plant_id, user_id, date_added) VALUES (?, ?, ?)";
     $stmt = $this->connection->prepare($sql);
@@ -28,31 +48,23 @@ class UserPlantController extends DB {
       return false;
     }
   }
-  
-  public function getUserPlants($userId) {
-    $sql = "SELECT up.plant_id, p.name, p.image_url, up.datetime_added FROM user_plants_tb AS up
-            JOIN plants_tb AS p ON up.plant_id = p.plant_id
-            WHERE up.user_id = ?";
-    $stmt = $this->connection->prepare($sql);
-    
-    $stmt->bind_param("i", $userId);
-    
-    $stmt->execute();
-    
-    $result = $stmt->get_result();
-    
-    $userPlants = array();
-    while ($row = $result->fetch_assoc()) {
-      $userPlants[] = $row;
-    }
-    
-    return $userPlants;
-  }  
 }
 
 $userPlantController = new UserPlantController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $userId = $_GET['user_id'];
+  
+  $userPlants = $userPlantController->getUserPlants($userId);
+  
+  if ($userPlants) {
+    $response = array('status' => 'success', 'data' => $userPlants);
+  } else {
+    $response = array('status' => 'fail', 'message' => 'Failed to retrieve user plant records');
+  }
+  
+  echo json_encode($response);
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $plantId = $_POST['plant_id'];
   $userId = $_POST['user_id'];
   
@@ -76,18 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = array('status' => 'success', 'message' => 'User plant record deleted');
   } else {
     $response = array('status' => 'fail', 'message' => 'Failed to delete user plant record');
-  }
-  
-  echo json_encode($response);
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  $userId = $_GET['user_id'];
-  
-  $userPlants = $userPlantController->getUserPlants($userId);
-  
-  if ($userPlants) {
-    $response = array('status' => 'success', 'data' => $userPlants);
-  } else {
-    $response = array('status' => 'fail', 'message' => 'Failed to retrieve user plant records');
   }
   
   echo json_encode($response);

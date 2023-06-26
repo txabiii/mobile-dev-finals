@@ -10,31 +10,31 @@ class PlantController extends DB {
     $stmt->bind_param("ssisss", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide);
     
     if ($stmt->execute()) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 
   public function getPlant($plantId = null) {
-      if ($plantId !== null) {
-        $query .= " WHERE plant_id = ?";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bind_param("i", $plantId);
-        $result = $this->connection->query($query);
-      } else {
-        $query = "SELECT * FROM plants_tb";
-        $result = $this->connection->query($query);
+    if ($plantId !== null) {
+      $query .= " WHERE plant_id = ?";
+      $stmt = $this->connection->prepare($query);
+      $stmt->bind_param("i", $plantId);
+      $result = $this->connection->query($query);
+    } else {
+      $query = "SELECT * FROM plants_tb";
+      $result = $this->connection->query($query);
+    }
+  
+    $plants = [];
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $plants[] = $row;
       }
-    
-      $plants = [];
-      if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-              $plants[] = $row;
-          }
-      }
+    }
 
-      return $plants;
+    return $plants;
   }
 
   public function updatePlant($id, $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
@@ -46,9 +46,9 @@ class PlantController extends DB {
     $stmt->bind_param("ssisssi", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide, $id);
     
     if ($stmt->execute()) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 
@@ -59,9 +59,9 @@ class PlantController extends DB {
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
 }

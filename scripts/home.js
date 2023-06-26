@@ -1,5 +1,6 @@
-import { myPlantsData, allPlantsData, plantParentsPosts, userData } from './data.js';
+import { myPlantsData, allPlantsData, userData } from './data.js';
 import { getWaterReminder } from './utils.js';
+import { getPosts, createPost } from './api/postApi.js'
 
 function displayMyPlants() {
   const template = document.getElementById("plant-item-template");
@@ -66,55 +67,51 @@ function displayAllPlants() {
 displayAllPlants()
 
 function displayPlantParentsPosts() {
-  const postTemplate = document.getElementById("post-template");
-  const postsContainer = document.getElementById("posts-list");
-
-  postsContainer.innerHTML = ''
-
-  for (const post of plantParentsPosts) {
-    const postElement = postTemplate.content.cloneNode(true);
-    const profileImage = postElement.querySelector("img");
-    const postContent = postElement.querySelector(".text");
-
-    const img = new Image();
-    img.onload = function () {
-      profileImage.src = img.src;
-    };
-    img.onerror = function () {
-      profileImage.src = "./assets/missing-profile-image.png";
-    };
-    img.src = post.profile_image_url;
-
-    postContent.textContent = post.content;
-    postsContainer.appendChild(postElement);
-  }
+  getPosts().then(({posts}) => {
+    console.log(posts)
+    const postTemplate = document.getElementById("post-template");
+    const postsContainer = document.getElementById("posts-list");
+  
+    postsContainer.innerHTML = ''
+  
+    for (const post of posts) {
+      const postElement = postTemplate.content.cloneNode(true);
+      const profileImage = postElement.querySelector("img");
+      const postContent = postElement.querySelector(".text");
+      const postCreator = postElement.querySelector(".username");
+  
+      const img = new Image();
+      img.onload = function () {
+        profileImage.src = img.src;
+      };
+      img.onerror = function () {
+        profileImage.src = "./assets/missing-profile-image.png";
+      };
+      img.src = post.profile_image_url;
+  
+      postContent.textContent = post.content;
+      postCreator.textContent = post.username;
+      postsContainer.appendChild(postElement);
+    }
+  
+    postsContainer.scrollTop = postsContainer.scrollHeight;
+  });
 }
 
 displayPlantParentsPosts();
 
-function addPost() {
-  const inputElement = document.getElementById('post-input');
-  const content = inputElement.value;
-
-  const newPostId = plantParentsPosts.length;
-
-  const { id: user_id, profile_image_url } = userData;
-
-  const newPost = {
-    id: newPostId,
-    user_id,
-    profile_image_url,
-    content,
-  };
-
-  plantParentsPosts.push(newPost);
-
-  inputElement.value = '';
-
-  displayPlantParentsPosts();
-}
-
 const inputElement = document.getElementById('post-input');
+
+function addPost() {
+  const content = inputElement.value;
+  
+  createPost(userData.id, content).then(() => {
+    const newPostId = plantParentsPosts.length;
+
+    const { id: user_id, profile_image_url, username } = userData;
+  })
+  inputElement.value = '';
+}
 
 inputElement.addEventListener('keypress', function(event) {
   if (event.keyCode === 13) {

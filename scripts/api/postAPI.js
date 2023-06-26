@@ -2,7 +2,7 @@ import { SERVER_URL } from "../config.js";
 
 export function createPost(userId, content) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts`, {
+    fetch(`${SERVER_URL}/api/posts_controller.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -12,11 +12,9 @@ export function createPost(userId, content) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Post created successfully
         console.log('Post created successfully');
         resolve();
       } else {
-        // Failed to create post
         console.log('Failed to create post');
         reject();
       }
@@ -30,7 +28,7 @@ export function createPost(userId, content) {
 
 export function deletePost(postId) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts?post_id=${postId}`, {
+    fetch(`${SERVER_URL}/api/posts_controller.php?post_id=${postId}`, {
       method: 'DELETE',
     })
     .then(response => response.json())
@@ -57,7 +55,7 @@ let currentOffset = 0;
 
 export function getPosts() {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts?limit=${MAX_POSTS}&offset=${currentOffset}`, {
+    fetch(`${SERVER_URL}/api/posts_controller.php?limit=${MAX_POSTS}&offset=${currentOffset}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -65,30 +63,15 @@ export function getPosts() {
     })
     .then(response => response.json())
     .then(data => {
-      const posts = data.posts;
-      const hasMorePosts = data.hasMorePosts;
+      const posts = data.data;
 
       currentOffset += MAX_POSTS;
 
-      resolve({ posts, hasMorePosts });
+      resolve({ posts });
     })
     .catch(error => {
       console.error('Error retrieving posts:', error);
       reject();
     });
   });
-}
-
-export function loadMorePosts() {
-  getPosts()
-    .then(({ posts, hasMorePosts }) => {
-
-      if (!hasMorePosts) {
-        // Disable the "Load More" button or stop the scroll event listener
-        // as there are no more posts to show
-      }
-    })
-    .catch(() => {
-      // Handle error while loading more posts
-    });
 }

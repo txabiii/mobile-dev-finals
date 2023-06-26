@@ -195,10 +195,6 @@ h3 {
 .post {
   display: flex;
   gap: 17px;
-  margin-bottom: 9px;
-}
-
-.post:last-child {
   margin-bottom: 12px;
 }
 
@@ -213,11 +209,25 @@ h3 {
 }
 
 .post .content {
-  padding: 15px;
+  padding: 7.5px 15px;
   background-color: rgb(var(--green-1-rgb));
-  color: white;
   border-radius: 5px;
   font-weight: 600;
+}
+
+.post .content p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.post .content h4 {
+  color: rgb(255, 255, 255);
+  font-family: 'Barlow', sans-serif;
+  margin-bottom: 5px;
+}
+
+#posts-list {
+  overflow: auto;
+  max-height: 300px;
 }
 
 .posts-container input {
