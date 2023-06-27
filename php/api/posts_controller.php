@@ -3,7 +3,7 @@ require_once '../db.php';
 
 class PostsController extends DB {
   public function getPosts() {
-    $sql = "SELECT p.id, p.user_id, u.profile_image_url, u.username, p.content
+    $sql = "SELECT p.*, u.profile_image_url, u.username
             FROM posts_tb p 
             JOIN user_accounts_tb u ON p.user_id = u.user_id 
             ORDER BY p.datetime_posted DESC LIMIT 10";

@@ -63,8 +63,8 @@ function displayMyPlants(plants) {
 var allPlantsData = new Array();
 
 /**
- * Gets all plants using `getAllPlants`
- * Displays them accordingly
+ * Gets all plants using `getPlant`
+ * Display them accordingly
  */
 getPlant().then((plants) => {
   allPlantsData = plants;
