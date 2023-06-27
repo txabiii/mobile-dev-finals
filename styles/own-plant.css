@@ -74,8 +74,19 @@
   line-height: 30px;
 }
 
+.plant-details-wrapper {
+  background-color: rgba(var(--green-1-rgb));
+}
+
 .plant-details {
+  position: relative;
   padding: 20px;
+  background-color: white;
+}
+
+.explore-specific-plant-details {
+  border-radius: 0px 0px 50px 0px;
+  padding-bottom: 50px;
 }
 
 .plant-details h2, .plant-details h5 {
@@ -123,6 +134,10 @@
   text-align: justify;
 }
 
+#plant-description {
+  text-indent: 20px;
+}
+
 #plant-guide {
   margin-bottom: 80px;
 }
@@ -135,4 +150,8 @@
   font-size: 25px;
   line-height: 32px;
   color: rgb(var(--green-1-rgb));
+}
+
+.extra-details-wrapper {
+  height: 114px;
 }

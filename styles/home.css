@@ -154,6 +154,7 @@ h3 {
   height: 40px;
   width: 100%;
   border-radius: 100px;
+  border: 2px solid rgb(var(--green-2-rgb));
 
   background-color: rgba(var(--green-1-rgb), 0.25);
   color: rgb(var(--green-2-rgb));
@@ -186,7 +187,7 @@ h3 {
 }
 
 .posts-container {
-  border: 3px solid rgb(var(--green-2-rgb));
+  border: 2px solid rgb(var(--green-2-rgb));
   border-radius: 10px;
   padding: 15px;
   background-color: rgb(var(--gray-rgb));
@@ -226,6 +227,7 @@ h3 {
 
 #posts-list {
   overflow: auto;
+  min-height: 300px;
   max-height: 300px;
 
   display: flex;
@@ -242,6 +244,7 @@ h3 {
 
   padding: 10px 15px;
   border-radius: 10px;
+  border: 2px solid rgb(var(--green-2-rgb));
 
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;

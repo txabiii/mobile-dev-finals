@@ -61,7 +61,6 @@ export function getPosts() {
     .then(response => response.json())
     .then(data => {
       const posts = data.data;
-
       resolve({ posts });
     })
     .catch(error => {

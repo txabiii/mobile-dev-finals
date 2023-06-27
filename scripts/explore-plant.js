@@ -1,4 +1,4 @@
-import { allPlantsData } from './data.js';
+import { getPlant } from './api/plantApi.js';
 
 /**
  * The image element for returning back.
@@ -30,39 +30,27 @@ const plantId = urlParameters.get("plant_id");
  * @param {string} id 
  */
 function displayPlantData(id) {
-  if (!isNaN(id)) {  
-    const plant = allPlantsData.find((plant) => plant.id === parseInt(id));
+  getPlant(id).then((plants) => {
+    const plant = plants[0];
+
+    const plantNameElement = document.getElementById('plant-name');
+    plantNameElement.innerText = plant.name;
   
-    if (plant) {
-      const plantNameElement = document.getElementById('plant-name');
-      plantNameElement.innerText = plant.name;
+    const scientificNameElement = document.getElementById('scientific-name');
+    scientificNameElement.innerText = plant.scientific_name;
   
-      const scientificNameElement = document.getElementById('scientific-name');
-      scientificNameElement.innerText = plant.scientific_name;
+    const waterFrequencyElement = document.getElementById('water-frequency');
+    if(plant.watering_frequency === 1) 
+    waterFrequencyElement.textContent = 'Water everyday'
+    else waterFrequencyElement.textContent = `Water every ${plant.watering_frequency} days`;
   
-      const waterFrequencyElement = document.getElementById('water-frequency');
-      if(plant.watering_frequency === 1) 
-      waterFrequencyElement.textContent = 'Water everyday'
-      else waterFrequencyElement.textContent = `Water every ${plant.watering_frequency} days`;
+    const plantDescriptionElement = document.getElementById('plant-description');
+    plantDescriptionElement.innerText = plant.description;
   
-      const plantDescriptionElement = document.getElementById('plant-description');
-      plantDescriptionElement.innerText = plant.description;
-  
-      const plantGuideLabelElement = document.getElementById('plant-guide-label');
-      plantGuideLabelElement.innerText = `How to take care (${plant.name})`;
-  
-      const plantGuideElement = document.getElementById('plant-guide');
-      plantGuideElement.innerText = plant.guide;
-  
-      const plantImageElement = document.getElementById('plant-image');
-      plantImageElement.src = plant.image_url;
-      plantImageElement.alt = `${plant.name}'s image`;
-    } else {
-      window.location.href = "/home.html";
-    }
-  } else {
-    window.location.href = "/home.html";
-  }  
+    const plantImageElement = document.getElementById('plant-image');
+    plantImageElement.src = plant.image_url;
+    plantImageElement.alt = `${plant.name}'s image`;
+  })
 }
 
 displayPlantData(plantId);

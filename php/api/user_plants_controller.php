@@ -4,9 +4,9 @@ require_once '../db.php';
 class UserPlantController extends DB {
   
   public function getUserPlants($userId) {
-    $sql = "SELECT up.plant_id, p.name, p.image_url, up.datetime_added FROM user_plants_tb AS up
-            JOIN plants_tb AS p ON up.plant_id = p.plant_id
-            WHERE up.user_id = ?";
+    $sql = "SELECT up.plant_id, p.name, p.image_url, p.watering_frequency, up.datetime_added FROM user_plants_tb AS up
+            JOIN plants_tb AS p ON up.plant_id = p.id
+            WHERE up.id = ?";
     $stmt = $this->connection->prepare($sql);
     
     $stmt->bind_param("i", $userId);
