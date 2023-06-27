@@ -1,7 +1,8 @@
 import { loginAccount } from "./api/userAccountAPI.js";
 
 const loginButton = document.getElementById("login-button");
-
+const errorMessageElement = document.getElementById("error-message");
+const labelErrorMessageElement = document.getElementById("label-error-message");
 const formFields = {
   usernameOrEmail: document.getElementById("username-input"),
   password: document.getElementById("password-input"),
@@ -16,87 +17,74 @@ document.addEventListener("click", function (event) {
 function getFormInputValues() {
   return {
     action: "login",
-    usernameOrEmail: document.getElementById("username-input").value.trim(),
-    password: document.getElementById("password-input").value.trim(),
+    usernameOrEmail: formFields.usernameOrEmail.value.trim(),
+    password: formFields.password.value.trim(),
   };
 }
 
 function resetFormInputValues() {
-  document.getElementById("username-input").value = "";
-  document.getElementById("password-input").value = "";
+  formFields.usernameOrEmail.value = "";
+  formFields.password.value = "";
 }
 
-function addError() {
+function showErrorBorderColor() {
   Object.values(formFields).forEach((field) => {
     field.classList.add("error");
   });
 }
 
-function removeError() {
+function hideErrorBorderColor() {
+  errorMessageElement.style.display = "none";
+
   Object.values(formFields).forEach((field) => {
     field.classList.remove("error");
   });
+}
+
+function displayError(message) {
+  errorMessageElement.style.display = "block";
+  labelErrorMessageElement.textContent = message;
 }
 
 function validateLoginForm() {
   const form = getFormInputValues();
 
   if (!form.usernameOrEmail && !form.password) {
-    alert("Please fill out the fields");
-    addError();
+    showErrorBorderColor();
+    displayError("Please fill out the fields.");
     return false;
   } else if (!form.usernameOrEmail) {
-    alert("Please enter a username or email address.");
     formFields.usernameOrEmail.classList.add("error");
+    displayError("Please enter a username or email address.");
     return false;
   } else if (!form.password) {
-    alert("Please enter a password.");
     formFields.password.classList.add("error");
+    displayError("Please enter a password.");
     return false;
   } else {
+    errorMessageElement.style.display = "none";
     return true;
   }
 }
 
 Object.values(formFields).forEach((field) => {
   field.addEventListener("focus", () => {
-    removeError();
+    hideErrorBorderColor();
   });
 });
 
 loginButton.addEventListener("click", function () {
+  const form = getFormInputValues();
+
   if (validateLoginForm()) {
-    const form = getFormInputValues();
     loginAccount(form).then((data) => {
       if (data.status === "success") {
-        alert(data.data);
         resetFormInputValues();
         window.location.href = "home.html";
       } else {
-        alert(data.data);
+        showErrorBorderColor();
+        displayError(data.data);
       }
     });
   }
 });
-
-// var socialMediaLinks = document.querySelectorAll(".social-media-links img");
-// socialMediaLinks.forEach(function (socialMedia) {
-//   socialMedia.addEventListener("click", function () {
-//     // Get the alt attribute of the clicked image
-//     var altText = socialMedia.alt;
-
-//     // Perform different actions based on the alt text
-//     switch (altText) {
-//       case "google":
-//         window.location.href = "https://www.google.com";
-//         break;
-//       case "facebook":
-//         window.location.href = "https://www.facebook.com";
-//         break;
-//       case "apple":
-//         window.location.href = "https://www.apple.com";
-//         break;
-//       // Add more cases for other alt texts if needed
-//     }
-//   });
-// });

@@ -17,7 +17,6 @@ body {
 .top {
   display: flex;
   flex-direction: column;
-  margin-top: 66px;
   margin-left: 20px;
   font-weight: bolder;
 }
@@ -38,24 +37,43 @@ body {
   gap: 10px;
   margin-top: 50px;
 }
+.error-message,
 .username,
 .password {
   position: relative;
 }
+.label-error-message {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(173, 52, 62, 255);
+  font-weight: bolder;
+  font-family: Barlow;
+  font-size: 15px;
+}
+.error-message {
+  display: none;
+  background: rgba(235, 204, 207, 255);
+  border-radius: 5px;
+}
+.error-message,
 .username-input,
 .password-input {
   padding-left: 60px;
   width: 100%;
   height: 45px;
-  background: rgba(236, 236, 236, 0.5);
-  border-radius: 20px;
   border-color: transparent;
   overflow: hidden;
-  font-family: Barlow;
-  font-size: 15px;
   -webkit-transition: 0s;
   transition: 0s;
   outline: none;
+}
+.username-input,
+.password-input {
+  background: rgba(236, 236, 236, 0.5);
+  border-radius: 20px;
+  font-family: Barlow;
+  font-size: 15px;
 }
 .username-input:focus,
 .password-input:focus {
@@ -66,7 +84,8 @@ body {
   border: 2px solid red;
 }
 .username img,
-.password img {
+.password img,
+.error-message img {
   position: absolute;
   top: 50%;
   left: 20px;
@@ -108,23 +127,6 @@ input[type="checkbox"] {
   accent-color: rgba(5, 77, 59, 1);
   cursor: pointer;
 }
-.separator {
-  display: flex;
-  margin-top: 50px;
-  justify-content: center;
-  gap: 40px;
-}
-.label-or {
-  color: rgba(0, 0, 0, 1);
-  font-family: Barlow;
-  font-size: 15px;
-}
-.left-line,
-.right-line {
-  width: 84px;
-  border-top: 1px solid rgba(5, 77, 59, 1);
-  margin-top: 10px;
-}
 .login-button-div {
   padding: 0 32px;
   margin-top: 50px;
@@ -148,20 +150,6 @@ input[type="checkbox"] {
 }
 .login-button:active {
   transform: translateY(2px);
-}
-.social-media-links {
-  display: flex;
-  margin-top: 40px;
-  justify-content: center;
-  gap: 20px;
-}
-.social-media-links img {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-.social-media-links img:hover {
-  transform: translateY(-2px);
 }
 .bottom {
   width: 100%;
