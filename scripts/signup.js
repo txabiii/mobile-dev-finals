@@ -1,7 +1,8 @@
 import { addUserAccount } from "./api/userAccountAPI.js";
 
 const signUpButton = document.getElementById("signup-button");
-
+const errorMessageElement = document.getElementById("error-message");
+const labelErrorMessageElement = document.getElementById("label-error-message");
 const formFields = {
   username: document.getElementById("username-input"),
   email: document.getElementById("email-input"),
@@ -28,22 +29,29 @@ function getFormInputValues() {
 }
 
 function resetFormInputValues() {
-  document.getElementById("username-input").value = "";
-  document.getElementById("email-input").value = "";
-  document.getElementById("password-input").value = "";
-  document.getElementById("confirm-password-input").value = "";
+  formFields.username.value = "";
+  formFields.email.value = "";
+  formFields.password.value = "";
+  formFields.confirmPassword.value = "";
 }
 
-function addError() {
+function showErrorBorderColor() {
   Object.values(formFields).forEach((field) => {
     field.classList.add("error");
   });
 }
 
-function removeError() {
+function hideErrorBorderColor() {
+  errorMessageElement.style.display = "none";
+
   Object.values(formFields).forEach((field) => {
     field.classList.remove("error");
   });
+}
+
+function displayError(message) {
+  errorMessageElement.style.display = "block";
+  labelErrorMessageElement.textContent = message;
 }
 
 function validateRegistrationForm() {
@@ -56,37 +64,37 @@ function validateRegistrationForm() {
     !form.password &&
     !form.confirmPassword
   ) {
-    alert("Please fill out the fields");
-    addError();
+    showErrorBorderColor();
+    displayError("Please fill out the fields.");
     return false;
   } else if (!form.username) {
-    alert("Please enter a username.");
     formFields.username.classList.add("error");
+    displayError("Please enter a username.");
     return false;
   } else if (!form.email) {
-    alert("Please enter an email address.");
     formFields.email.classList.add("error");
+    displayError("Please enter an email address.");
     return false;
   } else if (!emailRegex.test(form.email)) {
-    alert("Please enter a valid email address.");
     formFields.email.classList.add("error");
+    displayError("Please enter a valid email address.");
     return false;
   } else if (!form.password) {
-    alert("Please enter a password.");
     formFields.password.classList.add("error");
+    displayError("Please enter a password.");
     return false;
   } else if (form.password.length < 8) {
-    alert("Password must be at least 8 characters long.");
     formFields.password.classList.add("error");
+    displayError("Password must be at least 8 characters long.");
     return false;
   } else if (!form.confirmPassword) {
-    alert("Please confirm your password.");
     formFields.confirmPassword.classList.add("error");
+    displayError("Please confirm your password.");
     return false;
   } else if (form.password !== form.confirmPassword) {
-    alert("Passwords do not match.");
     formFields.password.classList.add("error");
     formFields.confirmPassword.classList.add("error");
+    displayError("Passwords do not match.");
     return false;
   } else {
     return true;
@@ -95,43 +103,22 @@ function validateRegistrationForm() {
 
 Object.values(formFields).forEach((field) => {
   field.addEventListener("focus", () => {
-    removeError();
+    hideErrorBorderColor();
   });
 });
 
 signUpButton.addEventListener("click", function () {
+  const form = getFormInputValues();
+
   if (validateRegistrationForm()) {
-    const form = getFormInputValues();
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
-        alert(data.data);
         resetFormInputValues();
         window.location.href = "login.html";
       } else {
-        alert(data.data);
+        showErrorBorderColor();
+        displayError(data.data);
       }
     });
   }
 });
-
-// var socialMediaLinks = document.querySelectorAll(".social-media-links img");
-// socialMediaLinks.forEach(function (socialMedia) {
-//   socialMedia.addEventListener("click", function () {
-//     // Get the alt attribute of the clicked image
-//     const altText = socialMedia.alt;
-
-//     // Perform different actions based on the alt text
-//     switch (altText) {
-//       case "google":
-//         window.location.href = "https://www.google.com";
-//         break;
-//       case "facebook":
-//         window.location.href = "https://www.facebook.com";
-//         break;
-//       case "apple":
-//         window.location.href = "https://www.apple.com";
-//         break;
-//       // Add more cases for other alt texts if needed
-//     }
-//   });
-// });
