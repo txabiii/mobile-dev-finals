@@ -5,7 +5,6 @@
  */
 export function getWaterReminder(plant) {
   const dateAdded = new Date(plant.datetime_added);
-  console.log(plant);
 
   const wateringFrequency = plant.watering_frequency;
 
