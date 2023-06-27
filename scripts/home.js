@@ -1,7 +1,8 @@
-<<<<<<< HEAD
-import { myPlantsData, allPlantsData, userData } from "./data.js";
+import { userData } from "./data.js";
 import { getWaterReminder } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
+import { getPlant } from "./api/plantApi.js";
+import { getUserPlants } from "./api/userPlantsApi.js";
 import { getUserAccount } from "./api/userAccountAPI.js";
 
 window.addEventListener("load", function () {
@@ -17,13 +18,6 @@ window.addEventListener("load", function () {
     }
   });
 });
-=======
-import { userData } from './data.js';
-import { getWaterReminder } from './utils.js';
-import { getPosts, createPost } from './api/postApi.js'
-import { getPlant } from './api/plantApi.js'
-import { getUserPlants } from './api/userPlantsApi.js'
->>>>>>> 7c5a2b109ed0b0aae3d6b6f4cd446faa174be7c9
 
 /**
  * An array that holds the user's plants' details.
@@ -34,31 +28,21 @@ var myPlantsData = new Array();
 /**
  * Get data of user's plants
  * Displays the plants of the user
-<<<<<<< HEAD
- *
-=======
->>>>>>> 7c5a2b109ed0b0aae3d6b6f4cd446faa174be7c9
  * @param {array} plants - An array of objects of the user's plants data
  * @returns {void}
  */
 getUserPlants(userData.id).then((userPlants) => {
   displayMyPlants(userPlants);
-})
+});
 
 function displayMyPlants(plants) {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
 
-<<<<<<< HEAD
-  if (myPlantsData.length === 0) {
+  if (plants.length === 0) {
     container.style.display = "none";
     noPlantsContainer.style.display = "flex";
-=======
-  if (plants.length === 0) {
-    container.style.display = "none"
-    noPlantsContainer.style.display = "flex"
->>>>>>> 7c5a2b109ed0b0aae3d6b6f4cd446faa174be7c9
     return;
   } else {
     container.style.display = "block";
@@ -72,23 +56,13 @@ function displayMyPlants(plants) {
     nameElement.textContent = plant.name;
 
     const waterScheduleElement = plantItem.querySelector(".water-schedule");
-<<<<<<< HEAD
-    waterScheduleElement.textContent = getWaterReminder(plant.id);
+    waterScheduleElement.textContent = getWaterReminder(plant);
 
-=======
-    waterScheduleElement.textContent = getWaterReminder(plant)
-    
->>>>>>> 7c5a2b109ed0b0aae3d6b6f4cd446faa174be7c9
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
 
-<<<<<<< HEAD
     nameElement.addEventListener("click", function () {
-      window.location.href = "/own-plant.html?plant_id=" + plant.id;
-=======
-    nameElement.addEventListener("click", function() {
       window.location.href = "/own-plant.html?plant_id=" + plant.plant_id;
->>>>>>> 1cc5e06dc4ddfbb3a92b525ba95d7f543c557f04
     });
 
     container.appendChild(plantItem);
@@ -131,13 +105,8 @@ function displayAllPlants() {
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
 
-<<<<<<< HEAD
     nameElement.addEventListener("click", function () {
-      window.location.href = "/explore-plant.html?plant_id=" + plant.id;
-=======
-    nameElement.addEventListener("click", function() {
       window.location.href = "/explore-plant.html?plant_id=" + plant.plant_id;
->>>>>>> 1cc5e06dc4ddfbb3a92b525ba95d7f543c557f04
     });
 
     container.appendChild(plantItem);
