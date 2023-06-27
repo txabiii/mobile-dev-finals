@@ -17,13 +17,15 @@ class PlantController extends DB {
   }
 
   public function getPlant($plantId = null) {
+    $query = "SELECT * FROM plants_tb";
+  
     if ($plantId !== null) {
-      $query .= " WHERE plant_id = ?";
+      $query .= " WHERE id = ?";
       $stmt = $this->connection->prepare($query);
       $stmt->bind_param("i", $plantId);
-      $result = $this->connection->query($query);
+      $stmt->execute();
+      $result = $stmt->get_result();
     } else {
-      $query = "SELECT * FROM plants_tb";
       $result = $this->connection->query($query);
     }
   
@@ -33,9 +35,9 @@ class PlantController extends DB {
         $plants[] = $row;
       }
     }
-
+  
     return $plants;
-  }
+  }  
 
   public function updatePlant($id, $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
     $query = "UPDATE plants_tb SET name=?, scientific_name=?,
@@ -69,7 +71,7 @@ class PlantController extends DB {
 $plantController = new PlantController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  if (isset($_GET['plant_id'])) {
+  if (isset($_GET['plant_id']) && $_GET['plant_id'] !== "null") {
       $plantId = $_GET['plant_id'];
       $plant = $plantController->getPlant($plantId);
       
@@ -81,7 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       }
   } else {
       $plants = $plantController->getPlant();
-      echo json_encode($plants);
+      if($plants) {
+        echo json_encode($plants);
+      } else {
+        http_response_code(404);
+        echo json_encode(['message' => 'Plant not found']);
+      }
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $requestData = json_decode(file_get_contents('php://input'), true);

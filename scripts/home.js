@@ -1,20 +1,31 @@
-import { myPlantsData, allPlantsData, userData } from './data.js';
+import { userData } from './data.js';
 import { getWaterReminder } from './utils.js';
 import { getPosts, createPost } from './api/postApi.js'
+import { getPlant } from './api/plantApi.js'
+import { getUserPlants } from './api/userPlantsApi.js'
 
 /**
+ * An array that holds the user's plants' details.
+ * @type {Array}
+ */
+var myPlantsData = new Array();
+
+/**
+ * Get data of user's plants
  * Displays the plants of the user
- * 
  * @param {array} plants - An array of objects of the user's plants data
  * @returns {void}
  */
+getUserPlants(userData.id).then((userPlants) => {
+  displayMyPlants(userPlants);
+})
 
 function displayMyPlants(plants) {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
 
-  if (myPlantsData.length === 0) {
+  if (plants.length === 0) {
     container.style.display = "none"
     noPlantsContainer.style.display = "flex"
     return;
@@ -30,7 +41,7 @@ function displayMyPlants(plants) {
     nameElement.textContent = plant.name;
 
     const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    waterScheduleElement.textContent = getWaterReminder(plant.id)
+    waterScheduleElement.textContent = getWaterReminder(plant)
     
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
@@ -43,11 +54,22 @@ function displayMyPlants(plants) {
   }
 }
 
-displayMyPlants(myPlantsData);
+// displayMyPlants(myPlantsData);
 
 /**
- * Display all the plants in the database
+ * An array that holds the plants' details.
+ * @type {Array}
  */
+var allPlantsData = new Array();
+
+/**
+ * Gets all plants using `getAllPlants`
+ * Displays them accordingly
+ */
+getPlant().then((plants) => {
+  allPlantsData = plants;
+  displayAllPlants();
+});
 
 function displayAllPlants() {
   const template = document.getElementById("plant-item-template");
@@ -74,8 +96,6 @@ function displayAllPlants() {
     container.appendChild(plantItem);
   }
 }
-
-displayAllPlants();
 
 /**
  * An array that holds the plant parents' posts.

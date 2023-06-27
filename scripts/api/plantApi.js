@@ -4,11 +4,11 @@ import { SERVER_URL } from "../config.js";
  * Retrieves all plants by sending a GET request to the server.
  * @returns {Promise<Array<Object>>} A promise that resolves with an array of plant objects if the request is successful, or rejects with an error message if the request fails.
  */
-export function getAllPlants() {
+export function getPlant(plantId = null) {
   return new Promise((resolve, reject) => {
-    fetch(SERVER_URL + '/api/plants')
+    fetch(SERVER_URL + `/api/plants_controller.php?plant_id=${plantId}`)
       .then(response => response.json())
-      .then(data => resolve(data))
+      .then(plants => resolve(plants)) 
       .catch(error => reject(error));
   });
 }
@@ -20,7 +20,7 @@ export function getAllPlants() {
  */
 export function createPlant(plantData) {
   return new Promise((resolve, reject) => {
-    fetch('/api/plants', {
+    fetch('/api/plants_controller.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export function createPlant(plantData) {
  */
 export function updatePlant(plantId, updatedData) {
   return new Promise((resolve, reject) => {
-    fetch(`/api/plants/${plantId}`, {
+    fetch(`/api/plants_controller.php/${plantId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export function updatePlant(plantId, updatedData) {
  */
 export function deletePlant(plantId) {
   return new Promise((resolve, reject) => {
-    fetch(`/api/plants/${plantId}`, {
+    fetch(`/api/plants_controller.php/${plantId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

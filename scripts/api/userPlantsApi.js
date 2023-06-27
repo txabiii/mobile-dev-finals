@@ -15,7 +15,7 @@ export function createUserPlant(plantId, userId, dateAdded) {
       date_added: dateAdded
     };
 
-    fetch(`${SERVER_URL}/api/user-plants`, {
+    fetch(`${SERVER_URL}/api/user_plants_controller.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export function createUserPlant(plantId, userId, dateAdded) {
  */
 export function deleteUserPlant(plantId, userId) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/user-plants/${plantId}/${userId}`, {
+    fetch(`${SERVER_URL}/api/user_plants_controller.php/${plantId}/${userId}`, {
       method: 'DELETE'
     })
     .then(response => response.json())
@@ -61,7 +61,6 @@ export function deleteUserPlant(plantId, userId) {
   });
 }
 
-
 /**
  * Retrieves the user's plants by sending a GET request to the server.
  * @param {number} userId - The ID of the user.
@@ -69,10 +68,10 @@ export function deleteUserPlant(plantId, userId) {
  */
 export function getUserPlants(userId) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/user-plants/${userId}`)
+    fetch(`${SERVER_URL}/api/user_plants_controller.php?user_id=${userId}`)
       .then(response => response.json())
       .then(result => {
-        if (result.success) {
+        if (result.status === 'success') {
           resolve(result.data);
         } else {
           reject(result.message);
