@@ -16,7 +16,7 @@
 
 .go-back {
   background-color: rgb(var(--green-1-rgb));
-  padding: 10px 20px;
+  padding: 10px 20px; 
 
   display: flex;
   align-items: center;
@@ -72,6 +72,48 @@
 .reminder .details h2 {
   font-size: 25px;
   line-height: 30px;
+}
+
+.extra-details {
+  background-color: rgb(var(--green-1-rgb));
+  width: 100%;
+  color: white;
+  font-family: 'Barlow', sans-serif;
+  display: inline-block;
+
+  padding: 20px 20px;
+}
+
+.extra-details-wrapper {
+  display: flex;
+  overflow-x: auto; /* Allow horizontal overflow */
+  white-space: nowrap; /* Prevent wrapping to next line */
+  gap: 40px;
+}
+
+.extra-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+}
+
+.extra-detail img {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+.extra-detail h4 {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.extra-detail p {
+  font-weight: 400;
+  font-size: 15px;
+  text-align: center;
 }
 
 .plant-details-wrapper {
@@ -138,10 +180,6 @@
   text-indent: 20px;
 }
 
-#plant-guide {
-  margin-bottom: 80px;
-}
-
 #plant-guide-label {
   margin-top: 20px;
 
@@ -150,4 +188,8 @@
   font-size: 25px;
   line-height: 32px;
   color: rgb(var(--green-1-rgb));
+}
+
+#plant-image {
+  visibility: hidden;
 }

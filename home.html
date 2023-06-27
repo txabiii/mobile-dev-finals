@@ -25,7 +25,13 @@
 
     <div class="my-plants-section">
       <h3 class="section-name">My Plants</h3>
-      <div class="plants-list" id="my-plants"></div>
+      <div class="plants-list" id="my-plants">
+        <div id="my-plants-loading-group">
+          <div class="explore-plants-loading-box loading"></div>
+          <div class="explore-plants-loading-box loading"></div>
+          <div class="explore-plants-loading-box loading"></div>
+        </div>
+      </div>
       <div class="no-plants" id="no-plants">
         <div class="add-first-plant">
           <img src="./assets/plus-icon.svg" alt="add plant button" />
@@ -45,13 +51,34 @@
 
     <div class="explore-plants-section">
       <h3 class="section-name">Explore Plants</h3>
-      <div class="plants-list" id="explore-plants"></div>
+      <div class="plants-list" id="explore-plants">
+        <div id="explore-plants-loading-group">
+          <div class="explore-plants-loading-box loading"></div>
+          <div class="explore-plants-loading-box loading"></div>
+          <div class="explore-plants-loading-box loading"></div>
+        </div>
+      </div>
     </div>
 
     <div class="plant-parents-section">
       <h3 class="section-name">Plant Parents</h3>
       <div class="posts-container">
-        <div id="posts-list"></div>
+        <div id="posts-list">
+          <div id="posts-list-loading-group">
+            <div class="post">
+              <div class="circle darker-loading"></div><div class="content-wrapper darker-loading loading-message"></div>
+            </div>
+            <div class="post">
+              <div class="circle darker-loading"></div><div class="content-wrapper darker-loading loading-message"></div>
+            </div>
+            <div class="post">
+              <div class="circle darker-loading"></div><div class="content-wrapper darker-loading loading-message"></div>
+            </div>
+            <div class="post">
+              <div class="circle darker-loading"></div><div class="content-wrapper darker-loading loading-message"></div>
+            </div>
+          </div>
+        </div>
         <input id="post-input" placeholder="Message / Comment??" />
       </div>
     </div>
