@@ -20,12 +20,6 @@ window.addEventListener("load", function () {
 });
 
 /**
- * An array that holds the user's plants' details.
- * @type {Array}
- */
-var myPlantsData = new Array();
-
-/**
  * Get data of user's plants
  * Displays the plants of the user
  * @param {array} plants - An array of objects of the user's plants data
@@ -69,8 +63,6 @@ function displayMyPlants(plants) {
   }
 }
 
-// displayMyPlants(myPlantsData);
-
 /**
  * An array that holds the plants' details.
  * @type {Array}
@@ -78,8 +70,8 @@ function displayMyPlants(plants) {
 var allPlantsData = new Array();
 
 /**
- * Gets all plants using `getAllPlants`
- * Displays them accordingly
+ * Gets all plants using `getPlant`
+ * Display them accordingly
  */
 getPlant().then((plants) => {
   allPlantsData = plants;
@@ -145,6 +137,7 @@ function displayPlantParentsPosts(posts) {
     const profileImage = postElement.querySelector("img");
     const postContent = postElement.querySelector(".text");
     const postCreator = postElement.querySelector(".username");
+    const dateTimeElement = postElement.querySelector("#date-time");
 
     if (post.profile_image_url === null)
       profileImage.src = "./assets/missing-profile-image.png";
@@ -161,6 +154,7 @@ function displayPlantParentsPosts(posts) {
 
     postContent.textContent = post.content;
     postCreator.textContent = post.username;
+    dateTimeElement.textContent = post.datetime_posted
     postsContainer.appendChild(postElement);
   }
 

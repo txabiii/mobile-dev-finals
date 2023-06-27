@@ -39,41 +39,6 @@
   object-fit: cover;
 }
 
-.reminder {
-  position: absolute;
-  bottom: 0;
-  height: 80px;
-  width: 100%;
-  padding-left: 20px;
-
-  display: flex;
-  gap: 18px;
-  align-items: center;
-
-  font-family: 'Barlow', sans-serif;
-  font-weight: 600;
-  color: white;
-  background-color: rgba(var(--green-2-rgb), 0.5);
-}
-
-.reminder img {
-  width: 24px;
-  height: 24px;
-
-  flex-shrink: 0;
-  align-self: center;
-}
-
-.reminder .details h5 {
-  font-size: 15px;
-  line-height: 18px;
-}
-
-.reminder .details h2 {
-  font-size: 25px;
-  line-height: 30px;
-}
-
 .plant-details-wrapper {
   background-color: rgba(var(--green-1-rgb));
 }
@@ -82,6 +47,21 @@
   position: relative;
   padding: 20px;
   background-color: white;
+}
+
+.water-details {
+  margin-top: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.water-details p {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: rgb(var(--green-1-rgb));
 }
 
 .explore-specific-plant-details {
@@ -110,21 +90,6 @@
   font-family: 'Barlow', sans-serif;
 }
 
-.water-details {
-  margin-top: 20px;
-
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.water-details p {
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
-  color: rgb(var(--green-1-rgb));
-}
-
 #plant-description, #plant-guide {
   margin-top: 20px;
 
@@ -138,16 +103,62 @@
   text-indent: 20px;
 }
 
-#plant-guide {
-  margin-bottom: 80px;
+.extra-details {
+  width: 100%;
+  color: white;
+  font-family: 'Barlow', sans-serif;
+  display: inline-block;
+
+  padding: 40px 20px;
 }
 
-#plant-guide-label {
-  margin-top: 20px;
+.extra-details-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Set two columns per row */
+  gap: 10px;
+  grid-row-gap: 30px;
+  grid-auto-columns: 1fr;
+}
 
-  font-family: 'Rajdhani', sans-serif;
+.extra-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+}
+
+.extra-detail img {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+.extra-detail h4 {
   font-weight: 700;
-  font-size: 25px;
-  line-height: 32px;
-  color: rgb(var(--green-1-rgb));
+  font-size: 18px;
+}
+
+.extra-detail p {
+  font-weight: 400;
+  font-size: 15px;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container button {
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(var(--green-2-rgb), 0.5);
+  border-radius: 100px;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 40px;
 }

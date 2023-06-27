@@ -213,6 +213,20 @@ h3 {
   background-color: rgb(var(--green-1-rgb));
   border-radius: 5px;
   font-weight: 600;
+} 
+
+.content:focus + .info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info {
+  display: none;
+  color: rgb(var(--green-1-rgb));
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0px 15px;
 }
 
 .post .content p {

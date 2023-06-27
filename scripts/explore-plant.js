@@ -50,6 +50,30 @@ function displayPlantData(id) {
     const plantImageElement = document.getElementById('plant-image');
     plantImageElement.src = plant.image_url;
     plantImageElement.alt = `${plant.name}'s image`;
+
+    // Modify the content of the 'height' element
+    const heightElement = document.querySelector('#height');
+    heightElement.textContent = plant.height;
+
+    // Modify the content of the 'temperature' element
+    const temperatureElement = document.querySelector('#temperature');
+    temperatureElement.textContent = plant.temperature;
+
+    // Modify the content of the 'container' element
+    const containerElement = document.querySelector('#container');
+    containerElement.textContent = plant.container;
+
+    // Modify the content of the 'environment' element
+    const environmentElement = document.querySelector('#environment');
+    environmentElement.textContent = plant.environment;
+
+    // Modify the content of the 'depth' element
+    const depthElement = document.querySelector('#depth');
+    depthElement.textContent = plant.depth;
+
+    // Modify the content of the 'care' element
+    const careElement = document.querySelector('#care');
+    careElement.textContent = plant.care;
   })
 }
 
