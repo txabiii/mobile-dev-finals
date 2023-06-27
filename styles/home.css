@@ -222,9 +222,10 @@ h3 {
 
 .info {
   display: none;
-  color: rgb(var(--green-2-rgb));
+  color: rgb(var(--green-1-rgb));
   font-family: 'Barlow', sans-serif;
   font-size: 12px;
+  font-weight: 700;
   padding: 0px 15px;
 }
 
