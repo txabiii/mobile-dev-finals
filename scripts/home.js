@@ -82,8 +82,13 @@ function displayMyPlants(plants) {
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
 
+<<<<<<< HEAD
     nameElement.addEventListener("click", function () {
       window.location.href = "/own-plant.html?plant_id=" + plant.id;
+=======
+    nameElement.addEventListener("click", function() {
+      window.location.href = "/own-plant.html?plant_id=" + plant.plant_id;
+>>>>>>> 1cc5e06dc4ddfbb3a92b525ba95d7f543c557f04
     });
 
     container.appendChild(plantItem);
@@ -126,8 +131,13 @@ function displayAllPlants() {
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
 
+<<<<<<< HEAD
     nameElement.addEventListener("click", function () {
       window.location.href = "/explore-plant.html?plant_id=" + plant.id;
+=======
+    nameElement.addEventListener("click", function() {
+      window.location.href = "/explore-plant.html?plant_id=" + plant.plant_id;
+>>>>>>> 1cc5e06dc4ddfbb3a92b525ba95d7f543c557f04
     });
 
     container.appendChild(plantItem);
