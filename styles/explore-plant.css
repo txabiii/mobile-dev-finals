@@ -26,6 +26,10 @@
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
+#plant-image {
+  visibility: hidden;
+}
+
 .plant-image-wrapper {
   width: 100vw;
   position: relative;

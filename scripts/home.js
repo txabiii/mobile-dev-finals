@@ -26,10 +26,13 @@ window.addEventListener("load", function () {
  * @returns {void}
  */
 getUserPlants(userData.id).then((userPlants) => {
+  const loading = document.querySelector('#my-plants-loading-group');
+  loading.style.display = 'none';
+
   displayMyPlants(userPlants);
 });
 
-function displayMyPlants(plants) {
+function displayMyPlants(plants) {  
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
@@ -74,6 +77,9 @@ var allPlantsData = new Array();
  * Display them accordingly
  */
 getPlant().then((plants) => {
+  const loading = document.querySelector('#explore-plants-loading-group');
+  loading.style.display = 'none';
+
   allPlantsData = plants;
   displayAllPlants();
 });
@@ -118,7 +124,6 @@ var plantParentsPosts = new Array();
  */
 getPosts().then(({ posts }) => {
   plantParentsPosts = posts;
-
   displayPlantParentsPosts(plantParentsPosts);
 });
 
