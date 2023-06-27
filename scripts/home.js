@@ -179,7 +179,7 @@ function addPost() {
 
     inputElement.value = '';
 
-    displayPlantParentsPosts();
+    displayPlantParentsPosts(plantParentsPosts);
   });
 }
 
