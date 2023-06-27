@@ -20,7 +20,7 @@ class PlantController extends DB {
     $query = "SELECT * FROM plants_tb";
   
     if ($plantId !== null) {
-      $query .= " WHERE id = ?";
+      $query .= " WHERE plant_id = ?";
       $stmt = $this->connection->prepare($query);
       $stmt->bind_param("i", $plantId);
       $stmt->execute();

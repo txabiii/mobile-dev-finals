@@ -1,10 +1,12 @@
 /**
  * Computes the amount of time between now and the next water scheduling
- * @param {string} plantId - The string id of the plant 
- * @returns {string} A string containing the remaining time before the next water schedule
+ * @param {object} plant - The object the data of the plant 
+ * @returns {string} A string of the remaining time before the next water schedule
  */
 export function getWaterReminder(plant) {
   const dateAdded = new Date(plant.datetime_added);
+  console.log(plant);
+
   const wateringFrequency = plant.watering_frequency;
 
   const currentDate = new Date();
