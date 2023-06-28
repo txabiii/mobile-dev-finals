@@ -10,6 +10,13 @@ const labelNotifyMessageElement = document.getElementById(
 );
 const notifyIconElement = document.getElementById("notify-icon");
 
+function getVerificationCodeInputValues() {
+  return {
+    user_id: userId,
+    verification_code: verificationCode.join(""),
+  };
+}
+
 function displayErrorMessage(message) {
   labelNotifyMessageElement.textContent = message;
   notifyIconElement.src = "./assets/error-icon.svg";
@@ -90,12 +97,9 @@ inputs.forEach((input, index1) => {
 window.addEventListener("load", () => inputs[0].focus());
 
 sendButton.addEventListener("click", function () {
-  const verificationCodeInput = {
-    user_id: userId,
-    verification_code: verificationCode.join(""),
-  };
+  const form = getVerificationCodeInputValues();
 
-  updateUserAccount(verificationCodeInput).then((data) => {
+  updateUserAccount(form).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.data);
       setTimeout(() => {
