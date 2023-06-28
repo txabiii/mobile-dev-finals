@@ -23,7 +23,7 @@
       <img src="./assets/reminder.svg" alt="reminder icon">
       <div class="details">
         <h5>Reminder</h5>
-        <h2 id="water-schedule">-</h2>
+        <h2 id="water-schedule">⠀</h2>
       </div>
     </div>
   </div>
@@ -33,60 +33,92 @@
       <div class="extra-detail">
         <img src="./assets/icons/height.svg" alt="height icon">
         <h4>Height</h4>
-        <p id="height">-</p>
+        <p id="height">⠀</p>
       </div>
 
       <div class="extra-detail">
         <img src="./assets/icons/temperature.svg" alt="temperature icon">
         <h4>Temperature</h4>
-        <p id="temperature">-</p>
+        <p id="temperature">⠀</p>
       </div>
 
       <div class="extra-detail">
         <img src="./assets/icons/container.svg" alt="container icon">
         <h4>Container</h4>
-        <p id="container">-</p>
+        <p id="container">⠀</p>
       </div>
 
       <div class="extra-detail">
         <img src="./assets/icons/environment.svg" alt="environment icon">
         <h4>Environment</h4>
-        <p id="environment">-</p>
+        <p id="environment">⠀</p>
       </div>
 
       <div class="extra-detail">
         <img src="./assets/icons/depth.svg" alt="depth icon">
         <h4>Depth</h4>
-        <p id="depth">-</p>
+        <p id="depth">⠀</p>
       </div>
 
       <div class="extra-detail">
         <img src="./assets/icons/care.svg" alt="height icon">
         <h4>Care</h4>
-        <p id="care">-</p>
+        <p id="care">⠀</p>
       </div>
     </div>
   </div>
 
   <div class="plant-details">
-    <h2 id="plant-name">Plant Name</h2>
-    <h5 id="scientific-name">Scientific name</h5>
+    <h2 id="plant-name">⠀</h2>
+    <h5 id="scientific-name">⠀</h5>
 
     <div class="water-details">
       <img src="./assets/watering-can-icon.svg" alt="watering can icon">
-      <p id="water-frequency">Water every _ days</p>
+      <p id="water-frequency">⠀</p>
     </div>
 
-    <p id="plant-description">
-      Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia.
-    </p>
+    <h3 class="plant-guide-label">Plant Overview</h3>
 
-    <h3 id="plant-guide-label">How to take care (Plant Name)</h3>
+    <div class="text-loading-group" id="plant-overview-loading">
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+    </div>
 
-    <p id="plant-guide">
-      Korem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia.
-    </p>
+    <p id="plant-description"></p>
+
+    <h3 class="plant-guide-label" id="plant-tip-label">Plant tips</h3>
+
+    <div class="tips-wrapper">
+      <div id="tips-list"></div>      
+      <div id="dot-group">
+      </div>
+    </div>
+
+    <h3 id="plant-guide-label" class="plant-guide-label">How to take care for the plant</h3>
+
+    <div class="text-loading-group" id="plant-guide-loading">
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+      <div class="loading-text loading"></div>
+    </div>
+
+    <p id="plant-guide"></p>
   </div>
+
+  <template id="tip-template">
+    <div class="tip">
+      <h4></h4>
+      <p></p>
+      <div class="filler"></div>
+    </div>
+  </template>
 
   <!-- <button class="add-plant">
     <img src="./assets/plus-icon.svg" alt="add plant button">

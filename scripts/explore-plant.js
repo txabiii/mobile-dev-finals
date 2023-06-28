@@ -32,6 +32,9 @@ const plantId = urlParameters.get("plant_id");
 function displayPlantData(id) {
   getPlant(id).then((plants) => {
     const plant = plants[0];
+      
+    const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
+    plantOverviewLoadingPlaceholder.style.display = 'none';
 
     const plantNameElement = document.getElementById('plant-name');
     plantNameElement.innerText = plant.name;
@@ -69,7 +72,79 @@ function displayPlantData(id) {
 
     const careElement = document.querySelector('#care');
     careElement.textContent = plant.care;
+
+    const shoplabelElement = document.querySelector('#shop-label');
+    shoplabelElement.textContent = `Shop for ${plant.name}`
+
+    addShopClickEvents(plant.name);
   })
 }
 
 displayPlantData(plantId);
+
+/**
+ * @type {boolean} indicates whether shop links are shown or not
+ */
+let showShopIcons = false;
+
+/**
+ * @type {HTMLElement}
+ */
+const shopElement = document.querySelector('.shop');
+const shopLabelElement = document.querySelector('#shop-label');
+const shopIcons = document.querySelector('.shop-icons');
+
+/**
+ * @type {Event}
+ */
+shopLabelElement.addEventListener("click", () => {
+  if(showShopIcons) {
+    shopIcons.style.display = 'none';
+    shopElement.style.borderRadius = '0px';
+    shopElement.style.position = 'unset';
+    shopElement.style.bottom = 'unset';
+    shopElement.style.widows = 'unset';
+    shopElement.style.maxHeight = 'unset';
+  } else {
+    shopIcons.style.display = 'flex';
+    shopElement.style.position = 'absolute';
+    shopElement.style.borderRadius = '40px 40px 0px 0px';
+    shopElement.style.bottom = '-70px';
+    shopElement.style.width = '100%';
+    shopElement.style.maxHeight = '1000px';
+  }
+  showShopIcons = !showShopIcons;
+});
+
+/**
+ * Shop icons
+ * @type {HTMLElement}
+ */
+const lazadaIcon = document.querySelector('#lazada-icon');
+const shopeeIcon = document.querySelector('#shopee-icon');
+const shopLeafIcon = document.querySelector('#shop-leaf-icon');
+const spruceIcon = document.querySelector('#spruce-icon');
+
+/**
+ * Add click events for each of the shop links
+ */
+function addShopClickEvents(plantName) {
+  let preparedPlantName = plantName.toLowerCase();
+  if(!preparedPlantName.includes('plant')) preparedPlantName += ' plant';
+
+  lazadaIcon.addEventListener("click", () => {
+    window.open(`https://www.lazada.com.ph/tag/${preparedPlantName.replace(/\s/g, "-")}`, '_blank')
+  })
+
+  shopeeIcon.addEventListener("click", () => {
+    window.open(`https://shopee.ph/search?keyword=${preparedPlantName.replace(/\s/g, "%20")}`, '_blank')
+  })
+
+  shopLeafIcon.addEventListener("click", () => {
+    window.open(`https://shopleaf.ph/search?q=${preparedPlantName.replace(/\s/g, "+")}`, '_blank')
+  })
+
+  spruceIcon.addEventListener("click", () => {
+    window.open(`https://spruceplantshop.com/search?q=${preparedPlantName.replace(/\s/g, "+")}`, '_blank')
+  })
+}

@@ -13,7 +13,8 @@ export function createPost(userId, content, dateTime) {
     .then(data => {
       if (data.success) {
         console.log('Post created successfully');
-        resolve();
+        const newId = data.postId;
+        resolve(newId);
       } else {
         console.log('Failed to create post');
         reject();

@@ -25,9 +25,10 @@ class PostsController extends DB {
     $stmt->bind_param("iss", $userId, $content, $datetime);
     
     if ($stmt->execute()) {
-      return true;
+        $newId = $stmt->insert_id;
+        return $newId;
     } else {
-      return false;
+        return false;
     }
   }
 
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $result = $postsController->createPost($userId, $content, $date_time);
   
   if ($result) {
-    $response = array('success' => true, 'message' => 'Post created successfully');
+    $response = array('success' => true, 'message' => 'Post created successfully', 'postId' => $result);
     echo json_encode($response);
   } else {
     $response = array('success' => false, 'message' => 'Failed to create post');
