@@ -207,7 +207,7 @@
 .tips-wrapper {
   position: relative;
   width: 100%;
-  height: 165px;
+  height: 180px;
   background-color: rgba(var(--green-2-rgb));
   margin-top: 20px;
   border-radius: 10px;
@@ -247,7 +247,8 @@
 .tip p {
   font-size: 16px;
   font-weight: 200;
-  max-height: 78px;
+  max-height: 85px;
+  overflow: auto;
 }
 
 .tip .filler {

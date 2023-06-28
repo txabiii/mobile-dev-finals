@@ -63,6 +63,9 @@ function displayPlantData(plant) {
   const plantDescriptionElement = document.getElementById('plant-description');
   plantDescriptionElement.innerText = plant.description;
 
+  const plantTipLabelElement = document.getElementById('plant-tip-label');
+  plantTipLabelElement.innerText = `${plant.name} tips`;
+
   const plantGuideLabelElement = document.getElementById('plant-guide-label');
   plantGuideLabelElement.innerText = `How to take care of ${plant.name}`;
 
@@ -143,8 +146,30 @@ getTips(plantId)
       });
     
       dotGroup.appendChild(dotElement);
-    }    
+    }
+    
+    const allDots = dotGroup.querySelectorAll('.dot');
+    tipsList.addEventListener('scroll', debounce(() => {
+      const visibleTipIndex = Math.round(tipsList.scrollLeft / tipsList.offsetWidth);
+
+      allDots.forEach((dot, index) => {
+        dot.style.opacity = index === visibleTipIndex ? '1' : '0.5';
+      });
+    }, 300));
   })
   .catch(error => {
     console.error('Error fetching tips:', error);
   });
+
+
+function debounce(func, delay) {
+  let timer;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(context, args);
+    }, delay);
+  };
+}
