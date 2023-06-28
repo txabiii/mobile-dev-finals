@@ -1,7 +1,7 @@
 import { getWaterReminder } from "./utils.js";
 import { getUserPlants } from './api/userPlantsApi.js';
-import { getPlant } from "./api/plantApi.js";
 import { userData } from './data.js';
+import { getTips } from "./api/tipsApi.js";
 
 /**
  * The image element for returning back.
@@ -30,10 +30,16 @@ const plantId = urlParameters.get("plant_id");
 
 /**
  * Get user's specific plant
- * Displays the plant data based on the id of the plant.
+ * then call 'displayUserPlants' to show the plant's datas
  * @param {string} id 
  */
 getUserPlants(userData.id).then((userPlants) => {
+  const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
+  plantOverviewLoadingPlaceholder.style.display = 'none';
+  
+  const plantGuideLoadingPlaceholder = document.querySelector('#plant-guide-loading');
+  plantGuideLoadingPlaceholder.style.display = 'none';
+
   const parsedId = parseInt(plantId)
   const plant = userPlants.find(item => item.plant_id === parsedId);
   displayPlantData(plant);
@@ -58,7 +64,7 @@ function displayPlantData(plant) {
   plantDescriptionElement.innerText = plant.description;
 
   const plantGuideLabelElement = document.getElementById('plant-guide-label');
-  plantGuideLabelElement.innerText = `How to take care (${plant.name})`;
+  plantGuideLabelElement.innerText = `How to take care of ${plant.name}`;
 
   const plantGuideElement = document.getElementById('plant-guide');
   plantGuideElement.innerText = plant.guide;
@@ -92,3 +98,53 @@ function displayPlantData(plant) {
   const careElement = document.querySelector('#care');
   careElement.textContent = plant.care;
 }
+
+/**
+ * Fetch tips and populate the template
+ * @param {plantId} number
+ */
+getTips(plantId)
+  .then(data => {
+    const tipTemplate = document.getElementById('tip-template');
+    const tipsList = document.getElementById('tips-list');
+    const dotGroup = document.getElementById('dot-group');
+    
+    for (const [index, tipData] of data.entries()) {
+      const tipElement = tipTemplate.content.cloneNode(true);
+    
+      // Fill in the tip data
+      const titleElement = tipElement.querySelector('h4');
+      const contentElement = tipElement.querySelector('p');
+    
+      titleElement.textContent = tipData.title;
+      contentElement.textContent = tipData.content;
+    
+      tipsList.appendChild(tipElement);
+    
+      const dotElement = document.createElement('div');
+      dotElement.classList.add('dot');
+      dotElement.setAttribute('data-index', index); // Add data attribute for index
+      dotElement.addEventListener('click', () => {
+        const clickedIndex = parseInt(dotElement.getAttribute('data-index'));
+    
+        // Calculate scroll position based on tip container width and dot index
+        const tipContainerWidth = tipsList.offsetWidth;
+        const scrollPosition = tipContainerWidth * clickedIndex;
+        tipsList.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        });
+    
+        // Change opacity of dots
+        const allDots = document.querySelectorAll('.dot');
+        allDots.forEach(dot => {
+          dot.style.opacity = dot === dotElement ? '1' : '0.5';
+        });
+      });
+    
+      dotGroup.appendChild(dotElement);
+    }    
+  })
+  .catch(error => {
+    console.error('Error fetching tips:', error);
+  });

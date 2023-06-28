@@ -32,6 +32,9 @@ const plantId = urlParameters.get("plant_id");
 function displayPlantData(id) {
   getPlant(id).then((plants) => {
     const plant = plants[0];
+      
+    const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
+    plantOverviewLoadingPlaceholder.style.display = 'none';
 
     const plantNameElement = document.getElementById('plant-name');
     plantNameElement.innerText = plant.name;

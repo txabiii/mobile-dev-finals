@@ -94,7 +94,17 @@
   font-family: 'Barlow', sans-serif;
 }
 
-#plant-description, #plant-guide {
+.text-loading-group {
+  margin-top: 20px;
+}
+
+.loading-text {
+  height: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#plant-description {
   margin-top: 20px;
 
   font-weight: 500;

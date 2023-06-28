@@ -180,7 +180,17 @@
   text-indent: 20px;
 }
 
-#plant-guide-label {
+.text-loading-group {
+  margin-top: 20px;
+}
+
+.loading-text {
+  height: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.plant-guide-label {
   margin-top: 20px;
 
   font-family: 'Rajdhani', sans-serif;
@@ -192,4 +202,74 @@
 
 #plant-image {
   visibility: hidden;
+}
+
+.tips-wrapper {
+  position: relative;
+  width: 100%;
+  height: 165px;
+  background-color: rgba(var(--green-2-rgb));
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#tips-list {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.tip {
+  flex: 0 0 auto;
+  width: 100%;
+  scroll-snap-align: start;
+  padding: 20px;
+
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  text-align: center;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.tip h4 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tip p {
+  font-size: 16px;
+  font-weight: 200;
+  max-height: 78px;
+}
+
+.tip .filler {
+  height: 20px;
+}
+
+#dot-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  left: 0;
+}
+
+#dot-group .dot {
+  height: 8px;
+  width: 8px;
+  background-color: white;
+  border-radius: 100px;
+  opacity: 50%;
 }
