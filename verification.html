@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./styles/verification.css" rel="stylesheet" />
+    <title>User Verification</title>
+  </head>
+
+  <body>
+    <div class="verification" id="verification">
+      <div class="top">
+        <img src="./assets/back-button.svg" alt="back" />
+        <label class="label-verification-code">Verification Code</label>
+      </div>
+
+      <div class="form-fields">
+        <label class="label-enter-verification-code"
+          >Enter Verification Code</label
+        >
+
+        <div class="input-field" id="input-field">
+          <input type="number" />
+          <input type="number" disabled />
+          <input type="number" disabled />
+          <input type="number" disabled />
+          <input type="number" disabled />
+          <input type="number" disabled />
+        </div>
+
+        <div class="notify-message" id="notify-message">
+          <label class="label-notify-message" id="label-notify-message"></label>
+          <img src="" alt="notify-icon" id="notify-icon" />
+        </div>
+
+        <label class="label-resend-code">Resend Code</label>
+      </div>
+
+      <div class="send-button-div">
+        <button class="send-button" id="send-button" type="button">Send</button>
+      </div>
+    </div>
+
+    <script src="./scripts/verification.js" type="module"></script>
+  </body>
+</html>
