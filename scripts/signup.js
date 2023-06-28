@@ -114,7 +114,8 @@ signUpButton.addEventListener("click", function () {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
         resetFormInputValues();
-        window.location.href = "login.html";
+        sessionStorage.setItem("user_id", data.user_id);
+        window.location.href = "verification.html";
       } else {
         showErrorBorderColor();
         displayError(data.data);
