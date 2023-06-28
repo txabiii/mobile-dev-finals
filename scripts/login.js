@@ -1,8 +1,11 @@
 import { loginAccount } from "./api/userAccountAPI.js";
 
 const loginButton = document.getElementById("login-button");
-const errorMessageElement = document.getElementById("error-message");
-const labelErrorMessageElement = document.getElementById("label-error-message");
+const notifyMessageElement = document.getElementById("notify-message");
+const labelNotifyMessageElement = document.getElementById(
+  "label-notify-message"
+);
+const notifyIconElement = document.getElementById("notify-icon");
 const formFields = {
   usernameOrEmail: document.getElementById("username-input"),
   password: document.getElementById("password-input"),
@@ -34,16 +37,35 @@ function showErrorBorderColor() {
 }
 
 function hideErrorBorderColor() {
-  errorMessageElement.style.display = "none";
+  notifyMessageElement.style.display = "none";
 
   Object.values(formFields).forEach((field) => {
     field.classList.remove("error");
   });
 }
 
-function displayError(message) {
-  errorMessageElement.style.display = "block";
-  labelErrorMessageElement.textContent = message;
+function displayErrorMessage(message) {
+  labelNotifyMessageElement.textContent = message;
+  notifyIconElement.src = "./assets/error-icon.svg";
+  notifyMessageElement.style.display = "block";
+  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
+  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
+}
+
+function displaySuccessMessage(message) {
+  labelNotifyMessageElement.textContent = message;
+  notifyIconElement.src = "./assets/check-icon.svg";
+  notifyMessageElement.style.display = "block";
+  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
+  labelNotifyMessageElement.style.color = "white";
+}
+
+function displayWarningMessage(message) {
+  labelNotifyMessageElement.textContent = message;
+  notifyIconElement.src = "./assets/exclamation-point-icon.png";
+  notifyMessageElement.style.display = "block";
+  notifyMessageElement.style.backgroundColor = "rgba(0, 71, 171, 255)";
+  labelNotifyMessageElement.style.color = "white";
 }
 
 function validateLoginForm() {
@@ -51,18 +73,17 @@ function validateLoginForm() {
 
   if (!form.usernameOrEmail && !form.password) {
     showErrorBorderColor();
-    displayError("Please fill out the fields.");
+    displayErrorMessage("Please fill out the fields.");
     return false;
   } else if (!form.usernameOrEmail) {
     formFields.usernameOrEmail.classList.add("error");
-    displayError("Please enter a username or email address.");
+    displayErrorMessage("Please enter a username or email address.");
     return false;
   } else if (!form.password) {
     formFields.password.classList.add("error");
-    displayError("Please enter a password.");
+    displayErrorMessage("Please enter a password.");
     return false;
   } else {
-    errorMessageElement.style.display = "none";
     return true;
   }
 }
@@ -79,11 +100,21 @@ loginButton.addEventListener("click", function () {
   if (validateLoginForm()) {
     loginAccount(form).then((data) => {
       if (data.status === "success") {
+        displaySuccessMessage(data.message);
         resetFormInputValues();
-        window.location.href = "home.html";
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 2000);
+      } else if (data.status === "warning") {
+        displayWarningMessage(data.message);
+        sessionStorage.setItem("user_id", data.user_id);
+        resetFormInputValues();
+        setTimeout(() => {
+          window.location.href = "verification.html";
+        }, 2000);
       } else {
         showErrorBorderColor();
-        displayError(data.data);
+        displayErrorMessage(data.message);
       }
     });
   }
