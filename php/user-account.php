@@ -60,8 +60,11 @@ class API extends DB
 			$password = $payload['password'];
 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = '".$email."' OR username = '".$username."'";
-			$result = $this->connection->query($search_existing_user);
+			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?";
+			$statement = $this->connection->prepare($search_existing_user);
+			$statement->bind_param("ss", $email, $username);
+			$statement->execute();
+			$result = $statement->get_result();
 
 			if ($result->num_rows > 0) {
 				$existing_user = $result->fetch_assoc();
@@ -74,37 +77,45 @@ class API extends DB
 			} else {
 				$verification_code = $this->emailVerification($payload['email']);
 
-				$add_user_account = "INSERT INTO user_accounts_tb (username, email, password, verification_code) VALUES ('$username', '$email', '$hashed_password', '$verification_code')";
-				$new_account = $this->connection->query($add_user_account);
-				$user_id = $this->connection->insert_id;
+				$add_user_account = "INSERT INTO user_accounts_tb (username, email, password, verification_code) VALUES (?, ?, ?, ?)";
+				$statement = $this->connection->prepare($add_user_account);
+				$statement->bind_param("ssss", $username, $email, $hashed_password, $verification_code);
+				$new_account = $statement->execute();
 
 				if ($new_account) {
-					echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Your account has been successfully created. Please verify your email address.', 'user_id' => $user_id));
+					$user_id = $statement->insert_id;
+					echo json_encode(array('method' => 'POST', 'status' => 'success', 'data' => 'Account creation successful. Please verify your email address.', 'user_id' => $user_id));
 				} else {
-					echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
 				}
 			}
 		} else if ($payload['action'] === 'login') {
 			$usernameOrEmail = $payload['usernameOrEmail'];
 			$password = $payload['password'];
 
-			$search_user = "SELECT * FROM user_accounts_tb WHERE (username = '".$usernameOrEmail."' OR email = '".$usernameOrEmail."')";
-			$result = $this->connection->query($search_user);
+			$search_user = "SELECT * FROM user_accounts_tb WHERE (username = ? OR email = ?)";
+			$statement = $this->connection->prepare($search_user);
+			$statement->bind_param("ss", $usernameOrEmail, $usernameOrEmail);
+			$statement->execute();
+			$result = $statement->get_result();
 
 			if ($result->num_rows > 0) {
 				$user = $result->fetch_assoc();
 
-				if (password_verify($password, $user['password'])) {
+				if ($user['email_verified_at'] !== null) {
+					if (password_verify($password, $user['password'])) {
+						$_SESSION['user_id'] = $user['user_id'];
+						$_SESSION['username'] = $user['username'];
 
-					$_SESSION['user_id'] = $user['user_id'];
-					$_SESSION['username'] = $user['username'];
-
-					echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => 'Login successful.', 'username' => $_SESSION['username']));
+						echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Login successful.', 'username' => $_SESSION['username']));
+					} else {
+						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Incorrect username/email address or password.'));
+					}
 				} else {
-					echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Incorrect username/email address or password.'));
+					echo json_encode(array('method' => 'POST', 'status' => 'warning', 'message' => 'Please verify your email account before signing in.', 'user_id' => $_SESSION['user_id']));
 				}
 			} else {
-				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'User not found.'));
+				echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'User not found.'));
 			}
 		} else {
 			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Unknown action.'));
