@@ -124,20 +124,20 @@ var plantParentsPosts = new Array();
  */
 getPosts().then(({ posts }) => {
   plantParentsPosts = posts;
-  displayPlantParentsPosts(plantParentsPosts);
+  displayPlantParentsPosts();
 });
 
 /**
  * Displays each post from the `plantParentsPosts` array.
  * @param {array} posts - An array of objects containing the posts' data
  */
-function displayPlantParentsPosts(posts) {
+function displayPlantParentsPosts() {
   const postTemplate = document.getElementById("post-template");
   const postsContainer = document.getElementById("posts-list");
 
   postsContainer.innerHTML = "";
 
-  for (const post of posts) {
+  for (const post of plantParentsPosts) {
     const postElement = postTemplate.content.cloneNode(true);
     const profileImage = postElement.querySelector("img");
     const postContent = postElement.querySelector(".text");
@@ -180,21 +180,31 @@ const inputElement = document.getElementById("post-input");
 function addPost() {
   const content = inputElement.value;
   const now = new Date();
+  const formattedDate = now.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  });
 
-  createPost(userData.id, content, now).then(() => {
+  createPost(userData.id, content, now).then((newId) => {
     const newPost = {
+      id: newId,
       content: content,
-      id: userData.id,
       profile_image_url: userData.profile_image_url,
       user_id: userData.id,
       username: userData.username,
+      datetime_posted: formattedDate,
     };
 
     plantParentsPosts.unshift(newPost);
 
     inputElement.value = "";
 
-    displayPlantParentsPosts(plantParentsPosts);
+    displayPlantParentsPosts();
   });
 }
 
