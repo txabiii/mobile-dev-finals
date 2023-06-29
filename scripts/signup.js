@@ -121,10 +121,9 @@ signUpButton.addEventListener("click", function () {
 
   if (validateRegistrationForm()) {
     addUserAccount(form).then((data) => {
-      sessionStorage.setItem("user_data", JSON.stringify(data.data));
-
       if (data.status === "success") {
         displaySuccessMessage(data.message);
+        sessionStorage.setItem("user_data", JSON.stringify(data.data));
 
         setTimeout(() => {
           resetFormInputValues();
