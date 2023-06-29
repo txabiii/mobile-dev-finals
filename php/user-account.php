@@ -21,9 +21,16 @@ class API extends DB
 		$result = $statement->get_result();
 
 		if ($result->num_rows > 0) {
-			$users = $result->fetch_all(MYSQLI_ASSOC);
+			$user = $result->fetch_assoc();
 
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.'));
+			$user_data = array(
+				'action' => 'resend_code',
+				'action2' => 'forgot_password',
+				'user_id' => $user['user_id'],
+				'email' => $user['email']
+			);
+
+			echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.', 'data' => $user_data));
 		} else {
 			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
 		}
@@ -63,7 +70,12 @@ class API extends DB
 
 				if ($new_account) {
 					$user_id = $statement->insert_id;
-					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Account creation successful. Please verify your email address.', 'user_id' => $user_id, 'email' => $email));
+
+					$user_data = array(
+						'user_id' => $user_id,
+						'email' => $email
+					);
+					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Account creation successful. Please verify your email address.', 'data' => $user_data));
 				} else {
 					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Account creation failed. Please try again.'));
 				}
@@ -81,17 +93,21 @@ class API extends DB
 			if ($result->num_rows > 0) {
 				$user = $result->fetch_assoc();
 
+				$user_data = array(
+					'user_id' => $user['user_id'],
+					'username' => $user['username'],
+					'email' => $user['email'],
+					'profile_image_url' => $user['profile_image_url']
+				);
+
 				if ($user['email_verified_at'] !== null) {
 					if (password_verify($password, $user['password'])) {
-						$_SESSION['user_id'] = $user['user_id'];
-						$_SESSION['username'] = $user['username'];
-
-						echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Login successful.', 'username' => $_SESSION['username']));
+						echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Login successful.', 'data' => $user_data));
 					} else {
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Incorrect username/email address or password.'));
 					}
 				} else {
-					echo json_encode(array('method' => 'POST', 'status' => 'warning', 'message' => 'Please verify your email account before signing in.', 'user_id' => $user['user_id'], 'email' => $user['email']));
+					echo json_encode(array('method' => 'POST', 'status' => 'warning', 'message' => 'Please verify your email account before signing in.', 'data' => $user_data));
 				}
 			} else {
 				echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'User not found.'));
@@ -130,10 +146,11 @@ class API extends DB
 			$user_id = $payload['user_id'];
 			$email = $payload['email'];
 			$verification_code = $this->emailVerification($email);
+			$email_verified_at = null;
 
-			$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ? WHERE user_id = ?";
+			$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ?, email_verified_at = ? WHERE user_id = ?";
 			$statement = $this->connection->prepare($resend_code_query);
-			$statement->bind_param("ss", $verification_code, $user_id);
+			$statement->bind_param("sss", $verification_code, $email_verified_at, $user_id);
 
 			if ($statement->execute()) {
 				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Verification code successfully resent to your email address.'));
