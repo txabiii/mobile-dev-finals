@@ -16,39 +16,20 @@ class API extends DB
 {
 	public function httpGet()
 	{
-		$get_all_users = "SELECT * FROM user_accounts_tb WHERE user_id = '".$_SESSION['user_id']."'";
-		$result = $this->connection->query($get_all_users);
+		$user_id = $_SESSION['user_id'];
+
+		$statement = $this->connection->prepare("SELECT user_id, username, email FROM user_accounts_tb WHERE user_id = ?");
+		$statement->bind_param("s", $user_id);
+		$statement->execute();
+		$result = $statement->get_result();
 
 		if ($result) {
-			$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+			$users = $result->fetch_all(MYSQLI_ASSOC);
 
-			$specificUsers = array_map(function ($user) {
-				return array(
-					'user_id' => $user['user_id'],
-					'username' => $user['username'],
-					'email' => $user['email']
-				);
-			}, $users);
-			
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => $specificUsers));
-		  } else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Failed to retrieve users.'));
-		  }
-
-		// $user_id = $_SESSION['user_id'];
-
-		// $statement = $this->connection->prepare("SELECT user_id, username, email FROM user_accounts_tb WHERE user_id = ?");
-		// $statement->bind_param("s", $user_id);
-		// $statement->execute();
-		// $result = $statement->get_result();
-
-		// if ($result) {
-		// 	$users = $result->fetch_all(MYSQLI_ASSOC);
-
-		// 	echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => $users));
-		// } else {
-		// 	echo json_encode(array('method' => 'GET', 'status' => 'failed', 'data' => 'Failed to retrieve users.'));
-		// }
+			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => $users));
+		} else {
+			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'Failed to retrieve users.'));
+		}
 	}
 
 	public function httpPost($payload)
