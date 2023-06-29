@@ -3,21 +3,16 @@ import { getWaterReminder } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { getUserAccount } from "./api/userAccountAPI.js";
 import { createReport } from "./api/reportApi.js";
 
+/**
+ * Waits for the home page to finish loading, retrieves a username from sessionStorage.
+ * Display the username followed by an exclamation mark in an HTML element with the ID "name".
+ */
 window.addEventListener("load", function () {
+  const username = sessionStorage.getItem("username");
   const usernameElement = document.getElementById("name");
-  usernameElement.style.visibility = "hidden";
-
-  getUserAccount().then((data) => {
-    if (data.status === "success") {
-      usernameElement.textContent = data.data[0].username + `!`;
-      usernameElement.style.visibility = "visible";
-    } else {
-      alert(data.data);
-    }
-  });
+  usernameElement.textContent = username + `!`;
 });
 
 /**
@@ -27,13 +22,13 @@ window.addEventListener("load", function () {
  * @returns {void}
  */
 getUserPlants(userData.id).then((userPlants) => {
-  const loading = document.querySelector('#my-plants-loading-group');
-  loading.style.display = 'none';
+  const loading = document.querySelector("#my-plants-loading-group");
+  loading.style.display = "none";
 
   displayMyPlants(userPlants);
 });
 
-function displayMyPlants(plants) {  
+function displayMyPlants(plants) {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
@@ -78,8 +73,8 @@ var allPlantsData = new Array();
  * Display them accordingly
  */
 getPlant().then((plants) => {
-  const loading = document.querySelector('#explore-plants-loading-group');
-  loading.style.display = 'none';
+  const loading = document.querySelector("#explore-plants-loading-group");
+  loading.style.display = "none";
 
   allPlantsData = plants;
   displayAllPlants();
@@ -157,21 +152,21 @@ function displayPlantParentsPosts() {
       };
       img.src = post.profile_image_url;
     }
-    
-    const reportElement = postElement.querySelector('#report');
+
+    const reportElement = postElement.querySelector("#report");
     reportElement.addEventListener("click", () => reportPost(post));
-    if(post.user_id == userData.id) reportElement.style.display = 'none';
+    if (post.user_id == userData.id) reportElement.style.display = "none";
 
     postContent.textContent = post.content;
     postCreator.textContent = post.username;
-    dateTimeElement.textContent = post.datetime_posted
+    dateTimeElement.textContent = post.datetime_posted;
 
-    const infoElement = postElement.querySelector('.info');
+    const infoElement = postElement.querySelector(".info");
     postContent.addEventListener("click", () => {
-      const shown = infoElement.style.display === 'flex' ? true : false
-      infoElement.style.display = shown ? 'none' : 'flex';
-      infoElement.style.justifyContent = 'space-between';
-    })
+      const shown = infoElement.style.display === "flex" ? true : false;
+      infoElement.style.display = shown ? "none" : "flex";
+      infoElement.style.justifyContent = "space-between";
+    });
 
     postsContainer.appendChild(postElement);
   }
@@ -193,13 +188,13 @@ const inputElement = document.getElementById("post-input");
 function addPost() {
   const content = inputElement.value;
   const now = new Date();
-  const formattedDate = now.toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
+  const formattedDate = now.toLocaleString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
     hour12: false,
   });
 
@@ -231,25 +226,25 @@ inputElement.addEventListener("keypress", function (event) {
 
 /**
  * Creates a report HTML element
- * @param {object} post 
+ * @param {object} post
  */
 function reportPost(post) {
-  const reportTemplate = document.querySelector('#report-template');
+  const reportTemplate = document.querySelector("#report-template");
 
   const reportElement = reportTemplate.content.cloneNode(true);
 
-  const reportImgElement = reportElement.querySelector('#user-image');
-  const usernameElement = reportElement.querySelector('.username');
-  const reportedTextElement = reportElement.querySelector('.text');
-  const closeButtonElement = reportElement.querySelector('.close-button')
-  const reasonElement = reportElement.querySelector('textarea');
-  const submitButtonElement = reportElement.querySelector('#submit-button');
-  const body = document.getElementsByTagName('body')[0];
+  const reportImgElement = reportElement.querySelector("#user-image");
+  const usernameElement = reportElement.querySelector(".username");
+  const reportedTextElement = reportElement.querySelector(".text");
+  const closeButtonElement = reportElement.querySelector(".close-button");
+  const reasonElement = reportElement.querySelector("textarea");
+  const submitButtonElement = reportElement.querySelector("#submit-button");
+  const body = document.getElementsByTagName("body")[0];
 
   closeButtonElement.addEventListener("click", () => {
-    const removeReportElement = document.querySelector('.report');
+    const removeReportElement = document.querySelector(".report");
     removeReportElement.remove();
-  })
+  });
 
   if (post.profile_image_url === null)
     reportImgElement.src = "./assets/missing-profile-image.png";
@@ -271,6 +266,6 @@ function reportPost(post) {
   body.insertBefore(reportElement, firstChild);
 
   submitButtonElement.addEventListener("click", () => {
-    createReport(post.id, userData.id, reasonElement.value)
-  })
+    createReport(post.id, userData.id, reasonElement.value);
+  });
 }
