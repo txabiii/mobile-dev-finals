@@ -49,8 +49,15 @@ sendButton.addEventListener("click", function () {
     displayErrorMessage("Please enter a valid email address.");
   } else {
     getUserAccount(emailValue).then((data) => {
+      sessionStorage.setItem("user_id", data.user_id);
+
       if (data.status === "success") {
         displaySuccessMessage(data.message);
+
+        // setTimeout(() => {
+        //   emailValue.email = "";
+        //   window.location.href = "home.html";
+        // }, 2000);
       } else {
         email.classList.add("error");
         displayErrorMessage(data.message);
