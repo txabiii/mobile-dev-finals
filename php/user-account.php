@@ -59,6 +59,7 @@ class API extends DB
 			$email = $payload['email'];
 			$password = $payload['password'];
 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+			$date_created = date('Y-m-d H:i:s');
 
 			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?";
 			$statement = $this->connection->prepare($search_existing_user);
@@ -70,23 +71,23 @@ class API extends DB
 				$existing_user = $result->fetch_assoc();
 
 				if ($existing_user['email'] === $email) {
-					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Email is already existing.'));
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Email is already existing.'));
 				} else if ($existing_user['username'] === $username) {
-					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Username is already taken.'));
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Username is already taken.'));
 				}
 			} else {
-				$verification_code = $this->emailVerification($payload['email']);
+				$verification_code = $this->emailVerification($email);
 
-				$add_user_account = "INSERT INTO user_accounts_tb (username, email, password, verification_code) VALUES (?, ?, ?, ?)";
+				$add_user_account = "INSERT INTO user_accounts_tb (username, email, password, verification_code, date_created) VALUES (?, ?, ?, ?, ?)";
 				$statement = $this->connection->prepare($add_user_account);
-				$statement->bind_param("ssss", $username, $email, $hashed_password, $verification_code);
+				$statement->bind_param("sssss", $username, $email, $hashed_password, $verification_code, $date_created);
 				$new_account = $statement->execute();
 
 				if ($new_account) {
 					$user_id = $statement->insert_id;
-					echo json_encode(array('method' => 'POST', 'status' => 'success', 'data' => 'Account creation successful. Please verify your email address.', 'user_id' => $user_id));
+					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Account creation successful. Please verify your email address.', 'user_id' => $user_id, 'email' => $email));
 				} else {
-					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Account creation failed. Please try again.'));
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Account creation failed. Please try again.'));
 				}
 			}
 		} else if ($payload['action'] === 'login') {
@@ -112,13 +113,13 @@ class API extends DB
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Incorrect username/email address or password.'));
 					}
 				} else {
-					echo json_encode(array('method' => 'POST', 'status' => 'warning', 'message' => 'Please verify your email account before signing in.', 'user_id' => $_SESSION['user_id']));
+					echo json_encode(array('method' => 'POST', 'status' => 'warning', 'message' => 'Please verify your email account before signing in.', 'user_id' => $user['user_id'], 'email' => $user['email']));
 				}
 			} else {
 				echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'User not found.'));
 			}
 		} else {
-			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'data' => 'Unknown action.'));
+			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
 
         $this->connection->close();
@@ -126,25 +127,43 @@ class API extends DB
 
 	public function httpPut($payload)
 	{
-		$user_id = $payload['user_id'];
-		$verification_code = $payload['verification_code'];
-		$date_time_now = date('Y-m-d H:i:s');
+		if($payload['action'] === 'verify_email') {
+			$user_id = $payload['user_id'];
+			$verification_code = $payload['verification_code'];
+			$email_verified_at = date('Y-m-d H:i:s');
 
-		$statement = $this->connection->prepare("SELECT verification_code FROM user_accounts_tb WHERE user_id = ?");
-		$statement->bind_param("s", $user_id);
-		$statement->execute();
-		$result = $statement->get_result();
-		$row = $result->fetch_assoc();
-
-		if ($row && $verification_code === $row['verification_code']) {
-			$verify_account_query = "UPDATE user_accounts_tb SET email_verified_at = ? WHERE user_id = ?";
-			$statement = $this->connection->prepare($verify_account_query);
-			$statement->bind_param("ss", $date_time_now, $user_id);
+			$statement = $this->connection->prepare("SELECT verification_code FROM user_accounts_tb WHERE user_id = ?");
+			$statement->bind_param("s", $user_id);
 			$statement->execute();
+			$result = $statement->get_result();
+			$row = $result->fetch_assoc();
 
-			echo json_encode(array('method' => 'PUT', 'status' => 'success', 'data' => 'You have successfully verified your account.'));
+			if ($row && $verification_code === $row['verification_code']) {
+				$verify_account_query = "UPDATE user_accounts_tb SET email_verified_at = ? WHERE user_id = ?";
+				$statement = $this->connection->prepare($verify_account_query);
+				$statement->bind_param("ss", $email_verified_at, $user_id);
+				$statement->execute();
+
+				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'You have successfully verified your account.'));
+			} else {
+				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Verification code failed.'));
+			}
+		} else if ($payload['action'] === 'resend_code') {
+			$user_id = $payload['user_id'];
+			$email = $payload['email'];
+			$verification_code = $this->emailVerification($email);
+
+			$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ? WHERE user_id = ?";
+			$statement = $this->connection->prepare($resend_code_query);
+			$statement->bind_param("ss", $verification_code, $user_id);
+
+			if ($statement->execute()) {
+				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Verification code successfully resent to your email address.'));
+			} else {
+				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to resend the verification code to your email address.'));
+			}
 		} else {
-			echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'data' => 'Verification code failed.'));
+			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
 
 		$this->connection->close();
