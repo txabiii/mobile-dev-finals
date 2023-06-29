@@ -1,4 +1,4 @@
-import { getUserAccount } from "./api/userAccountAPI.js";
+import { getUserAccount, updateUserAccount } from "./api/userAccountAPI.js";
 
 const backButton = document.getElementById("back-button");
 const sendButton = document.getElementById("send-button");
@@ -36,7 +36,7 @@ backButton.addEventListener("click", function () {
 
 sendButton.addEventListener("click", function () {
   const emailValue = {
-    action: "search_email_address",
+    action: "forgot_password",
     email: document.getElementById("email-input").value.trim(),
   };
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -44,20 +44,29 @@ sendButton.addEventListener("click", function () {
   if (!emailValue.email) {
     email.classList.add("error");
     displayErrorMessage("Please enter your email address.");
+    return;
   } else if (!emailRegex.test(emailValue.email)) {
     email.classList.add("error");
     displayErrorMessage("Please enter a valid email address.");
+    return;
   } else {
     getUserAccount(emailValue).then((data) => {
-      sessionStorage.setItem("user_id", data.user_id);
-
       if (data.status === "success") {
-        displaySuccessMessage(data.message);
+        sessionStorage.setItem("user_data", JSON.stringify(data.data));
+        const userData = JSON.parse(sessionStorage.getItem("user_data"));
 
-        // setTimeout(() => {
-        //   emailValue.email = "";
-        //   window.location.href = "home.html";
-        // }, 2000);
+        updateUserAccount(userData).then((data) => {
+          if (data.status === "success") {
+            displaySuccessMessage(data.message);
+            setTimeout(() => {
+              emailValue.email = "";
+              window.location.href = "verification.html";
+            }, 2000);
+          } else {
+            showErrorBorderColor();
+            displayErrorMessage(data.message);
+          }
+        });
       } else {
         email.classList.add("error");
         displayErrorMessage(data.message);
