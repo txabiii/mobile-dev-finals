@@ -1,6 +1,7 @@
 import { loginAccount } from "./api/userAccountAPI.js";
 
 const loginButton = document.getElementById("login-button");
+const signUpButton = document.getElementById("sign-up");
 const notifyMessageElement = document.getElementById("notify-message");
 const labelNotifyMessageElement = document.getElementById(
   "label-notify-message"
@@ -10,12 +11,6 @@ const formFields = {
   usernameOrEmail: document.getElementById("username-input"),
   password: document.getElementById("password-input"),
 };
-
-document.addEventListener("click", function (event) {
-  if (event.target.matches("#sign-up")) {
-    window.location.href = "signup.html";
-  }
-});
 
 function getFormInputValues() {
   return {
@@ -101,6 +96,7 @@ loginButton.addEventListener("click", function () {
     loginAccount(form).then((data) => {
       if (data.status === "success") {
         displaySuccessMessage(data.message);
+        sessionStorage.setItem("username", data.username);
 
         setTimeout(() => {
           resetFormInputValues();
@@ -121,4 +117,8 @@ loginButton.addEventListener("click", function () {
       }
     });
   }
+});
+
+signUpButton.addEventListener("click", function () {
+  window.location.href = "signup.html";
 });

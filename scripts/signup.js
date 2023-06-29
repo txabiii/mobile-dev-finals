@@ -1,6 +1,7 @@
 import { addUserAccount } from "./api/userAccountAPI.js";
 
 const signUpButton = document.getElementById("signup-button");
+const signInButton = document.getElementById("sign-in");
 const notifyMessageElement = document.getElementById("notify-message");
 const labelNotifyMessageElement = document.getElementById(
   "label-notify-message"
@@ -12,12 +13,6 @@ const formFields = {
   password: document.getElementById("password-input"),
   confirmPassword: document.getElementById("confirm-password-input"),
 };
-
-document.addEventListener("click", function (event) {
-  if (event.target.matches("#sign-in")) {
-    window.location.href = "login.html";
-  }
-});
 
 function getFormInputValues() {
   return {
@@ -141,4 +136,8 @@ signUpButton.addEventListener("click", function () {
       }
     });
   }
+});
+
+signInButton.addEventListener("click", function () {
+  window.location.href = "login.html";
 });
