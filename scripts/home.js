@@ -55,7 +55,7 @@ function displayMyPlants(plants) {
     imageElement.src = plant.image_url;
 
     nameElement.addEventListener("click", function () {
-      window.location.href = "/own-plant.html?plant_id=" + plant.plant_id;
+      window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
     });
 
     container.appendChild(plantItem);
@@ -100,7 +100,7 @@ function displayAllPlants() {
     imageElement.src = plant.image_url;
 
     nameElement.addEventListener("click", function () {
-      window.location.href = "/explore-plant.html?plant_id=" + plant.plant_id;
+      window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
     });
 
     container.appendChild(plantItem);
