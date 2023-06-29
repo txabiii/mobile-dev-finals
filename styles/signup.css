@@ -37,28 +37,26 @@ body {
   gap: 10px;
   margin-top: 50px;
 }
-.error-message,
+.notify-message,
 .username,
 .email,
 .password,
 .confirm-password {
   position: relative;
 }
-.label-error-message {
+.label-notify-message {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(173, 52, 62, 255);
   font-weight: bolder;
   font-family: Barlow;
   font-size: 15px;
 }
-.error-message {
+.notify-message {
   display: none;
-  background: rgba(235, 204, 207, 255);
   border-radius: 5px;
 }
-.error-message,
+.notify-message,
 .username-input,
 .email-input,
 .password-input,
@@ -93,7 +91,7 @@ body {
 .confirm-password-input.error {
   border: 2px solid red;
 }
-.error-message img,
+.notify-message img,
 .username img,
 .email img,
 .password img,

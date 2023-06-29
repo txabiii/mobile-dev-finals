@@ -1,8 +1,11 @@
 import { addUserAccount } from "./api/userAccountAPI.js";
 
 const signUpButton = document.getElementById("signup-button");
-const errorMessageElement = document.getElementById("error-message");
-const labelErrorMessageElement = document.getElementById("label-error-message");
+const notifyMessageElement = document.getElementById("notify-message");
+const labelNotifyMessageElement = document.getElementById(
+  "label-notify-message"
+);
+const notifyIconElement = document.getElementById("notify-icon");
 const formFields = {
   username: document.getElementById("username-input"),
   email: document.getElementById("email-input"),
@@ -42,16 +45,27 @@ function showErrorBorderColor() {
 }
 
 function hideErrorBorderColor() {
-  errorMessageElement.style.display = "none";
+  notifyMessageElement.style.display = "none";
 
   Object.values(formFields).forEach((field) => {
     field.classList.remove("error");
   });
 }
 
-function displayError(message) {
-  errorMessageElement.style.display = "block";
-  labelErrorMessageElement.textContent = message;
+function displayErrorMessage(message) {
+  labelNotifyMessageElement.textContent = message;
+  notifyIconElement.src = "./assets/error-icon.svg";
+  notifyMessageElement.style.display = "block";
+  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
+  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
+}
+
+function displaySuccessMessage(message) {
+  labelNotifyMessageElement.textContent = message;
+  notifyIconElement.src = "./assets/check-icon.svg";
+  notifyMessageElement.style.display = "block";
+  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
+  labelNotifyMessageElement.style.color = "white";
 }
 
 function validateRegistrationForm() {
@@ -65,36 +79,36 @@ function validateRegistrationForm() {
     !form.confirmPassword
   ) {
     showErrorBorderColor();
-    displayError("Please fill out the fields.");
+    displayErrorMessage("Please fill out the fields.");
     return false;
   } else if (!form.username) {
     formFields.username.classList.add("error");
-    displayError("Please enter a username.");
+    displayErrorMessage("Please enter a username.");
     return false;
   } else if (!form.email) {
     formFields.email.classList.add("error");
-    displayError("Please enter an email address.");
+    displayErrorMessage("Please enter an email address.");
     return false;
   } else if (!emailRegex.test(form.email)) {
     formFields.email.classList.add("error");
-    displayError("Please enter a valid email address.");
+    displayErrorMessage("Please enter a valid email address.");
     return false;
   } else if (!form.password) {
     formFields.password.classList.add("error");
-    displayError("Please enter a password.");
+    displayErrorMessage("Please enter a password.");
     return false;
   } else if (form.password.length < 8) {
     formFields.password.classList.add("error");
-    displayError("Password must be at least 8 characters long.");
+    displayErrorMessage("Password must be at least 8 characters long.");
     return false;
   } else if (!form.confirmPassword) {
     formFields.confirmPassword.classList.add("error");
-    displayError("Please confirm your password.");
+    displayErrorMessage("Please confirm your password.");
     return false;
   } else if (form.password !== form.confirmPassword) {
     formFields.password.classList.add("error");
     formFields.confirmPassword.classList.add("error");
-    displayError("Passwords do not match.");
+    displayErrorMessage("Passwords do not match.");
     return false;
   } else {
     return true;
@@ -113,11 +127,15 @@ signUpButton.addEventListener("click", function () {
   if (validateRegistrationForm()) {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
+        displaySuccessMessage(data.data);
         resetFormInputValues();
-        window.location.href = "login.html";
+        sessionStorage.setItem("user_id", data.user_id);
+        setTimeout(() => {
+          window.location.href = "verification.html";
+        }, 2000);
       } else {
         showErrorBorderColor();
-        displayError(data.data);
+        displayErrorMessage(data.data);
       }
     });
   }
