@@ -1,7 +1,7 @@
 import { SERVER_URL } from "../config.js";
 
 // Function to create a new report
-function createReport(postId, reporterId, reason) {
+export function createReport(postId, reporterId, reason) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/reports_controller.php`, {
       method: 'POST',
@@ -25,7 +25,7 @@ function createReport(postId, reporterId, reason) {
 }
 
 // Function to delete a report
-function deleteReport(reportId) {
+export function deleteReport(reportId) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/reports_controller.php?report_id=${reportId}`, {
       method: 'DELETE'
