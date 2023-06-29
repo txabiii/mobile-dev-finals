@@ -131,8 +131,7 @@ sendButton.addEventListener("click", function () {
   let redirectUrl;
 
   if (userData.action2 === "forgot_password") {
-    // new-password.html
-    redirectUrl = "index.html";
+    redirectUrl = "new-password.html";
   } else {
     redirectUrl = "login.html";
   }
