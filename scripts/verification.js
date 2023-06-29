@@ -10,14 +10,13 @@ const labelNotifyMessageElement = document.getElementById(
 const notifyIconElement = document.getElementById("notify-icon");
 const resendCodeElement = document.getElementById("label-resend-code");
 
-const userId = parseInt(sessionStorage.getItem("user_id"), 10);
-const email = sessionStorage.getItem("email");
+const userData = JSON.parse(sessionStorage.getItem("user_data"));
 const verificationCode = [];
 
 function getVerificationCodeInputValues() {
   return {
     action: "verify_email",
-    user_id: userId,
+    user_id: userData.user_id,
     verification_code: verificationCode.join(""),
   };
 }
@@ -25,8 +24,8 @@ function getVerificationCodeInputValues() {
 function resendCode() {
   return {
     action: "resend_code",
-    user_id: userId,
-    email: email,
+    user_id: userData.user_id,
+    email: userData.email,
   };
 }
 
