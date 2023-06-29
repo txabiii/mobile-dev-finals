@@ -1,6 +1,10 @@
-export function getUserAccount() {
+export function getUserAccount(payload) {
   return new Promise((resolve, reject) => {
-    fetch("./php/user-account.php", {
+    const url = `./php/user-account.php?email=${encodeURIComponent(
+      payload.email
+    )}&action=${encodeURIComponent(payload.action)}`;
+
+    fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import { loginAccount } from "./api/userAccountAPI.js";
 
 const loginButton = document.getElementById("login-button");
 const signUpButton = document.getElementById("sign-up");
+const forgotPasswordButton = document.getElementById("label-forgot-password");
 const notifyMessageElement = document.getElementById("notify-message");
 const labelNotifyMessageElement = document.getElementById(
   "label-notify-message"
@@ -121,4 +122,8 @@ loginButton.addEventListener("click", function () {
 
 signUpButton.addEventListener("click", function () {
   window.location.href = "signup.html";
+});
+
+forgotPasswordButton.addEventListener("click", function () {
+  window.location.href = "forgot-password.html";
 });

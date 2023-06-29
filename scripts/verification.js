@@ -2,15 +2,17 @@ import { updateUserAccount } from "./api/userAccountAPI.js";
 
 const inputs = document.querySelectorAll("input");
 const sendButton = document.getElementById("send-button");
-const userId = parseInt(sessionStorage.getItem("user_id"), 10);
-const email = sessionStorage.getItem("email");
-const verificationCode = [];
+const backButton = document.getElementById("back-button");
 const notifyMessageElement = document.getElementById("notify-message");
 const labelNotifyMessageElement = document.getElementById(
   "label-notify-message"
 );
 const notifyIconElement = document.getElementById("notify-icon");
 const resendCodeElement = document.getElementById("label-resend-code");
+
+const userId = parseInt(sessionStorage.getItem("user_id"), 10);
+const email = sessionStorage.getItem("email");
+const verificationCode = [];
 
 function getVerificationCodeInputValues() {
   return {
@@ -106,6 +108,11 @@ inputs.forEach((input, index1) => {
 });
 
 window.addEventListener("load", () => inputs[0].focus());
+
+backButton.addEventListener("click", function () {
+  const lastURL = document.referrer;
+  window.location.href = lastURL;
+});
 
 resendCodeElement.addEventListener("click", function () {
   const form = resendCode();
