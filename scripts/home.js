@@ -4,6 +4,7 @@ import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
 import { getUserAccount } from "./api/userAccountAPI.js";
+import { createReport } from "./api/reportApi.js";
 
 window.addEventListener("load", function () {
   const usernameElement = document.getElementById("name");
@@ -178,38 +179,6 @@ function displayPlantParentsPosts() {
   postsContainer.scrollTop = postsContainer.scrollHeight;
 }
 
-function reportPost(post) {
-  const reportTemplate = document.querySelector('#report-template');
-
-  const reportElement = reportTemplate.content.cloneNode(true);
-
-  const reportImgElement = reportElement.querySelector('#user-image');
-  const usernameElement = reportElement.querySelector('.username');
-  const reportedTextElement = reportElement.querySelector('.text');
-
-  if (post.profile_image_url === null)
-    reportImgElement.src = "./assets/missing-profile-image.png";
-  else {
-    const img = new Image();
-    img.onload = function () {
-      reportImgElement.src = img.src;
-    };
-    img.onerror = function () {
-      reportImgElement.src = "./assets/missing-profile-image.png";
-    };
-    img.src = post.profile_image_url;
-  }
-
-  usernameElement.textContent = post.username;
-  reportedTextElement.textContent = post.content;
-
-  const body = document.getElementsByTagName('body')[0];
-  const firstChild = body.firstChild;
-
-  body.insertBefore(reportElement, firstChild);
-  console.log(post)
-}
-
 /**
  * The input element for entering the post content.
  * @type {HTMLElement}
@@ -259,3 +228,49 @@ function addPost() {
 inputElement.addEventListener("keypress", function (event) {
   if (event.key === "Enter") addPost();
 });
+
+/**
+ * Creates a report HTML element
+ * @param {object} post 
+ */
+function reportPost(post) {
+  const reportTemplate = document.querySelector('#report-template');
+
+  const reportElement = reportTemplate.content.cloneNode(true);
+
+  const reportImgElement = reportElement.querySelector('#user-image');
+  const usernameElement = reportElement.querySelector('.username');
+  const reportedTextElement = reportElement.querySelector('.text');
+  const closeButtonElement = reportElement.querySelector('.close-button')
+  const reasonElement = reportElement.querySelector('textarea');
+  const submitButtonElement = reportElement.querySelector('#submit-button');
+  const body = document.getElementsByTagName('body')[0];
+
+  closeButtonElement.addEventListener("click", () => {
+    const removeReportElement = document.querySelector('.report');
+    removeReportElement.remove();
+  })
+
+  if (post.profile_image_url === null)
+    reportImgElement.src = "./assets/missing-profile-image.png";
+  else {
+    const img = new Image();
+    img.onload = function () {
+      reportImgElement.src = img.src;
+    };
+    img.onerror = function () {
+      reportImgElement.src = "./assets/missing-profile-image.png";
+    };
+    img.src = post.profile_image_url;
+  }
+
+  usernameElement.textContent = post.username;
+  reportedTextElement.textContent = post.content;
+
+  const firstChild = body.firstChild;
+  body.insertBefore(reportElement, firstChild);
+
+  submitButtonElement.addEventListener("click", () => {
+    createReport(post.id, userData.id, reasonElement.value)
+  })
+}
