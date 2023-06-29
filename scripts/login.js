@@ -101,15 +101,18 @@ loginButton.addEventListener("click", function () {
     loginAccount(form).then((data) => {
       if (data.status === "success") {
         displaySuccessMessage(data.message);
-        resetFormInputValues();
+
         setTimeout(() => {
+          resetFormInputValues();
           window.location.href = "home.html";
         }, 2000);
       } else if (data.status === "warning") {
         displayWarningMessage(data.message);
         sessionStorage.setItem("user_id", data.user_id);
-        resetFormInputValues();
+        sessionStorage.setItem("email", data.email);
+
         setTimeout(() => {
+          resetFormInputValues();
           window.location.href = "verification.html";
         }, 2000);
       } else {

@@ -128,9 +128,11 @@ signUpButton.addEventListener("click", function () {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
         displaySuccessMessage(data.message);
-        resetFormInputValues();
         sessionStorage.setItem("user_id", data.user_id);
+        sessionStorage.setItem("email", data.email);
+
         setTimeout(() => {
+          resetFormInputValues();
           window.location.href = "verification.html";
         }, 2000);
       } else {
