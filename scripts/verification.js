@@ -3,17 +3,28 @@ import { updateUserAccount } from "./api/userAccountAPI.js";
 const inputs = document.querySelectorAll("input");
 const sendButton = document.getElementById("send-button");
 const userId = parseInt(sessionStorage.getItem("user_id"), 10);
+const email = sessionStorage.getItem("email");
 const verificationCode = [];
 const notifyMessageElement = document.getElementById("notify-message");
 const labelNotifyMessageElement = document.getElementById(
   "label-notify-message"
 );
 const notifyIconElement = document.getElementById("notify-icon");
+const resendCodeElement = document.getElementById("label-resend-code");
 
 function getVerificationCodeInputValues() {
   return {
+    action: "verify_email",
     user_id: userId,
     verification_code: verificationCode.join(""),
+  };
+}
+
+function resendCode() {
+  return {
+    action: "resend_code",
+    user_id: userId,
+    email: email,
   };
 }
 
@@ -95,6 +106,19 @@ inputs.forEach((input, index1) => {
 });
 
 window.addEventListener("load", () => inputs[0].focus());
+
+resendCodeElement.addEventListener("click", function () {
+  const form = resendCode();
+
+  updateUserAccount(form).then((data) => {
+    if (data.status === "success") {
+      displaySuccessMessage(data.message);
+    } else {
+      showErrorBorderColor();
+      displayErrorMessage(data.message);
+    }
+  });
+});
 
 sendButton.addEventListener("click", function () {
   const form = getVerificationCodeInputValues();
