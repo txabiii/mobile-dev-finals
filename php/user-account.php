@@ -157,6 +157,20 @@ class API extends DB
 			} else {
 				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to resend the verification code to your email address.'));
 			}
+		} else if ($payload['action'] === 'new_password') {
+			$user_id = $payload['user_id'];
+			$password = $payload['newPassword'];
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+			$new_password_query = "UPDATE user_accounts_tb SET password = ? WHERE user_id = ?";
+			$statement = $this->connection->prepare($new_password_query);
+			$statement->bind_param("ss", $hashed_password, $user_id);
+
+			if ($statement->execute()) {
+				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Password changed successfully.'));
+			} else {
+				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to change password. Please try again.'));
+			}
 		} else {
 			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
