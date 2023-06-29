@@ -10,9 +10,9 @@ import { createReport } from "./api/reportApi.js";
  * Display the username followed by an exclamation mark in an HTML element with the ID "name".
  */
 window.addEventListener("load", function () {
-  const username = sessionStorage.getItem("username");
+  const userData = JSON.parse(sessionStorage.getItem("user_data"));
   const usernameElement = document.getElementById("name");
-  usernameElement.textContent = username + `!`;
+  usernameElement.textContent = userData.username + `!`;
 });
 
 /**
