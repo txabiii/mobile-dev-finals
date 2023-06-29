@@ -101,13 +101,13 @@ sendButton.addEventListener("click", function () {
 
   updateUserAccount(form).then((data) => {
     if (data.status === "success") {
-      displaySuccessMessage(data.data);
+      displaySuccessMessage(data.message);
       setTimeout(() => {
         window.location.href = "login.html";
       }, 2000);
     } else {
       showErrorBorderColor();
-      displayErrorMessage(data.data);
+      displayErrorMessage(data.message);
     }
   });
 });

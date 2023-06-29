@@ -127,7 +127,7 @@ signUpButton.addEventListener("click", function () {
   if (validateRegistrationForm()) {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
-        displaySuccessMessage(data.data);
+        displaySuccessMessage(data.message);
         resetFormInputValues();
         sessionStorage.setItem("user_id", data.user_id);
         setTimeout(() => {
@@ -135,7 +135,7 @@ signUpButton.addEventListener("click", function () {
         }, 2000);
       } else {
         showErrorBorderColor();
-        displayErrorMessage(data.data);
+        displayErrorMessage(data.message);
       }
     });
   }
