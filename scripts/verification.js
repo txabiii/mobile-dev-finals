@@ -128,12 +128,20 @@ resendCodeElement.addEventListener("click", function () {
 
 sendButton.addEventListener("click", function () {
   const form = getVerificationCodeInputValues();
+  let redirectUrl;
+
+  if (userData.action2 === "forgot_password") {
+    // new-password.html
+    redirectUrl = "index.html";
+  } else {
+    redirectUrl = "login.html";
+  }
 
   updateUserAccount(form).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.message);
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = redirectUrl;
       }, 2000);
     } else {
       showErrorBorderColor();
