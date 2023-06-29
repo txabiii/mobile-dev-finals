@@ -156,14 +156,58 @@ function displayPlantParentsPosts() {
       };
       img.src = post.profile_image_url;
     }
+    
+    const reportElement = postElement.querySelector('#report');
+    reportElement.addEventListener("click", () => reportPost(post));
+    if(post.user_id == userData.id) reportElement.style.display = 'none';
 
     postContent.textContent = post.content;
     postCreator.textContent = post.username;
     dateTimeElement.textContent = post.datetime_posted
+
+    const infoElement = postElement.querySelector('.info');
+    postContent.addEventListener("click", () => {
+      const shown = infoElement.style.display === 'flex' ? true : false
+      infoElement.style.display = shown ? 'none' : 'flex';
+      infoElement.style.justifyContent = 'space-between';
+    })
+
     postsContainer.appendChild(postElement);
   }
 
   postsContainer.scrollTop = postsContainer.scrollHeight;
+}
+
+function reportPost(post) {
+  const reportTemplate = document.querySelector('#report-template');
+
+  const reportElement = reportTemplate.content.cloneNode(true);
+
+  const reportImgElement = reportElement.querySelector('#user-image');
+  const usernameElement = reportElement.querySelector('.username');
+  const reportedTextElement = reportElement.querySelector('.text');
+
+  if (post.profile_image_url === null)
+    reportImgElement.src = "./assets/missing-profile-image.png";
+  else {
+    const img = new Image();
+    img.onload = function () {
+      reportImgElement.src = img.src;
+    };
+    img.onerror = function () {
+      reportImgElement.src = "./assets/missing-profile-image.png";
+    };
+    img.src = post.profile_image_url;
+  }
+
+  usernameElement.textContent = post.username;
+  reportedTextElement.textContent = post.content;
+
+  const body = document.getElementsByTagName('body')[0];
+  const firstChild = body.firstChild;
+
+  body.insertBefore(reportElement, firstChild);
+  console.log(post)
 }
 
 /**

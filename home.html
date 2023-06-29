@@ -114,6 +114,29 @@
         </div>
       </div>
     </template>
+
+    <template id="report-template">
+      <div class="report">
+        <div class="close-button">
+          <img src="./assets/icons/x.svg" alt="x button">
+        </div>
+        <h2>Report</h2>
+        <h3>You are reporting:</h3>
+        <div class="post-content">
+          <img id="user-image" src="./assets/missing-profile-image.png" alt="">
+          <div class="content">
+            <h5 class="username"></h5>
+            <p class="text"></p>
+          </div>
+        </div>
+  
+        <h3>Reason:</h3>
+        <textarea name="reason" id="reason" cols="30" rows="10" placeholder="State your reason"></textarea>
+        <div class="button-wrapper">
+          <button>Submit Report</button>
+        </div>
+      </div>
+    </template>
     <script src="./scripts/home.js" type="module"></script>
   </body>
 </html>

@@ -104,14 +104,14 @@ shopLabelElement.addEventListener("click", () => {
     shopElement.style.position = 'unset';
     shopElement.style.bottom = 'unset';
     shopElement.style.widows = 'unset';
-    shopElement.style.maxHeight = 'unset';
+    shopElement.style.height = '70px';
   } else {
     shopIcons.style.display = 'flex';
     shopElement.style.position = 'absolute';
     shopElement.style.borderRadius = '40px 40px 0px 0px';
     shopElement.style.bottom = '-70px';
     shopElement.style.width = '100%';
-    shopElement.style.maxHeight = '1000px';
+    shopElement.style.height = '177px';
   }
   showShopIcons = !showShopIcons;
 });
