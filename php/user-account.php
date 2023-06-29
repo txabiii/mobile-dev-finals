@@ -8,27 +8,24 @@ require('vendor/autoload.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
 class API extends DB
 {
 	public function httpGet()
 	{
-		$user_id = $_SESSION['user_id'];
+		$email = $_GET['email'];
 
-		$statement = $this->connection->prepare("SELECT user_id, username, email FROM user_accounts_tb WHERE user_id = ?");
-		$statement->bind_param("s", $user_id);
+		$search_email_address_query = "SELECT user_id, username, email FROM user_accounts_tb WHERE email = ?";
+		$statement = $this->connection->prepare($search_email_address_query);
+		$statement->bind_param("s", $email);
 		$statement->execute();
 		$result = $statement->get_result();
 
-		if ($result) {
+		if ($result->num_rows > 0) {
 			$users = $result->fetch_all(MYSQLI_ASSOC);
 
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'data' => $users));
+			echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.'));
 		} else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'Failed to retrieve users.'));
+			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
 		}
 	}
 
