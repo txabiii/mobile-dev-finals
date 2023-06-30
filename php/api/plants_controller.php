@@ -2,139 +2,109 @@
 require_once '../db.php';
 
 class PlantController extends DB {
-  public function createPlant($name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
+  public function httpPost($payload) {
+    $name = $this->connection->real_escape_string($payload['name']);
+    $scientific_name = $this->connection->real_escape_string($payload['scientificName']);
+    $watering_frequency = $this->connection->real_escape_string($payload['wateringFrequency']);
+    $image_url = $this->connection->real_escape_string($payload['imageUrl']);
+    $description = $this->connection->real_escape_string($payload['description']);
+    $guide = $this->connection->real_escape_string($payload['guide']);
+
     $query = "INSERT INTO plants_tb (name, scientific_name, watering_frequency, image_url, description, guide)
-              VALUES (?, ?, ?, ?, ?, ?)";
+    VALUES (?, ?, ?, ?, ?, ?)";
 
     $stmt = $this->connection->prepare($query);
-    $stmt->bind_param("ssisss", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide);
-    
+    $stmt->bind_param("ssisss", $name, $scientific_name, $watering_frequency, $image_url, $description, $guide);
+
     if ($stmt->execute()) {
-      return true;
+      echo json_encode(['message' => 'Plant created successfully']);
     } else {
-      return false;
+      echo json_encode(['message' => 'Failed to create plant']);
     }
   }
 
-  public function getPlant($plantId = null) {
-    $query = "SELECT * FROM plants_tb";
-  
-    if ($plantId !== null) {
-      $query .= " WHERE plant_id = ?";
+  public function httpGet() {
+    $action = $_GET['action'];
+
+    if($action === 'get-all-plants') {
+      $query = "SELECT * FROM plants_tb";
+      $result = $this->connection->query($query);
+
+      if ($result) {
+        $plants = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array("status" => "success", "message" => "Plants retrieved successfully", "data" => $plants));
+      } else {
+        echo json_encode(array("status" => "error", "message" => "Failed to retrieve plants"));
+      }
+    } elseif ($action === 'get-specific-plant') {
+      $plant_id = $_GET['plant_id'];
+
+      $query = "SELECT * FROM plants_tb WHERE plant_id = ?";
       $stmt = $this->connection->prepare($query);
-      $stmt->bind_param("i", $plantId);
+      $stmt->bind_param("i", $plant_id);
       $stmt->execute();
       $result = $stmt->get_result();
-    } else {
-      $result = $this->connection->query($query);
-    }
-  
-    $plants = [];
-    if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-        $plants[] = $row;
+    
+      if ($result) {
+        $plant = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array("status" => "success", "message" => "Plant retrieved successfully", "data" => $plant));
+      } else {
+        echo json_encode(array("status" => "error", "message" => "Failed to retrieve plant"));
       }
     }
-  
-    return $plants;
   }  
 
-  public function updatePlant($id, $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide) {
+  public function httpPut($payload) {
+    $plant_id = $this->connection->real_escape_string($payload['plantId']);
+    $name = $this->connection->real_escape_string($payload['name']);
+    $scientific_name = $this->connection->real_escape_string($payload['scientificName']);
+    $watering_frequency = $this->connection->real_escape_string($payload['wateringFrequency']);
+    $image_url = $this->connection->real_escape_string($payload['imageUrl']);
+    $description = $this->connection->real_escape_string($payload['description']);
+    $guide = $this->connection->real_escape_string($payload['guide']);
+
     $query = "UPDATE plants_tb SET name=?, scientific_name=?,
               watering_frequency=?, image_url=?,
               description=?, guide=? WHERE id=?";
 
     $stmt = $this->connection->prepare($query);
-    $stmt->bind_param("ssisssi", $name, $scientificName, $wateringFrequency, $imageUrl, $description, $guide, $id);
-    
+    $stmt->bind_param("ssisssi", $name, $scientific_name, $watering_frequency, $image_url, $description, $guide, $plant_id);
+
     if ($stmt->execute()) {
-      return true;
+      echo json_encode(['message' => 'Plant updated successfully']);
     } else {
-      return false;
+      echo json_encode(['message' => 'Failed to update plant']);
     }
   }
 
-  public function removePlant($id) {
+  public function httpDelete($payload) {
+    $id = $payload['plant_id'];
+
     $query = "DELETE FROM plants_tb WHERE id=?";
 
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-      return true;
+      echo json_encode(['message' => 'Plant deleted successfully']);
     } else {
-      return false;
+      echo json_encode(['message' => 'Failed to delete plant']);
     }
   }
 }
 
 $plantController = new PlantController();
 
+$received_data = json_decode(file_get_contents('php://input'), true);
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  if (isset($_GET['plant_id']) && $_GET['plant_id'] !== "null") {
-      $plantId = $_GET['plant_id'];
-      $plant = $plantController->getPlant($plantId);
-      
-      if ($plant) {
-          echo json_encode($plant);
-      } else {
-          http_response_code(404);
-          echo json_encode(['message' => 'Plant not found']);
-      }
-  } else {
-      $plants = $plantController->getPlant();
-      if($plants) {
-        echo json_encode($plants);
-      } else {
-        http_response_code(404);
-        echo json_encode(['message' => 'Plant not found']);
-      }
-  }
+  $plantController->httpGet();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $requestData = json_decode(file_get_contents('php://input'), true);
-  $result = $plantController->createPlant(
-      $requestData['name'],
-      $requestData['scientific_name'],
-      $requestData['watering_frequency'],
-      $requestData['image_url'],
-      $requestData['description'],
-      $requestData['guide']
-  );
-
-  if ($result) {
-      echo json_encode(['message' => 'Plant created successfully']);
-  } else {
-      http_response_code(500);
-      echo json_encode(['message' => 'Failed to create plant']);
-  }
+  $plantController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  $requestData = json_decode(file_get_contents('php://input'), true);
-  $result = $plantController->updatePlant(
-      $requestData['id'],
-      $requestData['name'],
-      $requestData['scientific_name'],
-      $requestData['watering_frequency'],
-      $requestData['image_url'],
-      $requestData['description'],
-      $requestData['guide']
-  );
-
-  if ($result) {
-      echo json_encode(['message' => 'Plant updated successfully']);
-  } else {
-      http_response_code(500);
-      echo json_encode(['message' => 'Failed to update plant']);
-  }
+  $plantController->httpPut($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  $requestData = json_decode(file_get_contents('php://input'), true);
-  $result = $plantController->deletePlant($requestData['id']);
-
-  if ($result) {
-      echo json_encode(['message' => 'Plant deleted successfully']);
-  } else {
-      http_response_code(500);
-      echo json_encode(['message' => 'Failed to delete plant']);
-  }
+  $result = $plantController->deletePlant($received_data);
 } else {
   http_response_code(405);
   echo json_encode(['message' => 'Invalid request method']);

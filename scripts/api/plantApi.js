@@ -4,11 +4,13 @@ import { SERVER_URL } from "../config.js";
  * Retrieves all plants by sending a GET request to the server.
  * @returns {Promise<Array<Object>>} A promise that resolves with an array of plant objects if the request is successful, or rejects with an error message if the request fails.
  */
-export function getPlant(plantId = null) {
+export function getPlant(payload) {
   return new Promise((resolve, reject) => {
-    fetch(SERVER_URL + `/api/plants_controller.php?plant_id=${plantId}`)
+    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
       .then(response => response.json())
-      .then(plants => resolve(plants)) 
+      .then(result => {
+        resolve(result.data)
+      }) 
       .catch(error => reject(error));
   });
 }

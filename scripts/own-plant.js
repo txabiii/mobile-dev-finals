@@ -33,7 +33,12 @@ const plantId = urlParameters.get("plant_id");
  * then call 'displayUserPlants' to show the plant's datas
  * @param {string} id 
  */
-getUserPlants(userData.id).then((userPlants) => {
+getUserPlants({
+  action: 'get-specific-user-plant',
+  plantId: plantId,
+  userId: userData.id
+})
+.then((userPlants) => {
   const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
   plantOverviewLoadingPlaceholder.style.display = 'none';
   
@@ -104,14 +109,17 @@ function displayPlantData(plant) {
 
 /**
  * Fetch tips and populate the template
- * @param {plantId} number
+ * @param {object} payload contains action and plantId
  */
-getTips(plantId)
+getTips({
+  action: 'get-plant-tips',
+  plantId: plantId
+})
   .then(data => {
     const tipTemplate = document.getElementById('tip-template');
     const tipsList = document.getElementById('tips-list');
     const dotGroup = document.getElementById('dot-group');
-    
+
     for (const [index, tipData] of data.entries()) {
       const tipElement = tipTemplate.content.cloneNode(true);
     

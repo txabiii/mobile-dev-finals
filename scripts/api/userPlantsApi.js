@@ -9,7 +9,7 @@ import { SERVER_URL } from "../config.js";
  */
 export function createUserPlant(plantId, userId, dateAdded) {
   return new Promise((resolve, reject) => {
-    const data = {
+    const payload = {
       plant_id: plantId,
       user_id: userId,
       date_added: dateAdded
@@ -20,7 +20,7 @@ export function createUserPlant(plantId, userId, dateAdded) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(payload)
     })
     .then(response => response.json())
     .then(result => {
@@ -42,10 +42,11 @@ export function createUserPlant(plantId, userId, dateAdded) {
  * @param {number} userId - The ID of the user.
  * @returns {Promise<string>} A promise that resolves with a success message if the request is successful, or rejects with an error message if the request fails.
  */
-export function deleteUserPlant(plantId, userId) {
+export function deleteUserPlant(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/user_plants_controller.php/${plantId}/${userId}`, {
-      method: 'DELETE'
+    fetch(`${SERVER_URL}/api/user_plants_controller.php`, {
+      method: 'DELETE',
+      body: JSON  .stringify(payload)
     })
     .then(response => response.json())
     .then(result => {
@@ -66,9 +67,9 @@ export function deleteUserPlant(plantId, userId) {
  * @param {number} userId - The ID of the user.
  * @returns {Promise<Array<Object>>} A promise that resolves with an array of user plant objects if the request is successful, or rejects with an error message if the request fails.
  */
-export function getUserPlants(userId) {
+export function getUserPlants(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/user_plants_controller.php?user_id=${userId}`)
+    fetch(`${SERVER_URL}/api/user_plants_controller.php?action=${payload.action}&user_id=${payload.userId}&plant_id=${payload.plantId}`)
       .then(response => response.json())
       .then(result => {
         if (result.status === 'success') {

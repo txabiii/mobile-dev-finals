@@ -30,7 +30,10 @@ const plantId = urlParameters.get("plant_id");
  * @param {string} id 
  */
 function displayPlantData(id) {
-  getPlant(id).then((plants) => {
+  getPlant({
+    action: 'get-specific-plant',
+    plantId: id
+  }).then((plants) => {
     const plant = plants[0];
       
     const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');

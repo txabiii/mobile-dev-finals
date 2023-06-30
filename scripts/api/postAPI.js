@@ -1,19 +1,19 @@
 import { SERVER_URL } from "../config.js";
 
-export function createPost(userId, content, dateTime) {
+export function createPost(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/posts_controller.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_id: userId, content: content, dateTime: dateTime}),
+      body: JSON.stringify(payload),
     })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
         console.log('Post created successfully');
-        const newId = data.postId;
+        const newId = data.newId;
         resolve(newId);
       } else {
         console.log('Failed to create post');
