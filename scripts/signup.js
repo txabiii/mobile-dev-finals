@@ -1,12 +1,14 @@
 import { addUserAccount } from "./api/userAccountAPI.js";
+import {
+  showErrorBorderColor,
+  displayErrorMessage,
+  displaySuccessMessage,
+  addFocusEventListenerToFields,
+  redirectWithTimeout,
+} from "./utils.js";
 
 const signUpButton = document.getElementById("signup-button");
 const signInButton = document.getElementById("sign-in");
-const notifyMessageElement = document.getElementById("notify-message");
-const labelNotifyMessageElement = document.getElementById(
-  "label-notify-message"
-);
-const notifyIconElement = document.getElementById("notify-icon");
 const formFields = {
   username: document.getElementById("username-input"),
   email: document.getElementById("email-input"),
@@ -14,53 +16,16 @@ const formFields = {
   confirmPassword: document.getElementById("confirm-password-input"),
 };
 
+addFocusEventListenerToFields(formFields);
+
 function getFormInputValues() {
   return {
     action: "signup",
-    username: document.getElementById("username-input").value.trim(),
-    email: document.getElementById("email-input").value.trim(),
-    password: document.getElementById("password-input").value.trim(),
-    confirmPassword: document
-      .getElementById("confirm-password-input")
-      .value.trim(),
+    username: formFields.username.value.trim(),
+    email: formFields.email.value.trim(),
+    password: formFields.password.value.trim(),
+    confirmPassword: formFields.confirmPassword.value.trim(),
   };
-}
-
-function resetFormInputValues() {
-  formFields.username.value = "";
-  formFields.email.value = "";
-  formFields.password.value = "";
-  formFields.confirmPassword.value = "";
-}
-
-function showErrorBorderColor() {
-  Object.values(formFields).forEach((field) => {
-    field.classList.add("error");
-  });
-}
-
-function hideErrorBorderColor() {
-  notifyMessageElement.style.display = "none";
-
-  Object.values(formFields).forEach((field) => {
-    field.classList.remove("error");
-  });
-}
-
-function displayErrorMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/error-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
-  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
-}
-
-function displaySuccessMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/check-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
-  labelNotifyMessageElement.style.color = "white";
 }
 
 function validateRegistrationForm() {
@@ -73,7 +38,7 @@ function validateRegistrationForm() {
     !form.password &&
     !form.confirmPassword
   ) {
-    showErrorBorderColor();
+    showErrorBorderColor(formFields);
     displayErrorMessage("Please fill out the fields.");
     return false;
   } else if (!form.username) {
@@ -110,28 +75,17 @@ function validateRegistrationForm() {
   }
 }
 
-Object.values(formFields).forEach((field) => {
-  field.addEventListener("focus", () => {
-    hideErrorBorderColor();
-  });
-});
-
 signUpButton.addEventListener("click", function () {
   const form = getFormInputValues();
 
   if (validateRegistrationForm()) {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
+        sessionStorage.setItem("user_data", JSON.stringify(data.data));
         displaySuccessMessage(data.message);
-        sessionStorage.setItem("user_id", data.user_id);
-        sessionStorage.setItem("email", data.email);
-
-        setTimeout(() => {
-          resetFormInputValues();
-          window.location.href = "verification.html";
-        }, 2000);
+        redirectWithTimeout(formFields, "verification.html");
       } else {
-        showErrorBorderColor();
+        showErrorBorderColor(formFields);
         displayErrorMessage(data.message);
       }
     });
