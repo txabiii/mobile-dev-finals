@@ -3,93 +3,108 @@ require_once '../db.php';
 
 class UserPlantController extends DB {
   
-  public function getUserPlants($userId) {
-    $sql = "SELECT up.*, p.* FROM user_plants_tb AS up
-            JOIN plants_tb AS p ON up.plant_id = p.plant_id
-            WHERE up.id = ?";
-    $stmt = $this->connection->prepare($sql);
+  public function httpGet() {
+    $action = $_GET['action'];
+    $user_id = $_GET['user_id'];
+
+    if($action === 'get-all-user-plants') {
+      $query = "SELECT up.*, p.name, p.watering_frequency, p.image_url FROM user_plants_tb AS up
+      JOIN plants_tb AS p ON up.plant_id = p.plant_id
+      WHERE up.id = ?";
+
+      $stmt = $this->connection->prepare($query);
     
-    $stmt->bind_param("i", $userId);
-    
-    $stmt->execute();
-    
-    $result = $stmt->get_result();
-    
-    $userPlants = array();
-    while ($row = $result->fetch_assoc()) {
-      $userPlants[] = $row;
-    }
-    
-    return $userPlants;
-  }  
-  
-  public function createUserPlant($plantId, $userId, $dateAdded) { 
-    $sql = "INSERT INTO user_plants_tb (plant_id, user_id, date_added) VALUES (?, ?, ?)";
-    $stmt = $this->connection->prepare($sql);
-    
-    $stmt->bind_param("iis", $plantId, $userId, $dateAdded);
-    
-    if ($stmt->execute()) {
-      return true;
-    } else {
-      return false;
+      $stmt->bind_param("i", $user_id);
+      
+      $stmt->execute();
+      
+      $result = $stmt->get_result();
+
+      if ($result) {
+        $userPlants = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array('status' => 'success', 'data' => $userPlants));
+      } else {
+        echo json_encode(array('status' => 'fail', 'message' => 'Failed to retrieve user plant records'));
+      }      
+      $this->connection->close();
+
+    } elseif($action === 'get-specific-user-plant') {
+      $plant_id = $_GET['plant_id'];
+
+      $query = "SELECT up.*, p.* FROM user_plants_tb AS up
+      JOIN plants_tb AS p ON up.plant_id = p.plant_id
+      WHERE up.id = ? AND p.plant_id = ?";
+
+      $stmt = $this->connection->prepare($query);
+          
+      $stmt->bind_param("ii", $user_id, $plant_id);
+
+      $stmt->execute();
+      
+      $result = $stmt->get_result();
+
+      if ($result) {
+        $userPlant = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array('status' => 'success', 'data' => $userPlant));
+      } else {
+        echo json_encode(array('status' => 'fail', 'message' => 'Failed to retrieve user plant record'));
+      }      
+      $this->connection->close();
     }
   }
-  
-  public function deleteUserPlant($plantId, $userId) {
-    $sql = "DELETE FROM user_plants_tb WHERE plant_id = ? AND user_id = ?";
-    $stmt = $this->connection->prepare($sql);
-    
-    $stmt->bind_param("ii", $plantId, $userId);
-    
-    if ($stmt->execute()) {
-      return true;
-    } else {
-      return false;
+
+  public function httpPost($payload) {
+    if($payload['action'] === 'create-plant') {
+      $plant_id = $payload['plantId'];
+      $user_id = $payload['userId'];
+      $date_time_added = $payload['dateTime'];
+      var_dump($date_time_added);
+
+      $query = "INSERT INTO user_plants_tb (id, plant_id, datetime_added) VALUES (?, ?, ?)";
+
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bind_param("iis", $user_id, $plant_id, $date_time_added);
+
+      if ($stmt->execute()) {
+        echo json_encode(array('status' => 'success', 'message' => 'User plant record created'));
+      } else {
+        echo json_encode(array('status' => 'fail', 'message' => 'Failed to create user plant record'));
+      }
+      $this->connection->close();
+    }
+  }
+
+  public function httpDelete($payload) {
+    if ($payload['action'] === 'delete-user-plant') {
+      $plant_id = $payload['plantId'];
+      $user_id = $payload['userId'];
+
+      $query = "DELETE FROM user_plants_tb WHERE plant_id = ? AND id = ?";
+      $stmt = $this->connection->prepare($query);
+      
+      $stmt->bind_param("ii", $plant_id, $user_id);
+      
+      if ($stmt->execute()) {
+        echo json_encode(array('status' => 'success', 'message' => 'User plant record deleted'));
+      } else {
+        echo json_encode(array('status' => 'fail', 'message' => 'Failed to delete user plant record'));
+      }
     }
   }
 }
 
 $userPlantController = new UserPlantController();
 
+$received_data = json_decode(file_get_contents('php://input'), true);
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  $userId = $_GET['user_id'];
-  
-  $userPlants = $userPlantController->getUserPlants($userId);
-  
-  if ($userPlants) {
-    $response = array('status' => 'success', 'data' => $userPlants);
-  } else {
-    $response = array('status' => 'fail', 'message' => 'Failed to retrieve user plant records');
-  }
-  
-  echo json_encode($response);
+  $userPlantController->httpGet();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $plantId = $_POST['plant_id'];
-  $userId = $_POST['user_id'];
-  
-  $success = $userPlantController->createUserPlant($plantId, $userId);
-  
-  if ($success) {
-    $response = array('status' => 'success', 'message' => 'User plant record created');
-  } else {
-    $response = array('status' => 'fail', 'message' => 'Failed to create user plant record');
-  }
-  
-  echo json_encode($response);
+  $userPlantController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  parse_str(file_get_contents("php://input"), $data);
-  $plantId = $data['plant_id'];
-  $userId = $data['user_id'];
-  
-  $success = $userPlantController->deleteUserPlant($plantId, $userId);
-  
-  if ($success) {
-    $response = array('status' => 'success', 'message' => 'User plant record deleted');
-  } else {
-    $response = array('status' => 'fail', 'message' => 'Failed to delete user plant record');
-  }
-  
-  echo json_encode($response);
+  $userPlantController->httpDelete($received_data);
+} else {
+  echo json_encode( array("status" => "error", "message" => "Invalid request method"));
 }
 ?>

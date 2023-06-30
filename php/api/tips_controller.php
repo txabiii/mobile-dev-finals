@@ -2,31 +2,66 @@
 require_once '../db.php';
 
 class TipsController extends DB {
-  // Function to create a new tip
-  public function createTip($plant_id, $title, $content) {
-    $query = "INSERT INTO tips_tb (plant_id, title, content) VALUES (?, ?, ?)";
-    $stmt = $this->connection->prepare($query);
-    $stmt->bind_param("iss", $plant_id, $title, $content);
-    if ($stmt->execute()) {
-      return json_encode(['success' => true, 'message' => 'Tip created successfully']);
-    } else {
-      return json_encode(['success' => false, 'message' => 'Failed to create tip']);
+
+  public function httpPost($payload) {
+    if($payload['action'] === 'create-tip') {
+
+      $plant_id = $payload['plantId']; 
+      $title = $payload['title'];
+      $content = $payload['content'];
+
+      $query = "INSERT INTO tips_tb (plant_id, title, content) VALUES (?, ?, ?)";
+
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bind_param("iss", $plant_id, $title, $content);
+
+      if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Tip created successfully']);
+      } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to create tip']);
+      }
     }
   }
 
-  // Function to get tips for a certain plant ID
-  public function getTips($plant_id) {
-    $query = "SELECT * FROM tips_tb WHERE plant_id = ?";
-    $stmt = $this->connection->prepare($query);
-    $stmt->bind_param("i", $plant_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $tips = $result->fetch_all(MYSQLI_ASSOC);
-    return json_encode($tips);
+  public function httpGet() {
+    $action = $_GET['action'];
+
+    if($action === 'get-all-tips') {
+      $query = "SELECT * FROM tips_tb";
+      $result = $this->connection->query($query);
+
+      if ($result) {
+        $tips = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array("status" => "success", "message" => "Tips retrieved successfully", "data" => $tips));
+      } else {
+        echo json_encode(array("status" => "error", "message" => "Failed to retrieve tips"));
+      }
+      $this->connection->close();
+    } elseif($action === 'get-plant-tips') {      
+      $plant_id = $_GET['plant_id'];
+
+      $query = "SELECT * FROM tips_tb WHERE plant_id = ?";
+      $stmt = $this->connection->prepare($query);
+
+      $stmt->bind_param("i", $plant_id);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      
+      if ($result) {
+        $tips = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array("status" => "success", "message" => "Reports retrieved successfully", "data" => $tips));
+      } else {
+        echo json_encode(array("status" => "error", "message" => "Failed to retrieve tips"));
+      }
+    }
   }
 
-  // Function to update a particular tip
-  public function updateTip($tip_id, $title, $content) {
+  public function httpPut($payload) {
+    $tip_id = $payload['tipId'];
+    $title = $payload['title'];
+    $content = $payload['content'];
+
     $query = "UPDATE tips_tb SET title = ?, content = ? WHERE tip_id = ?";
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("ssi", $title, $content, $tip_id);
@@ -37,8 +72,9 @@ class TipsController extends DB {
     }
   }
 
-  // Function to delete a particular tip
-  public function deleteTip($tip_id) {
+  public function httpDelete($payload) {
+    $tip_id = $payload['tipId'];
+
     $query = "DELETE FROM tips_tb WHERE tip_id = ?";
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("i", $tip_id);
@@ -50,32 +86,20 @@ class TipsController extends DB {
   }
 }
 
-// Handle different server request methods and perform corresponding actions
 $tipController = new TipsController();
 
+$received_data = json_decode(file_get_contents('php://input'), true);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Create a new tip
-  $plant_id = $_POST['plant_id'];
-  $title = $_POST['title'];
-  $content = $_POST['content'];
-  echo $tipController->createTip($plant_id, $title, $content);
+  $tipController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  // Get tips for a certain plant ID
-  if (isset($_GET['plant_id'])) {
-    $plant_id = $_GET['plant_id'];
-    echo $tipController->getTips($plant_id);
-  }
+  $tipController->httpGet();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  // Update a particular tip
-  parse_str(file_get_contents("php://input"), $_PUT);
-  $tip_id = $_PUT['tip_id'];
-  $title = $_PUT['title'];
-  $content = $_PUT['content'];
-  echo $tipController->updateTip($tip_id, $title, $content);
+  $tipController->httpPut($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  // Delete a particular tip
-  parse_str(file_get_contents("php://input"), $_DELETE);
-  $tip_id = $_DELETE['tip_id'];
-  echo $tipController->deleteTip($tip_id);
+  $tipController->httpDelete($received_data);
+} else {
+  http_response_code(405);
+  echo json_encode(['message' => 'Invalid request method']);
 }
 ?>

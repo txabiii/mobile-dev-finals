@@ -1,4 +1,7 @@
 import { getPlant } from './api/plantApi.js';
+import { createUserPlant } from './api/userPlantsApi.js';
+import { userData } from './data.js';
+import { generateDateTime } from './utils.js';
 
 /**
  * The image element for returning back.
@@ -30,7 +33,10 @@ const plantId = urlParameters.get("plant_id");
  * @param {string} id 
  */
 function displayPlantData(id) {
-  getPlant(id).then((plants) => {
+  getPlant({
+    action: 'get-specific-plant',
+    plantId: id
+  }).then((plants) => {
     const plant = plants[0];
       
     const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
@@ -71,10 +77,20 @@ function displayPlantData(id) {
     depthElement.textContent = plant.depth;
 
     const careElement = document.querySelector('#care');
-    careElement.textContent = plant.care;
+    careElement.textContent = plant.care; 
 
     const shoplabelElement = document.querySelector('#shop-label');
     shoplabelElement.textContent = `Shop for ${plant.name}`
+
+    const addPlantButton = document.querySelector('#add-plant-button');
+    addPlantButton.addEventListener("click", () => {
+      createUserPlant({
+        action: 'create-plant',
+        plantId: plant.plant_id,
+        userId: userData.id,
+        dateTime: generateDateTime()
+      })
+    })
 
     addShopClickEvents(plant.name);
   })

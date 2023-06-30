@@ -27,7 +27,10 @@ imageProfile.addEventListener("click", function () {
  * @param {array} plants - An array of objects of the user's plants data
  * @returns {void}
  */
-getUserPlants(userData.id).then((userPlants) => {
+getUserPlants({
+  action: 'get-all-user-plants',
+  userId: userData.id
+}).then((userPlants) => {
   const loading = document.querySelector("#my-plants-loading-group");
   loading.style.display = "none";
 
@@ -69,38 +72,31 @@ function displayMyPlants(plants) {
 }
 
 /**
- * An array that holds the plants' details.
- * @type {Array}
+ * Gets all plants using `getPlant` function and display them accordingly
  */
-var allPlantsData = new Array();
-
-/**
- * Gets all plants using `getPlant`
- * Display them accordingly
- */
-getPlant().then((plants) => {
+getPlant({
+  action: 'get-all-plants',
+  plantId: null
+}).then((plants) => {
   const loading = document.querySelector("#explore-plants-loading-group");
   loading.style.display = "none";
 
-  allPlantsData = plants;
-  displayAllPlants();
+  displayAllPlants(plants);
 });
 
-function displayAllPlants() {
+function displayAllPlants(plants) {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("explore-plants");
 
-  for (const plant of allPlantsData) {
+  for (const plant of plants) {
     const plantItem = template.content.cloneNode(true);
 
     const nameElement = plantItem.querySelector(".name");
     nameElement.textContent = plant.name;
 
     const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    if (plant.watering_frequency === 1)
-      waterScheduleElement.textContent = "Water everyday";
-    else
-      waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
+    if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
+    else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
 
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
@@ -204,7 +200,11 @@ function addPost() {
     hour12: false,
   });
 
-  createPost(userData.id, content, now).then((newId) => {
+  createPost({
+    userId: userData.id, 
+    content: content, 
+    dateTime: now
+  }).then((newId) => {
     const newPost = {
       id: newId,
       content: content,
@@ -247,10 +247,7 @@ function reportPost(post) {
   const submitButtonElement = reportElement.querySelector("#submit-button");
   const body = document.getElementsByTagName("body")[0];
 
-  closeButtonElement.addEventListener("click", () => {
-    const removeReportElement = document.querySelector(".report");
-    removeReportElement.remove();
-  });
+  closeButtonElement.addEventListener("click", () => closeReport());
 
   if (post.profile_image_url === null)
     reportImgElement.src = "./assets/missing-profile-image.png";
@@ -272,6 +269,20 @@ function reportPost(post) {
   body.insertBefore(reportElement, firstChild);
 
   submitButtonElement.addEventListener("click", () => {
-    createReport(post.id, userData.id, reasonElement.value);
+    const payload = {
+      action: 'submit-report',
+      postId: post.id,
+      reporterId: userData.id,
+      reason: reasonElement.value
+    };
+    createReport(payload).then(() => closeReport());
   });
+}
+
+/**
+ * Removes the report HTML element
+ */
+function closeReport() {
+  const removeReportElement = document.querySelector(".report-wrapper");
+  removeReportElement.remove();
 }

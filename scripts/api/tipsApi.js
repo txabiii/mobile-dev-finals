@@ -21,13 +21,16 @@ export function createTip(plant_id, title, content) {
 }
 
 // Function to get tips for a certain plant ID
-export function getTips(plant_id) {
+export function getTips(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/tips_controller.php?plant_id=${plant_id}`, {
+    fetch(`${SERVER_URL}/api/tips_controller.php?action=${payload.action}&plant_id=${payload.plantId}`, {
       method: 'GET',
     })
       .then(response => response.json())
-      .then(result => resolve(result))
+      .then(result => {
+        const data = result.data;
+        resolve(data)
+      })
       .catch(error => reject(error));
   });
 }

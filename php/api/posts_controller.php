@@ -2,115 +2,65 @@
 require_once '../db.php';
 
 class PostsController extends DB {
-  public function getPosts() {
-    $sql = "SELECT p.*, u.profile_image_url, u.username
+  public function httpGet() {
+    $query = "SELECT p.*, u.profile_image_url, u.username
             FROM posts_tb p 
             JOIN user_accounts_tb u ON p.user_id = u.user_id 
             ORDER BY p.datetime_posted DESC LIMIT 10";
 
-    $result = $this->connection->query($sql);
+    $result = $this->connection->query($query);
   
-    $posts = array();
-    while ($row = $result->fetch_assoc()) {
-        $posts[] = $row;
-    }
-  
-    return $posts;
-  }
-
-  public function createPost($userId, $content, $datetime) {        
-    $sql = "INSERT INTO posts_tb (user_id, content, datetime_posted) VALUES (?, ?, ?)";
-    $stmt = $this->connection->prepare($sql);
-    
-    $stmt->bind_param("iss", $userId, $content, $datetime);
-    
-    if ($stmt->execute()) {
-        $newId = $stmt->insert_id;
-        return $newId;
+    $posts = $result->fetch_all(MYSQLI_ASSOC);
+    if ($posts) {
+      echo json_encode(array('success' => true, 'data' => $posts));
     } else {
-        return false;
+      echo json_encode(array('success' => false, 'message' => 'Failed to fetch posts'));
     }
   }
 
-  public function updatePost($postId, $content) {
-    $sql = "UPDATE posts_tb SET content = ? WHERE id = ?";
-    $stmt = $this->connection->prepare($sql);
+  public function httpPost($payload) {
+    $user_id = $payload['userId'];
+    $content = $payload['content'];
+    $date_time = $payload['dateTime'];
+
+    $query = "INSERT INTO posts_tb (user_id, content, datetime_posted) VALUES (?, ?, ?)";
+    $stmt = $this->connection->prepare($query);
     
-    $stmt->bind_param("si", $content, $postId);
-    
+    $stmt->bind_param("iss", $user_id, $content, $date_time);
+
     if ($stmt->execute()) {
-      return true;
+      $newId = $stmt->insert_id;
+      echo json_encode(array('success' => true, 'message' => 'Post created successfully', 'newId' => $newId));
     } else {
-      return false;
+      echo json_encode(array('success' => false, 'message' => 'Failed to create post'));
     }
   }
-  
-  public function deletePost($postId) {
-    $sql = "DELETE FROM posts_tb WHERE id = ?";
-    $stmt = $this->connection->prepare($sql);
+
+  public function httpDelete() {
+    $postId = $_GET['post_id'];
+
+    $query = "DELETE FROM posts_tb WHERE id = ?";
+    $stmt = $this->connection->prepare($query);
     
     $stmt->bind_param("i", $postId);
     
-    if ($stmt->execute()) {
-      return true;
+    if ($result) {
+      echo json_encode(array('success' => true, 'message' => 'Post deleted successfully'));
     } else {
-      return false;
+      echo json_encode(array('success' => false, 'message' => 'Failed to delete post'));
     }
   } 
 }
 
 $postsController = new PostsController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  $result = $postsController->getPosts();
-  
-  if ($result) {
-    $response = array('success' => true, 'data' => $result);
-    echo json_encode($response);
-  } else {
-    $response = array('success' => false, 'message' => 'Failed to fetch posts');
-    echo json_encode($response);
-  }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $postData = json_decode(file_get_contents('php://input'), true);
+$received_data = json_decode(file_get_contents('php://input'), true);
 
-  $userId = $postData['user_id'];
-  $content = $postData['content'];
-  $date_time = $postData['dateTime'];
-  
-  $result = $postsController->createPost($userId, $content, $date_time);
-  
-  if ($result) {
-    $response = array('success' => true, 'message' => 'Post created successfully', 'postId' => $result);
-    echo json_encode($response);
-  } else {
-    $response = array('success' => false, 'message' => 'Failed to create post');
-    echo json_encode($response);
-  }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  $postId = $_GET['post_id'];
-  $content = $_POST['content'];
-  
-  $result = $postsController->updatePost($postId, $content);
-  
-  if ($result) {
-    $response = array('success' => true, 'message' => 'Post updated successfully');
-    echo json_encode($response);
-  } else {
-    $response = array('success' => false, 'message' => 'Failed to update post');
-    echo json_encode($response);
-  }
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $postsController->httpGet();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+  $postsController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  $postId = $_GET['post_id'];
-  
-  $result = $postsController->deletePost($postId);
-  
-  if ($result) {
-    $response = array('success' => true, 'message' => 'Post deleted successfully');
-    echo json_encode($response);
-  } else {
-    $response = array('success' => false, 'message' => 'Failed to delete post');
-    echo json_encode($response);
-  }
+  $postsController->httpDelete();
 } 
 ?>
