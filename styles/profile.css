@@ -63,24 +63,26 @@ body {
   flex-direction: column;
   gap: 20px;
 }
-.label-name,
+.actual-credentials label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
 .label-username,
 .label-email-address,
 .label-password,
-.actual-name,
 .actual-username,
 .actual-email-address,
 .actual-password {
   font-family: Barlow;
   font-size: 15px;
 }
-.label-name,
 .label-username,
 .label-email-address,
 .label-password {
   color: rgba(76, 175, 80, 1);
 }
-.actual-name,
 .actual-username,
 .actual-email-address,
 .actual-password {

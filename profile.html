@@ -17,27 +17,31 @@
   <body>
     <div class="profile">
       <div class="profile-picture">
-        <img src="./assets/profile.svg" alt="profile" id="profile-image" />
+        <img
+          src="./assets/missing-profile-image.svg"
+          alt="profile"
+          id="profile-image"
+        />
       </div>
 
       <div class="top">
         <label class="label-about-you">About You</label>
-        <label class="label-edit-button">Edit</label>
+        <label class="label-edit-button" id="label-edit-button">Edit</label>
       </div>
 
       <div class="credentials-container">
         <div class="labels-credentials">
-          <label class="label-name">Name</label>
           <label class="label-username">Username</label>
           <label class="label-email-address">Email Address</label>
           <label class="label-password">Password</label>
         </div>
 
         <div class="actual-credentials">
-          <label class="actual-name">Name</label>
-          <label class="actual-username">Username</label>
-          <label class="actual-email-address">email@email.com</label>
-          <label class="actual-password">**********</label>
+          <label class="actual-username" id="actual-username">Username</label>
+          <label class="actual-email-address" id="actual-email-address"
+            >email@email.com</label
+          >
+          <label class="actual-password" id="actual-password"></label>
         </div>
       </div>
 
