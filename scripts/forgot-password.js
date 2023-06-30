@@ -1,32 +1,16 @@
 import { getUserAccount, updateUserAccount } from "./api/userAccountAPI.js";
+import {
+  displayErrorMessage,
+  displaySuccessMessage,
+  notifyElements,
+} from "./utils.js";
 
 const backButton = document.getElementById("back-button");
 const sendButton = document.getElementById("send-button");
-const notifyMessageElement = document.getElementById("notify-message");
-const labelNotifyMessageElement = document.getElementById(
-  "label-notify-message"
-);
-const notifyIconElement = document.getElementById("notify-icon");
 const email = document.getElementById("email-input");
 
-function displayErrorMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/error-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
-  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
-}
-
-function displaySuccessMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/check-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
-  labelNotifyMessageElement.style.color = "white";
-}
-
 email.addEventListener("focus", () => {
-  notifyMessageElement.style.display = "none";
+  notifyElements.notifyMessageElement.style.display = "none";
   email.classList.remove("error");
 });
 
@@ -63,7 +47,7 @@ sendButton.addEventListener("click", function () {
               window.location.href = "verification.html";
             }, 2000);
           } else {
-            showErrorBorderColor();
+            email.classList.add("error");
             displayErrorMessage(data.message);
           }
         });

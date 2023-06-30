@@ -1,69 +1,20 @@
 import { updateUserAccount } from "./api/userAccountAPI.js";
+import {
+  showErrorBorderColor,
+  displayErrorMessage,
+  displaySuccessMessage,
+  addFocusEventListenerToFields,
+} from "./utils.js";
 
 const inputs = document.querySelectorAll("input");
 const sendButton = document.getElementById("send-button");
 const backButton = document.getElementById("back-button");
-const notifyMessageElement = document.getElementById("notify-message");
-const labelNotifyMessageElement = document.getElementById(
-  "label-notify-message"
-);
-const notifyIconElement = document.getElementById("notify-icon");
 const resendCodeElement = document.getElementById("label-resend-code");
 
 const userData = JSON.parse(sessionStorage.getItem("user_data"));
 const verificationCode = [];
 
-function getVerificationCodeInputValues() {
-  return {
-    action: "verify_email",
-    user_id: userData.user_id,
-    verification_code: verificationCode.join(""),
-  };
-}
-
-function resendCode() {
-  return {
-    action: "resend_code",
-    user_id: userData.user_id,
-    email: userData.email,
-  };
-}
-
-function displayErrorMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/error-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
-  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
-}
-
-function displaySuccessMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/check-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
-  labelNotifyMessageElement.style.color = "white";
-}
-
-function showErrorBorderColor() {
-  inputs.forEach((input) => {
-    input.classList.add("error");
-  });
-}
-
-function hideErrorBorderColor() {
-  notifyMessageElement.style.display = "none";
-
-  inputs.forEach((input) => {
-    input.classList.remove("error");
-  });
-}
-
-inputs.forEach((input) => {
-  input.addEventListener("focus", () => {
-    hideErrorBorderColor();
-  });
-});
+addFocusEventListenerToFields(inputs);
 
 inputs.forEach((input, index1) => {
   input.addEventListener("keyup", (e) => {
@@ -114,36 +65,44 @@ backButton.addEventListener("click", function () {
 });
 
 resendCodeElement.addEventListener("click", function () {
-  const form = resendCode();
+  const form = {
+    action: "resend_code",
+    user_id: userData.user_id,
+    email: userData.email,
+  };
 
   updateUserAccount(form).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.message);
     } else {
-      showErrorBorderColor();
+      showErrorBorderColor(inputs);
       displayErrorMessage(data.message);
     }
   });
 });
 
 sendButton.addEventListener("click", function () {
-  const form = getVerificationCodeInputValues();
-  let redirectUrl;
+  const form = {
+    action: "verify_email",
+    user_id: userData.user_id,
+    verification_code: verificationCode.join(""),
+  };
+  let redirectURL;
 
   if (userData.action2 === "forgot_password") {
-    redirectUrl = "new-password.html";
+    redirectURL = "new-password.html";
   } else {
-    redirectUrl = "login.html";
+    redirectURL = "login.html";
   }
 
   updateUserAccount(form).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.message);
       setTimeout(() => {
-        window.location.href = redirectUrl;
+        window.location.href = redirectURL;
       }, 2000);
     } else {
-      showErrorBorderColor();
+      showErrorBorderColor(inputs);
       displayErrorMessage(data.message);
     }
   });

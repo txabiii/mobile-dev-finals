@@ -1,16 +1,20 @@
 import { updateUserAccount } from "./api/userAccountAPI.js";
+import {
+  showErrorBorderColor,
+  displayErrorMessage,
+  displaySuccessMessage,
+  addFocusEventListenerToFields,
+  redirectWithTimeout,
+} from "./utils.js";
 
 const sendButton = document.getElementById("send-button");
-const notifyMessageElement = document.getElementById("notify-message");
-const labelNotifyMessageElement = document.getElementById(
-  "label-notify-message"
-);
-const notifyIconElement = document.getElementById("notify-icon");
 const formFields = {
   newPassword: document.getElementById("new-password-input"),
   confirmPassword: document.getElementById("confirm-password-input"),
 };
 const userData = JSON.parse(sessionStorage.getItem("user_data"));
+
+addFocusEventListenerToFields(formFields);
 
 function getFormInputValues() {
   return {
@@ -21,46 +25,11 @@ function getFormInputValues() {
   };
 }
 
-function resetFormInputValues() {
-  formFields.newPassword.value = "";
-  formFields.confirmPassword.value = "";
-}
-
-function showErrorBorderColor() {
-  Object.values(formFields).forEach((field) => {
-    field.classList.add("error");
-  });
-}
-
-function hideErrorBorderColor() {
-  notifyMessageElement.style.display = "none";
-
-  Object.values(formFields).forEach((field) => {
-    field.classList.remove("error");
-  });
-}
-
-function displayErrorMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/error-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
-  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
-}
-
-function displaySuccessMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/check-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
-  labelNotifyMessageElement.style.color = "white";
-}
-
 function validateForm() {
   const form = getFormInputValues();
 
   if (!form.newPassword && !form.confirmPassword) {
-    showErrorBorderColor();
+    showErrorBorderColor(formFields);
     displayErrorMessage("Please fill out the fields.");
     return false;
   } else if (!form.newPassword) {
@@ -85,12 +54,6 @@ function validateForm() {
   }
 }
 
-Object.values(formFields).forEach((field) => {
-  field.addEventListener("focus", () => {
-    hideErrorBorderColor();
-  });
-});
-
 sendButton.addEventListener("click", function () {
   const form = getFormInputValues();
 
@@ -98,12 +61,9 @@ sendButton.addEventListener("click", function () {
     updateUserAccount(form).then((data) => {
       if (data.status === "success") {
         displaySuccessMessage(data.message);
-        setTimeout(() => {
-          resetFormInputValues();
-          window.location.href = "login.html";
-        }, 2000);
+        redirectWithTimeout(formFields, "login.html");
       } else {
-        showErrorBorderColor();
+        showErrorBorderColor(formFields);
         displayErrorMessage(data.message);
       }
     });

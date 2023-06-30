@@ -1,17 +1,28 @@
 import { loginAccount } from "./api/userAccountAPI.js";
+import {
+  showErrorBorderColor,
+  displayErrorMessage,
+  displaySuccessMessage,
+  displayWarningMessage,
+  addFocusEventListenerToFields,
+  redirectWithTimeout,
+} from "./utils.js";
 
 const loginButton = document.getElementById("login-button");
-const signUpButton = document.getElementById("sign-up");
-const forgotPasswordButton = document.getElementById("label-forgot-password");
-const notifyMessageElement = document.getElementById("notify-message");
-const labelNotifyMessageElement = document.getElementById(
-  "label-notify-message"
-);
-const notifyIconElement = document.getElementById("notify-icon");
 const formFields = {
   usernameOrEmail: document.getElementById("username-input"),
   password: document.getElementById("password-input"),
 };
+
+addFocusEventListenerToFields(formFields);
+
+document.addEventListener("click", function (event) {
+  if (event.target.matches("#label-forgot-password")) {
+    window.location.href = "forgot-password.html";
+  } else if (event.target.matches("#sign-up")) {
+    window.location.href = "signup.html";
+  }
+});
 
 function getFormInputValues() {
   return {
@@ -21,54 +32,11 @@ function getFormInputValues() {
   };
 }
 
-function resetFormInputValues() {
-  formFields.usernameOrEmail.value = "";
-  formFields.password.value = "";
-}
-
-function showErrorBorderColor() {
-  Object.values(formFields).forEach((field) => {
-    field.classList.add("error");
-  });
-}
-
-function hideErrorBorderColor() {
-  notifyMessageElement.style.display = "none";
-
-  Object.values(formFields).forEach((field) => {
-    field.classList.remove("error");
-  });
-}
-
-function displayErrorMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/error-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(235, 204, 207, 255)";
-  labelNotifyMessageElement.style.color = "rgba(173, 52, 62, 255)";
-}
-
-function displaySuccessMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/check-icon.svg";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(121, 158, 41, 1)";
-  labelNotifyMessageElement.style.color = "white";
-}
-
-function displayWarningMessage(message) {
-  labelNotifyMessageElement.textContent = message;
-  notifyIconElement.src = "./assets/exclamation-point-icon.png";
-  notifyMessageElement.style.display = "block";
-  notifyMessageElement.style.backgroundColor = "rgba(0, 71, 171, 255)";
-  labelNotifyMessageElement.style.color = "white";
-}
-
 function validateLoginForm() {
   const form = getFormInputValues();
 
   if (!form.usernameOrEmail && !form.password) {
-    showErrorBorderColor();
+    showErrorBorderColor(formFields);
     displayErrorMessage("Please fill out the fields.");
     return false;
   } else if (!form.usernameOrEmail) {
@@ -84,12 +52,6 @@ function validateLoginForm() {
   }
 }
 
-Object.values(formFields).forEach((field) => {
-  field.addEventListener("focus", () => {
-    hideErrorBorderColor();
-  });
-});
-
 loginButton.addEventListener("click", function () {
   const form = getFormInputValues();
 
@@ -99,30 +61,14 @@ loginButton.addEventListener("click", function () {
 
       if (data.status === "success") {
         displaySuccessMessage(data.message);
-
-        setTimeout(() => {
-          resetFormInputValues();
-          window.location.href = "home.html";
-        }, 2000);
+        redirectWithTimeout(formFields, "home.html");
       } else if (data.status === "warning") {
         displayWarningMessage(data.message);
-
-        setTimeout(() => {
-          resetFormInputValues();
-          window.location.href = "verification.html";
-        }, 2000);
+        redirectWithTimeout(formFields, "verification.html");
       } else {
-        showErrorBorderColor();
+        showErrorBorderColor(formFields);
         displayErrorMessage(data.message);
       }
     });
   }
-});
-
-signUpButton.addEventListener("click", function () {
-  window.location.href = "signup.html";
-});
-
-forgotPasswordButton.addEventListener("click", function () {
-  window.location.href = "forgot-password.html";
 });
