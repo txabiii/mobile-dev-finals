@@ -1,5 +1,5 @@
 import { getWaterReminder } from "./utils.js";
-import { getUserPlants } from './api/userPlantsApi.js';
+import { getUserPlants, deleteUserPlant } from './api/userPlantsApi.js';
 import { userData } from './data.js';
 import { getTips } from "./api/tipsApi.js";
 
@@ -48,6 +48,9 @@ getUserPlants({
   const parsedId = parseInt(plantId)
   const plant = userPlants.find(item => item.plant_id === parsedId);
   displayPlantData(plant);
+})
+.catch(() => {
+  window.location.href = 'home.html'
 })
 
 function displayPlantData(plant) {
@@ -123,6 +126,17 @@ function displayPlantData(plant) {
   const waterScheduleStat = document.querySelector('#water-schedule-stats');
   waterScheduleStat.querySelector('#text').innerHTML = `Your watering schedule is <span class="data">${formattedTime + ' every ' + plant.watering_frequency + ' days'}</span>`;
 
+  const deletePlantLabel = document.querySelector('#delete-plant-label');
+  deletePlantLabel.textContent = `Remove ${plant.name}`
+  deletePlantLabel.addEventListener("click", () => deleteUserPlant({
+    action: 'delete-user-plant',
+    plantId: plant.plant_id,
+    userId: plant.id
+  }).then(() => {
+    window.location.href = "home.html"
+  }).catch(() => {
+    // handle error here
+  }))
 }
 
 function getDayDifferenceFromToday(date) {

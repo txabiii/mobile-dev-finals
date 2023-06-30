@@ -79,7 +79,7 @@ class UserPlantController extends DB {
       $plant_id = $payload['plantId'];
       $user_id = $payload['userId'];
 
-      $query = "DELETE FROM user_plants_tb WHERE plant_id = ? AND user_id = ?";
+      $query = "DELETE FROM user_plants_tb WHERE plant_id = ? AND id = ?";
       $stmt = $this->connection->prepare($query);
       
       $stmt->bind_param("ii", $plant_id, $user_id);
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $userPlantController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  $userPlantController->deleteUserPlant($received_data);
+  $userPlantController->httpDelete($received_data);
 } else {
   echo json_encode( array("status" => "error", "message" => "Invalid request method"));
 }

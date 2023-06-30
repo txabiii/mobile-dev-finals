@@ -319,3 +319,22 @@
   font-weight: 700;
   color: white;
 }
+
+.delete-plant {
+  height: 70px;
+  background-color: rgb(var(--green-2-rgb));
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-plant h2 {
+  font-size: 24px;
+  font-family: Rajdhani;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+}

@@ -241,10 +241,7 @@ function reportPost(post) {
   const submitButtonElement = reportElement.querySelector("#submit-button");
   const body = document.getElementsByTagName("body")[0];
 
-  closeButtonElement.addEventListener("click", () => {
-    const removeReportElement = document.querySelector(".report");
-    removeReportElement.remove();
-  });
+  closeButtonElement.addEventListener("click", () => closeReport());
 
   if (post.profile_image_url === null)
     reportImgElement.src = "./assets/missing-profile-image.png";
@@ -272,6 +269,14 @@ function reportPost(post) {
       reporterId: userData.id,
       reason: reasonElement.value
     };
-    createReport(payload);
+    createReport(payload).then(() => closeReport());
   });
+}
+
+/**
+ * Removes the report HTML element
+ */
+function closeReport() {
+  const removeReportElement = document.querySelector(".report-wrapper");
+  removeReportElement.remove();
 }
