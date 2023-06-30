@@ -15,6 +15,12 @@ window.addEventListener("load", function () {
   usernameElement.textContent = userData.username + `!`;
 });
 
+const imageProfile = document.getElementById("profile-img");
+
+imageProfile.addEventListener("click", function () {
+  window.location.href = "profile.html";
+});
+
 /**
  * Get data of user's plants
  * Displays the plants of the user
