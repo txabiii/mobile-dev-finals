@@ -68,48 +68,74 @@
     </div>
   </div>
 
-  <div class="plant-details">
-    <h2 id="plant-name">⠀</h2>
-    <h5 id="scientific-name">⠀</h5>
-
-    <div class="water-details">
-      <img src="./assets/watering-can-icon.svg" alt="watering can icon">
-      <p id="water-frequency">⠀</p>
-    </div>
-
-    <h3 class="plant-guide-label">Plant Overview</h3>
-
-    <div class="text-loading-group" id="plant-overview-loading">
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-    </div>
-
-    <p id="plant-description"></p>
-
-    <h3 class="plant-guide-label" id="plant-tip-label">Plant tips</h3>
-
-    <div class="tips-wrapper">
-      <div id="tips-list"></div>      
-      <div id="dot-group">
+  <div class="plant-details-wrapper">
+    <div class="plant-details">
+      <h2 id="plant-name">⠀</h2>
+      <h5 id="scientific-name">⠀</h5>
+  
+      <div class="water-details">
+        <img src="./assets/watering-can-icon.svg" alt="watering can icon">
+        <p id="water-frequency">⠀</p>
+      </div>
+  
+      <h3 class="plant-guide-label">Plant Overview</h3>
+  
+      <div class="text-loading-group" id="plant-overview-loading">
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+      </div>
+  
+      <p id="plant-description"></p>
+  
+      <h3 class="plant-guide-label" id="plant-tip-label">Plant tips</h3>
+  
+      <div class="tips-wrapper">
+        <div id="tips-list"></div>      
+        <div id="dot-group">
+        </div>
+      </div>
+  
+      <h3 id="plant-guide-label"   class="plant-guide-label">How to take care for the plant</h3>
+  
+      <p id="plant-guide"></p>
+      
+      <div class="text-loading-group" id="plant-guide-loading">
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
+        <div class="loading-text loading"></div>
       </div>
     </div>
+    <div class="plant-stats">
+      <h3 class="plant-guide-label" id="plant-stats-label">⠀</h3>
+      <div class="stats-wrapper">
+        <div class="stats" id="date-added-stats">
+          <img src="./assets/icons/calendar.svg" alt="calendar">
+          <p id="text"><span class="data"></span></p>
+        </div>
 
-    <h3 id="plant-guide-label" class="plant-guide-label">How to take care for the plant</h3>
+        <div class="stats" id="days-spent-stats">
+          <img src="./assets/icons/sun.svg" alt="sun">
+          <p id="text"><span class="data"></span></p>
+        </div>
 
-    <div class="text-loading-group" id="plant-guide-loading">
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
-      <div class="loading-text loading"></div>
+        <div class="stats" id="water-schedule-stats">
+          <img src="./assets/icons/drop.svg" alt="drop">
+          <p id="text"><span class="data"></span></p>
+        </div>
+
+        <div class="stats" id="water-recorded-stats">
+          <img src="./assets/icons/can.svg" alt="can">
+          <p id="text">On our records, you have watered this plant <span class="data">12 times</span></p>
+        </div>
+      </div>
     </div>
-
-    <p id="plant-guide"></p>
   </div>
 
   <template id="tip-template">

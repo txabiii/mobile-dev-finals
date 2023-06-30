@@ -51,6 +51,7 @@ getUserPlants({
 })
 
 function displayPlantData(plant) {
+  console.log(plant);
   const waterScheduleElement = document.getElementById('water-schedule')
   waterScheduleElement.innerText = getWaterReminder(plant)
 
@@ -82,29 +83,54 @@ function displayPlantData(plant) {
   plantImageElement.src = plant.image_url;
   plantImageElement.alt = `${plant.name}'s image`;
 
-  // Modify the content of the 'height' element
   const heightElement = document.querySelector('#height');
   heightElement.textContent = plant.height;
 
-  // Modify the content of the 'temperature' element
   const temperatureElement = document.querySelector('#temperature');
   temperatureElement.textContent = plant.temperature;
 
-  // Modify the content of the 'container' element
   const containerElement = document.querySelector('#container');
   containerElement.textContent = plant.container;
 
-  // Modify the content of the 'environment' element
   const environmentElement = document.querySelector('#environment');
   environmentElement.textContent = plant.environment;
 
-  // Modify the content of the 'depth' element
   const depthElement = document.querySelector('#depth');
   depthElement.textContent = plant.depth;
 
-  // Modify the content of the 'care' element
   const careElement = document.querySelector('#care');
   careElement.textContent = plant.care;
+
+  const plantStatsLabel = document.querySelector('#plant-stats-label');
+  plantStatsLabel.textContent = `Your ${plant.name} Stats`;
+
+  const dateOnly = plant.datetime_added.split(" ")[0];
+  const timeOnly = plant.datetime_added.split(" ")[1];
+  const unformattedTime = new Date(`1970-01-01T${timeOnly}`);
+  const formattedTime = unformattedTime.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  });
+
+  const dateAddedStat = document.querySelector('#date-added-stats');
+  dateAddedStat.querySelector('#text').innerHTML = `You added Bougainvillea on <span class="data">${dateOnly}</span>`;
+
+  const daysSpentStat = document.querySelector('#days-spent-stats');
+  const daysDifference = getDayDifferenceFromToday(plant.datetime_added);
+  daysSpentStat.querySelector('#text').innerHTML = `You've spent <span class="data">${daysDifference}</span> days with your ${plant.name}`
+
+  const waterScheduleStat = document.querySelector('#water-schedule-stats');
+  waterScheduleStat.querySelector('#text').innerHTML = `Your watering schedule is <span class="data">${formattedTime + ' every ' + plant.watering_frequency + ' days'}</span>`;
+
+}
+
+function getDayDifferenceFromToday(date) {
+  const targetDate = new Date(date);
+  const today = new Date();
+  const timeDifference = targetDate.getTime() - today.getTime();
+  const daysDifference = Math.ceil(Math.abs(timeDifference) / (1000 * 60 * 60 * 24));
+  return daysDifference;
 }
 
 /**
