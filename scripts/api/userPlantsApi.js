@@ -7,14 +7,8 @@ import { SERVER_URL } from "../config.js";
  * @param {string} dateAdded - The date when the plant was added by the user.
  * @returns {Promise<string>} A promise that resolves with a success message if the request is successful, or rejects with an error message if the request fails.
  */
-export function createUserPlant(plantId, userId, dateAdded) {
+export function createUserPlant(payload) {
   return new Promise((resolve, reject) => {
-    const payload = {
-      plant_id: plantId,
-      user_id: userId,
-      date_added: dateAdded
-    };
-
     fetch(`${SERVER_URL}/api/user_plants_controller.php`, {
       method: 'POST',
       headers: {

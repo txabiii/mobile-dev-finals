@@ -58,6 +58,7 @@ class UserPlantController extends DB {
       $plant_id = $payload['plantId'];
       $user_id = $payload['userId'];
       $date_time_added = $payload['dateTime'];
+      var_dump($date_time_added);
 
       $query = "INSERT INTO user_plants_tb (id, plant_id, datetime_added) VALUES (?, ?, ?)";
 
