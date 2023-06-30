@@ -38,7 +38,9 @@ class API extends DB
 
 	public function httpPost($payload)
 	{  	
-		if ($payload['action'] === 'signup') {
+		$action = $payload['action'];
+
+		if ($action === 'signup') {
 
 			$username = $payload['username'];
 			$email = $payload['email'];
@@ -80,7 +82,7 @@ class API extends DB
 					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Account creation failed. Please try again.'));
 				}
 			}
-		} else if ($payload['action'] === 'login') {
+		} else if ($action === 'login') {
 			$usernameOrEmail = $payload['usernameOrEmail'];
 			$password = $payload['password'];
 
@@ -97,6 +99,7 @@ class API extends DB
 					'user_id' => $user['user_id'],
 					'username' => $user['username'],
 					'email' => $user['email'],
+					'password' => $password,
 					'profile_image_url' => $user['profile_image_url']
 				);
 
@@ -121,7 +124,9 @@ class API extends DB
 
 	public function httpPut($payload)
 	{
-		if($payload['action'] === 'verify_email') {
+		$action = $payload['action'];
+
+		if($action === 'verify_email') {
 			$user_id = $payload['user_id'];
 			$verification_code = $payload['verification_code'];
 			$email_verified_at = date('Y-m-d H:i:s');
@@ -142,7 +147,7 @@ class API extends DB
 			} else {
 				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Verification code failed.'));
 			}
-		} else if ($payload['action'] === 'resend_code') {
+		} else if ($action === 'resend_code') {
 			$user_id = $payload['user_id'];
 			$email = $payload['email'];
 			$verification_code = $this->emailVerification($email);
@@ -151,13 +156,14 @@ class API extends DB
 			$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ?, email_verified_at = ? WHERE user_id = ?";
 			$statement = $this->connection->prepare($resend_code_query);
 			$statement->bind_param("sss", $verification_code, $email_verified_at, $user_id);
+			$execution = $statement->execute();
 
-			if ($statement->execute()) {
+			if ($execution) {
 				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Verification code successfully resent to your email address.'));
 			} else {
 				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to resend the verification code to your email address.'));
 			}
-		} else if ($payload['action'] === 'new_password') {
+		} else if ($action === 'new_password') {
 			$user_id = $payload['user_id'];
 			$password = $payload['newPassword'];
 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -165,11 +171,83 @@ class API extends DB
 			$new_password_query = "UPDATE user_accounts_tb SET password = ? WHERE user_id = ?";
 			$statement = $this->connection->prepare($new_password_query);
 			$statement->bind_param("ss", $hashed_password, $user_id);
+			$execution = $statement->execute();
 
-			if ($statement->execute()) {
+			if ($execution) {
 				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Password changed successfully.'));
 			} else {
 				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to change password. Please try again.'));
+			}
+		} else if ($action === 'update_user_credentials') {
+			$user_id = $payload['user_id'];
+
+			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?";
+			$statement = $this->connection->prepare($search_existing_user);
+			$statement->bind_param("ss", $payload['email'], $payload['username']);
+			$statement->execute();
+			$result = $statement->get_result();
+
+			if ($result->num_rows > 0) {
+				$existing_user = $result->fetch_assoc();
+
+				if ($existing_user['email'] === $payload['email']) {
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Email is already existing.', 'error' => 'email'));
+				} else if ($existing_user['username'] === $payload['username']) {
+					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Username is already taken.', 'error' => 'username'));
+				}
+			} else {
+				$update_user_credentials_query = "UPDATE user_accounts_tb SET ";
+				$update_params = array();
+				$param_types = "";
+
+				if (isset($payload['username'])) {
+					$update_user_credentials_query .= "username = ?, ";
+					$update_params[] = $payload['username'];
+					$param_types .= "s";
+				}
+
+				if (isset($payload['email'])) {
+					$update_user_credentials_query .= "email = ?, ";
+					$update_params[] = $payload['email'];
+					$param_types .= "s";
+				}
+
+				if (isset($payload['password'])) {
+					$hashed_password = password_hash($payload['password'], PASSWORD_DEFAULT);
+					$update_user_credentials_query .= "password = ?, ";
+					$update_params[] = $hashed_password;
+					$param_types .= "s";
+					$user_data['password'] = $payload['password'];
+				}
+
+				$update_user_credentials_query = rtrim($update_user_credentials_query, ", ");
+				$update_user_credentials_query .= " WHERE user_id = $user_id";
+				$statement = $this->connection->prepare($update_user_credentials_query);
+
+				foreach ($update_params as $key => $value) {
+					$statement->bind_param($param_types, ...$update_params);
+				}
+
+				$execution = $statement->execute();
+
+				if ($execution) {
+					$search_user = "SELECT * FROM user_accounts_tb WHERE user_id = ?";
+					$statement = $this->connection->prepare($search_user);
+					$statement->bind_param("s", $user_id);
+					$statement->execute();
+					$result = $statement->get_result();
+
+					$user = $result->fetch_assoc();
+
+					$user_data = array(
+						'user_id' => $user['user_id'],
+						'username' => $user['username'],
+						'email' => $user['email'],
+					);
+					echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
+				} else {
+					echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to update user profile.'));
+				}
 			}
 		} else {
 			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
