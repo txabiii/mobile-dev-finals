@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garden</title>
+  <title>Library</title>
   <link rel="stylesheet" href="./styles/globals.css">
-  <link rel="stylesheet" href="./styles/garden.css">
 </head>
 <body>
   <div class="navbar">
@@ -18,9 +17,8 @@
   </div>
 
   <div class="banner">
-    <h2 class="garden-welcome-label">Welcome to your mini garden,</h2>
-    <h1 id="name">Name!</h1>
-    <button class="standard-button">+ Add a plant</button>
+    <h2 class="garden-welcome-label">Browse plant in our</h2>
+    <h1 id="name">Gallery!</h1>
   </div>
 
   <div class="search-section garden-page-search">
@@ -32,17 +30,11 @@
     />
   </div>
 
-  <div id="garden-plants-loading-group" class="grid-layout">
+  <div id="library-plants-loading-group" class="grid-layout">
     <div class="loading-box loading"></div>
     <div class="loading-box loading"></div>
-  </div>
-  <div class="grid-layout" id="my-plants"></div>
-  <div class="no-plants" id="no-plants">
-    <div class="add-first-plant">
-      <img src="./assets/plus-icon.svg" alt="add plant button" />
-    </div>
-    <p>Become a plant parent by adding your plants to your list</p>
-  </div>
+  </div>  
+  <div class="grid-layout" id="explore-plants"></div>
 
   <div class="bottom-navbar-filler"></div>
   <div class="bottom-navbar">
@@ -50,11 +42,11 @@
       <img class="inactive" src="./assets/icons/home.svg" alt="home">
     </a>
     <a href="garden.html">
-      <img class="active" src="./assets/icons/garden.svg" alt="garden">
+      <img class="inactive" src="./assets/icons/garden.svg" alt="garden">
     </a>
     <img class="active" src="./assets/icons/add.svg" alt="add">
     <a href="library.html">        
-      <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
+      <img class="active" src="./assets/icons/explore.svg" alt="explore">
     </a>
     <a href="profile.html">
       <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
@@ -70,7 +62,7 @@
       <img src="./assets/missing-image-small.png" alt="missing image" />
     </div>
   </template>
-
-  <script src="./scripts/garden.js" type="module"></script>
+  
+  <script src="./scripts/library.js" type="module"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 import { userData } from "./data.js";
-import { displayMyPlants } from "./utils.js";
+import { displayMyPlants, displayAllPlants } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -33,9 +33,7 @@ getUserPlants({
   loading.style.display = "none";
 
   displayMyPlants(userPlants);
-}).catch((error) => {
-  //handle error here
-});
+})
 
 /**
  * Gets all plants using `getPlant` function and display them accordingly
@@ -49,35 +47,6 @@ getPlant({
 
   displayAllPlants(plants);
 });
-
-/**
- * Displays the plant's data into their respective HTML elements
- * @param {object} plants 
- */
-function displayAllPlants(plants) {
-  const template = document.getElementById("plant-item-template");
-  const container = document.getElementById("explore-plants");
-
-  for (const plant of plants) {
-    const plantItem = template.content.cloneNode(true);
-
-    const nameElement = plantItem.querySelector(".name");
-    nameElement.textContent = plant.name;
-
-    const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
-    else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
-
-    const imageElement = plantItem.querySelector("img");
-    imageElement.src = plant.image_url;
-
-    nameElement.addEventListener("click", function () {
-      window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
-    });
-
-    container.appendChild(plantItem);
-  }
-}
 
 /**
  * An array that holds the plant parents' posts.

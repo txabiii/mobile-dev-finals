@@ -6,23 +6,6 @@
   margin-top: 20px;
 }
 
-.grid-layout {
-  padding: 20px;
+#my-plants {
   display: grid !important;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.grid-layout .plant-item, .loading {
-  margin: 0;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1/1;
-}
-
-#my-plants-loading-group {
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
 }

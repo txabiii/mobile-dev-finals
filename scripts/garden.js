@@ -10,11 +10,8 @@ getUserPlants({
   action: 'get-all-user-plants',
   userId: userData.id
 }).then((userPlants) => {
-  const loading = document.querySelector("#my-plants-loading-group");
-  console.log(loading)
+  const loading = document.querySelector('#garden-plants-loading-group');
   loading.style.display = "none";
 
   displayMyPlants(userPlants);
-}).catch((error) => {
-  //handle error here
-});
+})

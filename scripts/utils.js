@@ -145,20 +145,49 @@ export function displayMyPlants(plants) {
   for (const plant of plants) {
     const plantItem = template.content.cloneNode(true);
 
-    // #1
+    // Plant name
     const nameElement = plantItem.querySelector(".name");
     nameElement.textContent = plant.name;
 
-    // #2
+    // Plant water schedule
     const waterScheduleElement = plantItem.querySelector(".water-schedule");
     waterScheduleElement.textContent = getWaterReminder(plant);
 
-    // #3
+    // Plant image
     const imageElement = plantItem.querySelector("img");
     imageElement.src = plant.image_url;
 
     nameElement.addEventListener("click", function () {
       window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
+    });
+
+    container.appendChild(plantItem);
+  }
+}
+
+/**
+ * Displays the plant's data into their respective HTML elements. Important: requires plant-item-template on the HTML page
+ * @param {object} plants 
+ */
+export function displayAllPlants(plants) {
+  const template = document.getElementById("plant-item-template");
+  const container = document.getElementById("explore-plants");
+
+  for (const plant of plants) {
+    const plantItem = template.content.cloneNode(true);
+
+    const nameElement = plantItem.querySelector(".name");
+    nameElement.textContent = plant.name;
+
+    const waterScheduleElement = plantItem.querySelector(".water-schedule");
+    if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
+    else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
+
+    const imageElement = plantItem.querySelector("img");
+    imageElement.src = plant.image_url;
+
+    nameElement.addEventListener("click", function () {
+      window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
     });
 
     container.appendChild(plantItem);
