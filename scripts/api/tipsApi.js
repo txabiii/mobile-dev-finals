@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../config.js";
+import { displayResultPopup } from "../utils.js";
 
 // Function to create a new tip
 export function createTip(plant_id, title, content) {
@@ -15,7 +16,10 @@ export function createTip(plant_id, title, content) {
       }),
     })
       .then(response => response.text())
-      .then(result => resolve(result))
+      .then(result => {
+        displayResultPopup(result);
+        resolve(result)
+      })
       .catch(error => reject(error));
   });
 }
@@ -28,6 +32,7 @@ export function getTips(payload) {
     })
       .then(response => response.json())
       .then(result => {
+        if(!result.success) displayResultPopup(result);
         const data = result.data;
         resolve(data)
       })

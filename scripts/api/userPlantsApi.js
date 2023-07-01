@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../config.js";
+import { displayResultPopup } from "../utils.js";
 
 /**
  * Creates a user plant record by sending a POST request to the server.
@@ -18,14 +19,12 @@ export function createUserPlant(payload) {
     })
     .then(response => response.json())
     .then(result => {
-      if (result.success) {
-        resolve(result.message);
-      } else {
-        reject(result.message);
-      }
+      displayResultPopup(result);
+      resolve(result.message);
     })
     .catch(error => {
-      reject(error.message);
+      displayResultPopup(error);
+      reject(error);
     });
   });
 }
@@ -44,14 +43,11 @@ export function deleteUserPlant(payload) {
     })
     .then(response => response.json())
     .then(result => {
-      if (result.success) {
-        resolve(result.message);
-      } else {
-        reject(result.message);
-      }
+      displayResultPopup(result);
+      resolve(result)
     })
     .catch(error => {
-      reject(error.message);
+      reject(error);
     });
   });
 }
@@ -69,6 +65,7 @@ export function getUserPlants(payload) {
         if (result.success) {
           resolve(result.data);
         } else {
+          displayResultPopup(result);
           reject(result.message);
         }
       })

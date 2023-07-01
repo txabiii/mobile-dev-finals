@@ -21,6 +21,7 @@ class PlantController extends DB {
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to create plant'));
     }
+    $this->connection->close();
   }
 
   public function httpGet() {
@@ -36,6 +37,8 @@ class PlantController extends DB {
       } else {
         echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
       }
+      $this->connection->close();
+
     } elseif ($action === 'get-specific-plant') {
       $plant_id = $_GET['plant_id'];
 
@@ -51,6 +54,7 @@ class PlantController extends DB {
       } else {
         echo json_encode(array('success' => false, "message" => "Failed to retrieve plant"));
       }
+      $this->connection->close();
     }
   }  
 
@@ -75,6 +79,7 @@ class PlantController extends DB {
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to update plant'));
     }
+    $this->connection->close();
   }
 
   public function httpDelete($payload) {
@@ -90,6 +95,7 @@ class PlantController extends DB {
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to update plant'));
     }
+    $this->connection->close();
   }
 }
 

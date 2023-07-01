@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../config.js";
+import { displayResultPopup } from "../utils.js";
 
 /**
  * Creates a report for a post.
@@ -17,6 +18,7 @@ export function createReport(payload) {
     })
       .then(response => response.json())
       .then(data => {
+        displayResultPopup(data);
         resolve(data);
       })
       .catch(error => {

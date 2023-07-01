@@ -117,6 +117,10 @@ h3 {
   border-radius: 100px;
 }
 
+.report h2 {
+  text-align: left;
+}
+
 .report .post-content {
   max-height: 150px;
   display: flex;
@@ -168,7 +172,8 @@ h3 {
   font-weight: 600;
 }
 
-.button-wrapper {
+.report .button-wrapper {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }

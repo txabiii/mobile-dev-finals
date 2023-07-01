@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../config.js";
+import { displayResultPopup } from "../utils.js";
 
 export function createPost(payload) {
   return new Promise((resolve, reject) => {
@@ -12,16 +13,14 @@ export function createPost(payload) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        console.log('Post created successfully');
         const newId = data.newId;
         resolve(newId);
       } else {
-        console.log('Failed to create post');
+        displayResultPopup(data);
         reject();
       }
     })
     .catch(error => {
-      console.error('Error creating post:', error);
       reject();
     });
   });
@@ -34,18 +33,15 @@ export function deletePost(postId) {
     })
     .then(response => response.json())
     .then(data => {
+      displayResultPopup(data);
       if (data.success) {
-        // Post deleted successfully
-        console.log('Post deleted successfully');
         resolve();
       } else {
-        // Failed to delete post
-        console.log('Failed to delete post');
         reject();
       }
     })
-    .catch(error => {DEFAULT_LIMIT
-      console.error('Error deleting post:', error);
+    .catch(() => {
+      displayResultPopup({ success: false, message: 'Failed to delete post' })
       reject();
     });
   });
@@ -65,7 +61,6 @@ export function getPosts() {
       resolve({ posts });
     })
     .catch(error => {
-      console.error('Error retrieving posts:', error);
       reject();
     });
   });

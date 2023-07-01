@@ -1,4 +1,5 @@
 import { SERVER_URL } from "../config.js";
+import { displayResultPopup } from "../utils.js";
 
 /**
  * Retrieves all plants by sending a GET request to the server.
@@ -9,9 +10,13 @@ export function getPlant(payload) {
     fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
       .then(response => response.json())
       .then(result => {
+        if(!result.success) displayResultPopup(data);
         resolve(result.data)
       }) 
-      .catch(error => reject(error));
+      .catch(error => {        
+        displayResultPopup(result);
+        reject(error)
+      });
   });
 }
 
@@ -30,8 +35,14 @@ export function createPlant(plantData) {
       body: JSON.stringify(plantData)
     })
     .then(response => response.json())
-    .then(data => resolve(data))
-    .catch(error => reject(error));
+    .then(data => {      
+      displayResultPopup(data);
+      resolve(data)
+    })
+    .catch(error => {        
+      displayResultPopup(result);
+      reject(error)
+    });
   });
 }
 
@@ -51,8 +62,13 @@ export function updatePlant(plantId, updatedData) {
       body: JSON.stringify(updatedData)
     })
     .then(response => response.json())
-    .then(data => resolve(data))
-    .catch(error => reject(error));
+    .then(data => {      
+      displayResultPopup(data);
+      resolve(data)
+    })
+    .catch(error => {
+      reject(error)
+    });
   });
 }
 
@@ -70,7 +86,13 @@ export function deletePlant(plantId) {
       }
     })
     .then(response => response.json())
-    .then(data => resolve(data))
-    .catch(error => reject(error));
+    .then(data => {      
+      displayResultPopup(data);
+      resolve(data)
+    })
+    .catch(error => {        
+      displayResultPopup(result);
+      reject(error)
+    });
   });
 }

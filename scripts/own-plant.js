@@ -54,7 +54,6 @@ getUserPlants({
 })
 
 function displayPlantData(plant) {
-  console.log(plant);
   const waterScheduleElement = document.getElementById('water-schedule')
   waterScheduleElement.innerText = getWaterReminder(plant)
 
@@ -151,10 +150,9 @@ function showConfirmDeletePopUp(plant){
       action: 'delete-user-plant',
       plantId: plant.plant_id,
       userId: plant.id
-    }).then(() => {
-      window.location.href = "home.html"
-    }).catch(() => {
-      closeRemovePlantPopup();
+    }).then((data) => {
+      console.log(data)
+      window.location.href = "garden.html"
     })
   )
 

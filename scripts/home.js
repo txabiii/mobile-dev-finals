@@ -202,9 +202,6 @@ function reportPost(post) {
   usernameElement.textContent = post.username;
   reportedTextElement.textContent = post.content;
 
-  const firstChild = body.firstChild;
-  body.insertBefore(reportElement, firstChild);
-
   submitButtonElement.addEventListener("click", () => {
     const payload = {
       action: 'submit-report',
@@ -212,8 +209,14 @@ function reportPost(post) {
       reporterId: userData.id,
       reason: reasonElement.value
     };
-    createReport(payload).then(() => closeReport());
+    createReport(payload).then(() => {
+      console.log("report popup should go away now")
+      closeReport();
+    });
   });
+
+  const firstChild = body.firstChild;
+  body.insertBefore(reportElement, firstChild);
 }
 
 /**
