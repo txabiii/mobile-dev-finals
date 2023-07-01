@@ -16,6 +16,8 @@ html {
   --gray-rgb: 236, 236, 236;
 }
 
+/* NAVBAR */
+
 .navbar {
   padding: 12px 20px;
   display: flex;
@@ -32,26 +34,33 @@ html {
   width: auto;
 }
 
-.add-plant {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgb(var(--green-1-rgb));
-  border: 2px solid rgb(var(--green-2-rgb));
+/* BANNER */
+
+.banner {
+  height: 245px;
   padding: 20px;
-  border-radius: 100px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../assets/home-banner.png"); 
 }
 
-.add-plant img {
-  width: 23.33px;
-  height: 23.33px;
-  object-fit: cover;
-  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+.banner h2 {
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
 }
+
+.banner h1 {
+  color: rgb(var(--green-1-rgb));
+  font-family: 'Barlow', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.banner button {
+  margin-top: 18px;
+}
+
+/* LOADING ANIMATION */
 
 @keyframes shimmer {
   0% {
@@ -74,10 +83,18 @@ html {
   animation: shimmer 1.5s infinite linear;
 }
 
+.green-loading {
+  background: linear-gradient(to right, #c2d5c4 8%, #cbedd9 18%, #c2d5c4 33%);
+  background-size: 800px 104px;
+  animation: shimmer 1.5s infinite linear;
+}
+
 #posts-list-loading-group .post {
   margin-top: 12px;
   border-radius: 5px;
 }
+
+/* POPUPS */
 
 .dark-background {
   position: fixed;
@@ -134,6 +151,8 @@ html {
   line-height: normal;
 }
 
+/* BUTTONS */
+
 .standard-button {
   color: white;
   background-color: rgb(var(--red-rgb));
@@ -163,4 +182,43 @@ html {
   justify-content: center;
 
   margin: 0;
+}
+
+/* BOTTOM NAVBAR */
+
+.bottom-navbar-filler {
+  height: 75px;
+}
+
+.bottom-navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+
+  height: 75px;
+  background-color: rgb(var(--gray-rgb));
+  padding: 14px 22px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-navbar .active {
+  position: relative;
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+}
+
+.bottom-navbar .active::after {
+  content: '';
+  position: absolute;
+}
+
+.bottom-navbar .inactive {
+  transition: all 300ms ease;
+  filter: invert(84%) sepia(0%) saturate(770%) hue-rotate(211deg) brightness(103%) contrast(83%);
+}
+
+.bottom-navbar .inactive:hover {
+  transform: translateY(-8px);
 }

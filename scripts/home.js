@@ -29,6 +29,8 @@ getUserPlants({
   loading.style.display = "none";
 
   displayMyPlants(userPlants);
+}).catch((error) => {
+  //handle error here
 });
 
 function displayMyPlants(plants) {
@@ -78,6 +80,10 @@ getPlant({
   displayAllPlants(plants);
 });
 
+/**
+ * Displays the plant's data into their respective HTML elements
+ * @param {object} plants 
+ */
 function displayAllPlants(plants) {
   const template = document.getElementById("plant-item-template");
   const container = document.getElementById("explore-plants");
@@ -121,7 +127,6 @@ getPosts().then(({ posts }) => {
 
 /**
  * Displays each post from the `plantParentsPosts` array.
- * @param {array} posts - An array of objects containing the posts' data
  */
 function displayPlantParentsPosts() {
   const postTemplate = document.getElementById("post-template");
@@ -179,7 +184,6 @@ const inputElement = document.getElementById("post-input");
 /**
  * Adds a new post by retrieving the content from the input element,
  * creating a post using the `createPost` function, and updating the UI with the new post.
- * @returns {Promise} A promise that resolves when the post is successfully created and displayed.
  */
 function addPost() {
   const content = inputElement.value;

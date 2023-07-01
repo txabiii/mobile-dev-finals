@@ -1,27 +1,3 @@
-.banner {
-  height: 245px;
-  padding: 20px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../assets/home-banner.png"); 
-}
-
-.banner h2 {
-  color: white;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-}
-
-.banner h1 {
-  color: rgb(var(--green-1-rgb));
-  font-family: 'Barlow', sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-}
-
-.banner button {
-  margin-top: 18px;
-}
-
 .my-plants-section {
   padding-top: 35px;
   padding-bottom: 35px;
