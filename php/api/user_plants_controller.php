@@ -22,9 +22,9 @@ class UserPlantController extends DB {
 
       if ($result) {
         $userPlants = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array('status' => 'success', 'data' => $userPlants));
+        echo json_encode(array('success' => true, 'message' => 'Plant records retrieved successfully', 'data' => $userPlants));
       } else {
-        echo json_encode(array('status' => 'fail', 'message' => 'Failed to retrieve user plant records'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to retrieve user plant records'));
       }      
       $this->connection->close();
 
@@ -45,9 +45,9 @@ class UserPlantController extends DB {
 
       if ($result) {
         $userPlant = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array('status' => 'success', 'data' => $userPlant));
+        echo json_encode(array('success' => true, 'message' => 'Plant record retrieved successfully', 'data' => $userPlant));
       } else {
-        echo json_encode(array('status' => 'fail', 'message' => 'Failed to retrieve user plant record'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to retrieve user plant record'));
       }      
       $this->connection->close();
     }
@@ -67,9 +67,9 @@ class UserPlantController extends DB {
       $stmt->bind_param("iis", $user_id, $plant_id, $date_time_added);
 
       if ($stmt->execute()) {
-        echo json_encode(array('status' => 'success', 'message' => 'User plant record created'));
+        echo json_encode(array('success' => true, 'message' => 'User plant record created'));
       } else {
-        echo json_encode(array('status' => 'fail', 'message' => 'Failed to create user plant record'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record'));
       }
       $this->connection->close();
     }
@@ -86,9 +86,9 @@ class UserPlantController extends DB {
       $stmt->bind_param("ii", $plant_id, $user_id);
       
       if ($stmt->execute()) {
-        echo json_encode(array('status' => 'success', 'message' => 'User plant record deleted'));
+        echo json_encode(array('success' => true, 'message' => 'User plant record deleted'));
       } else {
-        echo json_encode(array('status' => 'fail', 'message' => 'Failed to delete user plant record'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to delete user plant record'));
       }
     }
   }
@@ -105,6 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $userPlantController->httpDelete($received_data);
 } else {
-  echo json_encode( array("status" => "error", "message" => "Invalid request method"));
+  echo json_encode( array('success' => false, "message" => "Invalid request method"));
 }
 ?>

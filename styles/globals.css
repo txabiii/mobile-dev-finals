@@ -16,6 +16,12 @@ html {
   --gray-rgb: 236, 236, 236;
 }
 
+.center-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* NAVBAR */
 
 .navbar {
@@ -170,7 +176,6 @@ html {
   height: 35px;
   width: 150px;
   border-radius: 200px;
-  margin-top: 18px;
   border: none;
 }
 
@@ -383,11 +388,12 @@ h3 {
 }
 
 .garden-page-search {
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .grid-layout {
   padding: 20px;
+  padding-top: 0px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;

@@ -19,10 +19,10 @@ class ReportsController extends DB {
       $result = $this->connection->query($query);
   
       if ($result) {
-        $tips = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array("status" => "success", "message" => "Reports retrieved successfully", "data" => $tips));
+        $reports = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode(array('success' => true, "message" => "Reports retrieved successfully", "data" => $reports));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to retrieve reports"));
+        echo json_encode(array('success' => false, "message" => "Failed to retrieve reports"));
       }      
       $this->connection->close();
     }
@@ -39,9 +39,9 @@ class ReportsController extends DB {
       $result = $this->connection->query($query);
 
       if ($result) { 
-        echo json_encode(array( "status" => "success", "message" => "Report created successfully"));
+        echo json_encode(array('success' => true, "message" => "Report created successfully"));
       } else {
-        echo json_encode(array( "status" => "error", "message" => "Failed to create report" ));
+        echo json_encode(array('success' => false, "message" => "Failed to create report" ));
       }
       $this->connection->close();
     }
@@ -61,12 +61,12 @@ class ReportsController extends DB {
         $delete_report_result = $this->connection->query($query);
   
         if ($delete_report_result) {
-          echo json_encode(array("status" => "success", "message" => "Report and post deleted successfully"));
+          echo json_encode(array('success' => true, "message" => "Report and post deleted successfully"));
         } else {
-          echo json_encode(array("status" => "error", "message" => "Failed to delete report"));
+          echo json_encode(array('success' => false, "message" => "Failed to delete report"));
         }
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to delete post"));
+        echo json_encode(array('success' => false, "message" => "Failed to delete post"));
       }  
       $this->connection->close();
     } elseif ($payload['action'] === 'resolve-report') {
@@ -77,9 +77,9 @@ class ReportsController extends DB {
       $delete_report_result = $this->connection->query($query);
   
       if ($delete_report_result) {
-        echo json_encode(array("status" => "success", "message" => "Report resolved successfully"));
+        echo json_encode(array('success' => true, "message" => "Report resolved successfully"));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to resolve report"));
+        echo json_encode(array('success' => false, "message" => "Failed to resolve report"));
       }  
       $this->connection->close();
     }
@@ -95,5 +95,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $reportsController->httpDelete($received_data);
 } else {
-  echo json_encode( array("status" => "error", "message" => "Invalid request method"));
+  echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
 }

@@ -17,9 +17,9 @@ class TipsController extends DB {
       $stmt->bind_param("iss", $plant_id, $title, $content);
 
       if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'message' => 'Tip created successfully']);
+        echo json_encode(array('success' => true, 'message' => 'Tip created successfully'));
       } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to create tip']);
+        echo json_encode(array('success' => false, 'message' => 'Failed to create tip'));
       }
     }
   }
@@ -33,9 +33,9 @@ class TipsController extends DB {
 
       if ($result) {
         $tips = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array("status" => "success", "message" => "Tips retrieved successfully", "data" => $tips));
+        echo json_encode(array('success' => true, "message" => "Tips retrieved successfully", "data" => $tips));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to retrieve tips"));
+        echo json_encode(array('success' => false, "message" => "Failed to retrieve tips"));
       }
       $this->connection->close();
     } elseif($action === 'get-plant-tips') {      
@@ -50,9 +50,9 @@ class TipsController extends DB {
       
       if ($result) {
         $tips = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array("status" => "success", "message" => "Reports retrieved successfully", "data" => $tips));
+        echo json_encode(array('success' => true, "message" => "Reports retrieved successfully", "data" => $tips));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to retrieve tips"));
+        echo json_encode(array('success' => false, "message" => "Failed to retrieve tips"));
       }
     }
   }
@@ -66,9 +66,9 @@ class TipsController extends DB {
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("ssi", $title, $content, $tip_id);
     if ($stmt->execute()) {
-      return json_encode(['success' => true, 'message' => 'Tip updated successfully']);
+      return json_encode(array('success' => true, 'message' => 'Tip updated successfully'));
     } else {
-      return json_encode(['success' => false, 'message' => 'Failed to update tip']);
+      return json_encode(array('success' => false, 'message' => 'Failed to update tip'));
     }
   }
 
@@ -79,9 +79,9 @@ class TipsController extends DB {
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("i", $tip_id);
     if ($stmt->execute()) {
-      return json_encode(['success' => true, 'message' => 'Tip deleted successfully']);
+      return json_encode(array('success' => true, 'message' => 'Tip deleted successfully'));
     } else {
-      return json_encode(['success' => false, 'message' => 'Failed to delete tip']);
+      return json_encode(array('success' => false, 'message' => 'Failed to delete tip'));
     }
   }
 }
@@ -99,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $tipController->httpDelete($received_data);
 } else {
-  http_response_code(405);
-  echo json_encode(['message' => 'Invalid request method']);
+  echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
 }
 ?>

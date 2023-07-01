@@ -17,9 +17,9 @@ class PlantController extends DB {
     $stmt->bind_param("ssisss", $name, $scientific_name, $watering_frequency, $image_url, $description, $guide);
 
     if ($stmt->execute()) {
-      echo json_encode(['message' => 'Plant created successfully']);
+      echo json_encode(array('success' => true, 'message' => 'Plant created successfully'));
     } else {
-      echo json_encode(['message' => 'Failed to create plant']);
+      echo json_encode(array('success' => false, 'message' => 'Failed to create plant'));
     }
   }
 
@@ -32,9 +32,9 @@ class PlantController extends DB {
 
       if ($result) {
         $plants = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array("status" => "success", "message" => "Plants retrieved successfully", "data" => $plants));
+        echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to retrieve plants"));
+        echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
       }
     } elseif ($action === 'get-specific-plant') {
       $plant_id = $_GET['plant_id'];
@@ -47,9 +47,9 @@ class PlantController extends DB {
     
       if ($result) {
         $plant = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array("status" => "success", "message" => "Plant retrieved successfully", "data" => $plant));
+        echo json_encode(array('success' => true, "message" => "Plant retrieved successfully", "data" => $plant));
       } else {
-        echo json_encode(array("status" => "error", "message" => "Failed to retrieve plant"));
+        echo json_encode(array('success' => false, "message" => "Failed to retrieve plant"));
       }
     }
   }  
@@ -71,9 +71,9 @@ class PlantController extends DB {
     $stmt->bind_param("ssisssi", $name, $scientific_name, $watering_frequency, $image_url, $description, $guide, $plant_id);
 
     if ($stmt->execute()) {
-      echo json_encode(['message' => 'Plant updated successfully']);
+      echo json_encode(array('success' => true, 'message' => 'Plant updated successfully'));
     } else {
-      echo json_encode(['message' => 'Failed to update plant']);
+      echo json_encode(array('success' => false, 'message' => 'Failed to update plant'));
     }
   }
 
@@ -86,9 +86,9 @@ class PlantController extends DB {
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-      echo json_encode(['message' => 'Plant deleted successfully']);
+      echo json_encode(array('success' => true, 'message' => 'Plant deleted successfully'));
     } else {
-      echo json_encode(['message' => 'Failed to delete plant']);
+      echo json_encode(array('success' => false, 'message' => 'Failed to update plant'));
     }
   }
 }
@@ -106,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $result = $plantController->deletePlant($received_data);
 } else {
-  http_response_code(405);
-  echo json_encode(['message' => 'Invalid request method']);
+  echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
 }
 ?>

@@ -66,7 +66,7 @@ export function getUserPlants(payload) {
     fetch(`${SERVER_URL}/api/user_plants_controller.php?action=${payload.action}&user_id=${payload.userId}&plant_id=${payload.plantId}`)
       .then(response => response.json())
       .then(result => {
-        if (result.status === 'success') {
+        if (result.success) {
           resolve(result.data);
         } else {
           reject(result.message);

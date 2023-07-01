@@ -12,7 +12,7 @@ class PostsController extends DB {
   
     $posts = $result->fetch_all(MYSQLI_ASSOC);
     if ($posts) {
-      echo json_encode(array('success' => true, 'data' => $posts));
+      echo json_encode(array('success' => true, 'message' => 'Posts fetched successfully', 'data' => $posts));
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to fetch posts'));
     }
@@ -62,5 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $postsController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $postsController->httpDelete();
-} 
+} else {
+  echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
+}
 ?>
