@@ -1,5 +1,5 @@
 import { userData } from "./data.js";
-import { getWaterReminder } from "./utils.js";
+import { displayMyPlants } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -24,8 +24,6 @@ imageProfile.addEventListener("click", function () {
 /**
  * Get data of user's plants
  * Displays the plants of the user
- * @param {array} plants - An array of objects of the user's plants data
- * @returns {void}
  */
 getUserPlants({
   action: 'get-all-user-plants',
@@ -38,40 +36,6 @@ getUserPlants({
 }).catch((error) => {
   //handle error here
 });
-
-function displayMyPlants(plants) {
-  const template = document.getElementById("plant-item-template");
-  const container = document.getElementById("my-plants");
-  const noPlantsContainer = document.getElementById("no-plants");
-
-  if (plants.length === 0) {
-    container.style.display = "none";
-    noPlantsContainer.style.display = "flex";
-    return;
-  } else {
-    container.style.display = "block";
-    noPlantsContainer.style.display = "none";
-  }
-
-  for (const plant of plants) {
-    const plantItem = template.content.cloneNode(true);
-
-    const nameElement = plantItem.querySelector(".name");
-    nameElement.textContent = plant.name;
-
-    const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    waterScheduleElement.textContent = getWaterReminder(plant);
-
-    const imageElement = plantItem.querySelector("img");
-    imageElement.src = plant.image_url;
-
-    nameElement.addEventListener("click", function () {
-      window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
-    });
-
-    container.appendChild(plantItem);
-  }
-}
 
 /**
  * Gets all plants using `getPlant` function and display them accordingly

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garden</title>
+  <link rel="stylesheet" href="./styles/globals.css">
+  <link rel="stylesheet" href="./styles/garden.css">
+</head>
+<body>
+  <div class="navbar">
+    <img src="./assets/logo.svg" alt="logo" />
+    <img
+      src="./assets/missing-profile-image.svg"
+      alt="profile"
+      id="profile-img"
+    />
+  </div>
+
+  <div class="banner">
+    <h2 class="garden-welcome-label">Welcome to your mini garden,</h2>
+    <h1 id="name">Name!</h1>
+    <button class="standard-button">+ Add a plant</button>
+  </div>
+
+  <div class="search-section garden-page-search">
+    <input type="text" placeholder="Search plant" class="search" />
+    <img
+      src="./assets/search-icon.svg"
+      alt="search icon"
+      class="search-icon"
+    />
+  </div>
+
+  <div id="my-plants-loading-group">
+    <div class="explore-plants-loading-box loading"></div>
+    <div class="explore-plants-loading-box loading"></div>
+  </div>
+  <div class="grid-layout" id="my-plants"></div>
+  <div class="no-plants" id="no-plants">
+    <div class="add-first-plant">
+      <img src="./assets/plus-icon.svg" alt="add plant button" />
+    </div>
+    <p>Become a plant parent by adding your plants to your list</p>
+  </div>
+
+  <template id="plant-item-template">
+    <div class="plant-item">
+      <div class="details">
+        <h4 class="name">Plant Name</h4>
+        <h4 class="water-schedule">Water Schedule</h4>
+      </div>
+      <img src="./assets/missing-image-small.png" alt="missing image" />
+    </div>
+  </template>
+  
+  <div class="bottom-navbar-filler"></div>
+  <div class="bottom-navbar">
+    <a href="home.html">
+      <img class="inactive" src="./assets/icons/home.svg" alt="home">
+    </a>
+    <a href="garden.html">
+      <img class="active" src="./assets/icons/garden.svg" alt="garden">
+    </a>
+    <img class="active" src="./assets/icons/add.svg" alt="add">
+    <a href="">        
+      <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
+    </a>
+    <a href="profile.html">
+      <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
+    </a>
+  </div>
+
+  <script src="./scripts/garden.js" type="module"></script>
+</body>
+</html>

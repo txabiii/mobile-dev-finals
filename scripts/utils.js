@@ -122,3 +122,45 @@ export function generateDateTime() {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+/**
+ * Displays plants' data. Important: requires plant-item-template on the HTML page
+ * @param {object} plants 
+ * @returns 
+ */
+export function displayMyPlants(plants) {
+  const template = document.getElementById("plant-item-template");
+  const container = document.getElementById("my-plants");
+  const noPlantsContainer = document.getElementById("no-plants");
+
+  if (plants.length === 0) {
+    container.style.display = "none";
+    noPlantsContainer.style.display = "flex";
+    return;
+  } else {
+    container.style.display = "block";
+    noPlantsContainer.style.display = "none";
+  }
+
+  for (const plant of plants) {
+    const plantItem = template.content.cloneNode(true);
+
+    // #1
+    const nameElement = plantItem.querySelector(".name");
+    nameElement.textContent = plant.name;
+
+    // #2
+    const waterScheduleElement = plantItem.querySelector(".water-schedule");
+    waterScheduleElement.textContent = getWaterReminder(plant);
+
+    // #3
+    const imageElement = plantItem.querySelector("img");
+    imageElement.src = plant.image_url;
+
+    nameElement.addEventListener("click", function () {
+      window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
+    });
+
+    container.appendChild(plantItem);
+  }
+}
