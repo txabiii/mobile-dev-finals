@@ -2,10 +2,6 @@
   color: rgb(var(--green-1-rgb)) !important;
 }
 
-.garden-page-search {
-  margin-top: 20px;
-}
-
 #my-plants {
   display: grid !important;
 }

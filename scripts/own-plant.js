@@ -13,7 +13,7 @@ const goBackImage = document.getElementById("go-back-image");
  * Adds an event listener to the goBackImage element, which navigates to the home page when clicked.
  */
 goBackImage.addEventListener("click", function() {
-  window.location.href = "home.html";
+  window.location.href = "garden.html";
 });
 
 /**

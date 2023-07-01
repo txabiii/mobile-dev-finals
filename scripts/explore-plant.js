@@ -13,7 +13,7 @@ const goBackImage = document.getElementById("go-back-image");
  * Adds an event listener to the goBackImage element, which navigates to the home page when clicked.
  */
 goBackImage.addEventListener("click", function() {
-  window.location.href = "home.html";
+  window.location.href = "library.html";
 });
 
 /** 
@@ -125,7 +125,7 @@ shopLabelElement.addEventListener("click", () => {
     shopIcons.style.display = 'flex';
     shopElement.style.position = 'absolute';
     shopElement.style.borderRadius = '40px 40px 0px 0px';
-    shopElement.style.bottom = '-70px';
+    shopElement.style.bottom = '0px';
     shopElement.style.width = '100%';
     shopElement.style.height = '177px';
   }
