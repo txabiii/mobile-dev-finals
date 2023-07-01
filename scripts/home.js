@@ -10,15 +10,9 @@ import { createReport } from "./api/reportApi.js";
  * Display the username followed by an exclamation mark in an HTML element with the ID "name".
  */
 window.addEventListener("load", function () {
-  const userData = JSON.parse(sessionStorage.getItem("user_data"));
+  const userData = JSON.parse(this.localStorage.getItem("user_data"));
   const usernameElement = document.getElementById("name");
   usernameElement.textContent = userData.username + `!`;
-});
-
-const imageProfile = document.getElementById("profile-img");
-
-imageProfile.addEventListener("click", function () {
-  window.location.href = "profile.html";
 });
 
 /**
@@ -26,21 +20,21 @@ imageProfile.addEventListener("click", function () {
  * Displays the plants of the user
  */
 getUserPlants({
-  action: 'get-all-user-plants',
-  userId: userData.id
+  action: "get-all-user-plants",
+  userId: userData.id,
 }).then((userPlants) => {
   const loading = document.querySelector("#my-plants-loading-group");
   loading.style.display = "none";
 
   displayMyPlants(userPlants);
-})
+});
 
 /**
  * Gets all plants using `getPlant` function and display them accordingly
  */
 getPlant({
-  action: 'get-all-plants',
-  plantId: null
+  action: "get-all-plants",
+  plantId: null,
 }).then((plants) => {
   const loading = document.querySelector("#explore-plants-loading-group");
   loading.style.display = "none";
@@ -138,9 +132,9 @@ function addPost() {
   });
 
   createPost({
-    userId: userData.id, 
-    content: content, 
-    dateTime: now
+    userId: userData.id,
+    content: content,
+    dateTime: now,
   }).then((newId) => {
     const newPost = {
       id: newId,
@@ -204,13 +198,13 @@ function reportPost(post) {
 
   submitButtonElement.addEventListener("click", () => {
     const payload = {
-      action: 'submit-report',
+      action: "submit-report",
       postId: post.id,
       reporterId: userData.id,
-      reason: reasonElement.value
+      reason: reasonElement.value,
     };
     createReport(payload).then(() => {
-      console.log("report popup should go away now")
+      console.log("report popup should go away now");
       closeReport();
     });
   });

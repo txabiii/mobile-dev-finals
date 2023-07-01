@@ -12,7 +12,7 @@ const formFields = {
   newPassword: document.getElementById("new-password-input"),
   confirmPassword: document.getElementById("confirm-password-input"),
 };
-const userData = JSON.parse(sessionStorage.getItem("user_data"));
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 addFocusEventListenerToFields(formFields);
 

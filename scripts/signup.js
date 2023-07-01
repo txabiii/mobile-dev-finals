@@ -81,7 +81,7 @@ signUpButton.addEventListener("click", function () {
   if (validateRegistrationForm()) {
     addUserAccount(form).then((data) => {
       if (data.status === "success") {
-        sessionStorage.setItem("user_data", JSON.stringify(data.data));
+        localStorage.setItem("user_data", JSON.stringify(data.data));
         displaySuccessMessage(data.message);
         redirectWithTimeout(formFields, "verification.html");
       } else {

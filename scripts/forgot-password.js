@@ -36,8 +36,8 @@ sendButton.addEventListener("click", function () {
   } else {
     getUserAccount(emailValue).then((data) => {
       if (data.status === "success") {
-        sessionStorage.setItem("user_data", JSON.stringify(data.data));
-        const userData = JSON.parse(sessionStorage.getItem("user_data"));
+        localStorage.setItem("user_data", JSON.stringify(data.data));
+        const userData = JSON.parse(localStorage.getItem("user_data"));
 
         updateUserAccount(userData).then((data) => {
           if (data.status === "success") {

@@ -5,7 +5,7 @@ editProfile.addEventListener("click", function () {
 });
 
 window.addEventListener("load", function () {
-  const userData = JSON.parse(sessionStorage.getItem("user_data"));
+  const userData = JSON.parse(this.localStorage.getItem("user_data"));
   const userCredentials = {
     username: document.getElementById("actual-username"),
     email: document.getElementById("actual-email-address"),
