@@ -101,4 +101,14 @@ class WateringHistoryController extends DB {
 
 $wateringHistoryController = new WateringHistoryController();
 
+$received_data = json_decode(file_get_contents('php://input'), true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $wateringHistoryController->httpGet();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+  $wateringHistoryController->httpPost($received_data);
+} else {
+  echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
+}
+
 ?>
