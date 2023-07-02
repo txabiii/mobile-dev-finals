@@ -72,9 +72,9 @@ export function redirectWithTimeout(formFields, destination) {
 /**
  * Computes the amount of time between now and the next water scheduling
  * @param {object} plant - The object the data of the plant
- * @returns {string} A string of the remaining time before the next water schedule
+ * @returns {Number} A number in milliseconds of the remaining time before the next water schedule
  */
-export function getWaterReminder(plant) {
+export function getNextWateringTime(plant) {
   const dateAdded = new Date(plant.datetime_added);
 
   const wateringFrequency = plant.watering_frequency;
@@ -92,18 +92,54 @@ export function getWaterReminder(plant) {
   }
 
   const timeDifference = nextWateringDate.getTime() - currentDate.getTime();
+  return timeDifference;
+}
 
+/**
+ * Turns Date format variable into human readable string for watering reminder
+ * @param {Date} timeDifference 
+ * @returns 
+ */
+export function getWaterReminder(timeDifference) {
   const daysLeft = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
   const hoursLeft = Math.floor(
     (timeDifference % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000)
   );
+  const minutesLeft = Math.floor(
+    (timeDifference % (60 * 60 * 1000)) / (60 * 1000)
+  );
 
-  let waterReminderText = "";
+  let waterReminderText;
 
-  if (daysLeft === 0) waterReminderText = hoursLeft + " hours";
-  else waterReminderText = daysLeft + " days" + " & " + hoursLeft + " hours";
+  if (daysLeft === 0) {
+    if (hoursLeft === 0) {
+      waterReminderText = minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
+    } else {
+      const hoursText = hoursLeft + (hoursLeft === 1 ? " hour" : " hours");
+      const minutesText = minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
+      waterReminderText = `${hoursText} and ${minutesText}`;
+    }
+  } else {
+    const daysText = daysLeft + (daysLeft === 1 ? " day" : " days");
+    const hoursText = hoursLeft + (hoursLeft === 1 ? " hour" : " hours");
+    waterReminderText = `${daysText} and ${hoursText}`;
+  }
 
   return waterReminderText;
+}
+
+/**
+ * Checks whether the time between two dates is under one hour
+ * @param {Date} dateNumberOne 
+ * @param {Date} dateNumberTwo 
+ * @returns 
+ */
+export function isTimeDifferenceUnderHour(dateNumberOne, dateNumberTwo) {
+  const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
+
+  const timeDifference = dateNumberTwo.getTime() - new Date(dateNumberOne).getTime();
+
+  return timeDifference < oneHourInMilliseconds;
 }
 
 /**
@@ -151,7 +187,7 @@ export function displayMyPlants(plants) {
 
     // Plant water schedule
     const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    waterScheduleElement.textContent = getWaterReminder(plant);
+    waterScheduleElement.textContent = getWaterReminder(getNextWateringTime(plant));
 
     // Plant image
     const imageElement = plantItem.querySelector("img");

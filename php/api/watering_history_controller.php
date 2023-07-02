@@ -28,7 +28,7 @@ class WateringHistoryController extends DB {
     if($action === 'get-user-watering-history') {
       $user_id = $_GET['userId'];
 
-      $query = 'SELECT * FROM watering_history_tb WHERE user_id = ?';
+      $query = 'SELECT * FROM watering_history_tb WHERE user_id = ? ORDER BY datetime_watered DESC';
 
       $stmt = $this->connection->prepare($query);
 

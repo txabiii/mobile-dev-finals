@@ -388,7 +388,21 @@ h3 {
   object-fit: cover;
 }
 
-/* SHARED CSS BETWEEN GARDEN.HTML and LIBRARY.HTML */
+/* SHARED CSS BETWEEN OWN_PLANT.HTML AND EXPLORE-PLANT.HTML */
+
+.go-back {
+  background-color: rgb(var(--green-1-rgb));
+  padding: 10px 20px; 
+
+  display: flex;
+  align-items: center;
+}
+
+.go-back img {
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
+/* SHARED CSS BETWEEN GARDEN.HTML AND LIBRARY.HTML */
 
 .garden-welcome-label {
   color: rgb(var(--green-1-rgb)) !important;

@@ -17,8 +17,8 @@ export function createWateringHistory(payload) {
     })
     .then(response => response.json())
     .then(result => {
-      displayResultPopup(result);
-      resolve(result.message);
+      if(!result.success) displayResultPopup(error);
+      resolve(result);
     })
     .catch(error => {
       displayResultPopup(error);
@@ -41,7 +41,7 @@ export function getWateringHistory(payload) {
           resolve(result.data);
         } else {
           displayResultPopup(result);
-          reject(result.message);
+          reject(result);
         }
       })
       .catch(error => {
