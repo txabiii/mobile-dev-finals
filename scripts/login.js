@@ -57,7 +57,7 @@ loginButton.addEventListener("click", function () {
 
   if (validateLoginForm()) {
     loginAccount(form).then((data) => {
-      sessionStorage.setItem("user_data", JSON.stringify(data.data));
+      localStorage.setItem("user_data", JSON.stringify(data.data));
 
       if (data.status === "success") {
         displaySuccessMessage(data.message);

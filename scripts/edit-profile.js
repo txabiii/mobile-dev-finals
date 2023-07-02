@@ -9,7 +9,7 @@ import {
 
 const saveButton = document.getElementById("save-button");
 const cancelButton = document.getElementById("cancel-button");
-const userData = JSON.parse(sessionStorage.getItem("user_data"));
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 const formFields = {
   username: document.getElementById("actual-username-input"),
@@ -93,7 +93,7 @@ saveButton.addEventListener("click", function () {
 
   if (validateEditForm()) {
     updateUserAccount(form).then((data) => {
-      sessionStorage.setItem("user_data", JSON.stringify(data.data));
+      localStorage.setItem("user_data", JSON.stringify(data.data));
 
       if (data.status === "success") {
         displaySuccessMessage(data.message);

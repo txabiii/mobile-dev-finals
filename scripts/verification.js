@@ -11,7 +11,7 @@ const sendButton = document.getElementById("send-button");
 const backButton = document.getElementById("back-button");
 const resendCodeElement = document.getElementById("label-resend-code");
 
-const userData = JSON.parse(sessionStorage.getItem("user_data"));
+const userData = JSON.parse(localStorage.getItem("user_data"));
 const verificationCode = [];
 
 addFocusEventListenerToFields(inputs);
