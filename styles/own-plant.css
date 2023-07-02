@@ -12,14 +12,14 @@
   border-radius: 100px;
   box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.15);
   background-color: white;
-  height: 60px;
-  width: 60px;
+  height: 80px;
+  width: 80px;
 
   transition: all 300ms ease;
 
   color: #000;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-family: Rajdhani;
   font-style: normal;
   font-weight: 400;
@@ -38,8 +38,8 @@
 }
 
 .water-reminder-wrapper img {
-  height: 32px;
-  width: 32px;
+  height: 48px;
+  width: 48px;
   transform: translateX(2px);
   filter: invert(54%) sepia(100%) saturate(308%) hue-rotate(73deg) brightness(90%) contrast(80%);
 }
@@ -56,25 +56,21 @@
   display: none;
 }
 
-.water-reminder-wrapper:focus > .pulse {
-  width: calc(100vw - 40px);
-}
-
 .pulse {
   content: ' ';
-  height: 65px;
-  width: calc(100% + 5px);
+  height: 90px;
+  width: 100%;
   position: absolute;
   z-index: -1;
   border-radius: 100px;
-  border: 5px solid rgba(var(--green-1-rgb), 0.5);
-  animation: pulse 1000ms infinite;
+  border: 6px solid rgba(var(--green-1-rgb), 0.5);
+  animation: pulse 600ms infinite;
 }
 
 @keyframes pulse {
   100% {
     border: 1px solid rgba(var(--green-1-rgb), 0.5);
-    height: 90px;
+    height: 110px;
     width: calc(100% + 30px);
   }
 }
@@ -223,13 +219,54 @@
   color: rgb(var(--green-1-rgb));
 }
 
-#plant-description, #plant-guide {
+#plant-description, #plant-guide, .expand-button {
   margin-top: 20px;
 
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   text-align: justify;
+}
+
+#plant-guide {
+  --max-lines: 15;
+  --line-height: 1.4;
+
+  max-height: calc(var(--max-lines) * 1em * var(--line-height));
+  line-height: var(--line-height) ;
+  overflow: hidden;
+
+  position: relative;
+}
+
+#plant-guide:has(+ .expand-button:not(:checked))::before {
+  content: '';
+  position: absolute;
+  height: calc(6em * var(--line-height));
+  width: 100%;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, white)
+}
+
+.expand-button {
+  appearance: none;
+  text-align: center;
+  width: 100%;
+  font-weight: 700;
+  color: rgb(var(--green-2-rgb));
+}
+
+.expand-button::before {
+  content: 'Read more';
+}
+
+.expand-button:checked::before {
+  content: 'Collapse';
+}
+
+#plant-guide:has(+ .expand-button:checked) {
+  max-height: none;
 }
 
 #plant-description {

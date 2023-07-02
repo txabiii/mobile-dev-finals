@@ -5,34 +5,26 @@ import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
 
 /**
- * The image element for returning back.
+ * Adds an event listener to the goBackImage element, which navigates to the home page when clicked.
  * @type {HTMLElement}
  */
 const goBackImage = document.getElementById("go-back-image");
-
-/**
- * Adds an event listener to the goBackImage element, which navigates to the home page when clicked.
- */
 goBackImage.addEventListener("click", function() {
   window.location.href = "garden.html";
 });
 
 /**
  * Parses the URL search parameters from the current window location.
- * @type {URLSearchParams}
- */
-const urlParameters = new URLSearchParams(window.location.search);
-
-/**
  * Retrieves the "plant_id" parameter from the URL search parameters.
+ * @type {URLSearchParams}
  * @type {string}
  */
+const urlParameters = new URLSearchParams(window.location.search);
 const plantId = urlParameters.get("plant_id");
 
 /**
  * Get user's specific plant
  * then call 'displayUserPlants' to show the plant's datas
- * @param {string} id 
  */
 getUserPlants({
   action: 'get-specific-user-plant',
@@ -310,7 +302,6 @@ function handleWaterReminder(plant){
   //for the floating reminder
   const waterReminderWrapper = document.querySelector('.water-reminder-wrapper'); 
   const WaterReminderTextElement = waterReminderWrapper.querySelector('p');
-  WaterReminderTextElement.innerHTML = `It's about time to water your <span id="water-reminder-plant-name">${plant.name}</span>. Click here to record your progress.`
 
   WaterReminderTextElement.addEventListener("click", () => createWateringHistory({
     userId: userData.id,
@@ -330,11 +321,8 @@ function handleWaterReminder(plant){
     const oneHourInMilliseconds = 60 * 60 * 1000;
     const isUnderAnHour = timeDifference < oneHourInMilliseconds;
 
-    // State 1: Watering schedule is under an hour, simply display the floating reminder
-    if(isUnderAnHour) {
-      waterReminderWrapper.style.display = 'flex'; 
-    // If there is watering data already (or if there is none), change UI accordingly
-    } else if(data.length > 0){
+    // Check first if the plant has been watered already today or if it isn't yet
+    if(data.length > 0){
       waterReminderWrapper.style.display = 'flex'; 
 
       //Preparing date and time information needed to display
@@ -351,26 +339,38 @@ function handleWaterReminder(plant){
         hour12: true
       }).format(new Date(`2000-01-01T${scheduledWateringTime}`));
 
-      // styling the floating reminder
-      waterReminderWrapper.style.backgroundColor = 'rgb(var(--green-1-rgb))';
-      waterReminderWrapper.style.border = 'none'
-      waterReminderWrapper.querySelector('img').style.filter = 'unset';
-      waterReminderWrapper.querySelector('.pulse').style.display = 'none';
-      WaterReminderTextElement.style.color = 'white';
-
-      // State #2: The plant has been watered already
+      // State #1: The plant has been watered already
       if(latestWateringDay === today) {
-        WaterReminderTextElement.textContent = `You've watered your ${plant.name} today at ${latestWateringDate.toLocaleTimeString()} Give yourself a pat i the back!`
+        WaterReminderTextElement.innerHTML = `You've watered your <span>${plant.name}</span> today at ${latestWateringDate.toLocaleTimeString()} Give yourself a pat in the back!`;
 
         // Remove event listeners by cloning
         const clonedWaterReminderTextElement = WaterReminderTextElement.cloneNode(true);
         waterReminderWrapper.replaceChild(clonedWaterReminderTextElement, WaterReminderTextElement);
-      // State #3: The plant has yet to be watered
+
+        styleFloatingReminderGreen();
+      // State #2: The time to water the plant is under an hour
+      } else if(isUnderAnHour) {
+        WaterReminderTextElement.innerHTML = `It's about time to water your <span>${plant.name}</span>. Click here to record your progress.`
+      // State #3: The time to water the plant has passed
       } else {
-        WaterReminderTextElement.textContent = `You're scheduled to water your ${plant.name} at ${formattedScheduledWateringTime}. If you missed, it's okay. Click here to record`
+        WaterReminderTextElement.innerHTML = `You're scheduled to water your <span>${plant.name}</span> at <span>${formattedScheduledWateringTime}</span>. Don't forget!`
+        styleFloatingReminderGreen();
       }
     } else {
       waterReminderWrapper.style.display = 'none'; 
     }
   })
+}
+
+/**
+ * Style the floating reminder green
+ */
+function styleFloatingReminderGreen() {
+  const waterReminderWrapper = document.querySelector('.water-reminder-wrapper'); 
+
+  waterReminderWrapper.style.backgroundColor = 'rgb(var(--green-2-rgb))';
+  waterReminderWrapper.style.border = 'none'
+  waterReminderWrapper.querySelector('img').style.filter = 'unset';
+  waterReminderWrapper.querySelector('.pulse').style.display = 'none';
+  waterReminderWrapper.querySelector('p').style.color = 'white';
 }

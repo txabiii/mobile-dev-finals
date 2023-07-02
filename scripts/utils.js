@@ -268,3 +268,10 @@ function removeDisplayResultPopup() {
   const popupElement = document.querySelector('.pop-up-wrapper');
   popupElement.remove();
 }
+
+/**
+ * Toggles the add plants display.
+ */
+export function toggleAddPlants () {
+  console.log('toggleAddPlants function called')
+}

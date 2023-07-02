@@ -20,7 +20,7 @@
     <div class="banner">
       <h2>Hello</h2>
       <h1 id="name">Name!</h1>
-      <button class="standard-button">+ Add a plant</button>
+      <button class="standard-button add-plant-button">+ Add a plant</button>
     </div>
 
     <div class="my-plants-section">
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="no-plants" id="no-plants">
-        <div class="add-first-plant">
+        <div class="add-first-plant add-plant-button">
           <img src="./assets/plus-icon.svg" alt="add plant button" />
         </div>
         <p>Become a plant parent by adding your plants to your list</p>
@@ -51,7 +51,7 @@
 
     <div class="explore-plants-section">
       <h3 class="section-name">Explore Plants</h3>
-      <div class="plants-list" id="explore-plants"> <!--Do not change explore-plants-->
+      <div class="plants-list" id="explore-plants">
         <div id="explore-plants-loading-group" class="home-plants-loading-group">
           <div class="loading-box loading"></div>
           <div class="loading-box loading"></div>
@@ -91,13 +91,17 @@
       <a href="garden.html">
         <img class="inactive" src="./assets/icons/garden.svg" alt="garden">
       </a>
-      <img class="active" src="./assets/icons/add.svg" alt="add">
+      <img class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
       <a href="library.html">        
         <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
       </a>
       <a href="profile.html">
         <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
       </a>
+    </div>
+
+    <div class="add-plant-wrapper">
+      
     </div>
 
     <template id="plant-item-template">

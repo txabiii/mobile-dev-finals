@@ -1,5 +1,5 @@
 import { userData } from "./data.js";
-import { displayMyPlants, displayAllPlants } from "./utils.js";
+import { displayMyPlants, displayAllPlants, toggleAddPlants } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -14,6 +14,12 @@ window.addEventListener("load", function () {
   const usernameElement = document.getElementById("name");
   usernameElement.textContent = userData.username + `!`;
 });
+
+/**
+ * Select add plant buttons and add the `toggleAddPlants` event
+ */
+Array.from(document.getElementsByClassName('add-plant-button'))
+  .forEach(button => button.addEventListener('click', toggleAddPlants));
 
 /**
  * Get data of user's plants
