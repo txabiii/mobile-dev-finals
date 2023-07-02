@@ -54,6 +54,10 @@ getUserPlants({
   window.location.href = 'home.html'
 })
 
+/**
+ * Displays the plant's data into the HTML
+ * @param {Object} plant 
+ */
 function displayPlantData(plant) {
   //For the water reminder
   handleWaterReminder(plant);
@@ -254,6 +258,7 @@ getTips({
     dotGroup.appendChild(dotElement);
   }
   
+  // Add click function to the tips' dots
   const allDots = dotGroup.querySelectorAll('.dot');
   tipsList.addEventListener('scroll', debounce(() => {
     const visibleTipIndex = Math.round(tipsList.scrollLeft / tipsList.offsetWidth);
@@ -285,6 +290,11 @@ function debounce(func, delay) {
   };
 }
 
+/**
+ * Handle the water's reminder data in the HTML
+ * @param {Object} plant 
+ * @returns 
+ */
 function handleWaterReminder(plant){
   const timeDifference = getNextWateringTime(plant)
 
@@ -292,7 +302,7 @@ function handleWaterReminder(plant){
   const waterScheduleElement = document.getElementById('water-schedule')
   waterScheduleElement.innerText = getWaterReminder(timeDifference)
   
-  //if today is not the watering day, return
+  //if today is not the watering day, simply return
   const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
   const isUnderAday = timeDifference < oneDayInMilliseconds;
   if(!isUnderAday) return;
@@ -311,7 +321,7 @@ function handleWaterReminder(plant){
     displayResultPopup({ success: true, message: `You've just recorded your watering of your ${plant.name}! Keep on it`});
   }))
 
-  // Get the latest watering date, if the user has watered today already show congratulations if not remind them
+  // Get the latest watering date, handle different states accordingly
   getWateringHistory({
     action: 'get-user-watering-history',
     userId: userData.id
@@ -320,11 +330,14 @@ function handleWaterReminder(plant){
     const oneHourInMilliseconds = 60 * 60 * 1000;
     const isUnderAnHour = timeDifference < oneHourInMilliseconds;
 
+    // State 1: Watering schedule is under an hour, simply display the floating reminder
     if(isUnderAnHour) {
       waterReminderWrapper.style.display = 'flex'; 
+    // If there is watering data already (or if there is none), change UI accordingly
     } else if(data.length > 0){
       waterReminderWrapper.style.display = 'flex'; 
 
+      //Preparing date and time information needed to display
       const latestWateringDate = new Date(Date.parse(data[0].datetime_watered));
       const dateToday = new Date();
 
@@ -345,15 +358,17 @@ function handleWaterReminder(plant){
       waterReminderWrapper.querySelector('.pulse').style.display = 'none';
       WaterReminderTextElement.style.color = 'white';
 
+      // State #2: The plant has been watered already
       if(latestWateringDay === today) {
         WaterReminderTextElement.textContent = `You've watered your ${plant.name} today at ${latestWateringDate.toLocaleTimeString()} Give yourself a pat i the back!`
-      } else {
-        WaterReminderTextElement.textContent = `You're scheduled to water your ${plant.name} at ${formattedScheduledWateringTime}. Don't forget!`
-      }
 
-      // Remove event listeners by cloning
-      const clonedWaterReminderTextElement = WaterReminderTextElement.cloneNode(true);
-      waterReminderWrapper.replaceChild(clonedWaterReminderTextElement, WaterReminderTextElement);
+        // Remove event listeners by cloning
+        const clonedWaterReminderTextElement = WaterReminderTextElement.cloneNode(true);
+        waterReminderWrapper.replaceChild(clonedWaterReminderTextElement, WaterReminderTextElement);
+      // State #3: The plant has yet to be watered
+      } else {
+        WaterReminderTextElement.textContent = `You're scheduled to water your ${plant.name} at ${formattedScheduledWateringTime}. If you missed, it's okay. Click here to record`
+      }
     } else {
       waterReminderWrapper.style.display = 'none'; 
     }
