@@ -23,7 +23,7 @@
     <button class="standard-button">+ Add a plant</button>
   </div>
 
-  <div class="search-section garden-page-search">
+  <div class="search-section padding-20">
     <input type="text" placeholder="Search plant" class="search" />
     <img
       src="./assets/search-icon.svg"
@@ -47,9 +47,7 @@
   </div>
 
   <div class="center-items button-wrapper">
-    <a href="library.html">
-      <button class="standard-button green-background">Explore new plants</button>
-    </a>
+    <button class="standard-button green-background add-plant-button">Explore new plants</button>
   </div>
 
   <div class="bottom-navbar-filler"></div>
@@ -60,13 +58,37 @@
     <a href="garden.html">
       <img class="active" src="./assets/icons/garden.svg" alt="garden">
     </a>
-    <img class="active" src="./assets/icons/add.svg" alt="add">
+    <img id="add-plant-circle-button" class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
     <a href="library.html">        
       <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
     </a>
     <a href="profile.html">
       <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
     </a>
+  </div>
+
+  <div class="add-plant-wrapper padding-20">
+    <div class="add-plant-header">
+      <h2>Add a new plant!</h2>
+      <div class="close-button">
+        <img src="./assets/icons/x.svg" alt="x button">
+      </div>
+    </div>
+    <div class="search-section">
+      <input type="text" placeholder="Search plant" class="search" />
+      <img
+        src="./assets/search-icon.svg"
+        alt="search icon"
+        class="search-icon"
+      />
+    </div>
+    <div id="add-plants-loading-group" class="grid-layout padding-0">
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+    </div>
+    <div id="add-plants-list" class="grid-layout padding-0"></div>
   </div>
 
   <template id="plant-item-template">

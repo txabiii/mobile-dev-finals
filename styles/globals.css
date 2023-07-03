@@ -408,7 +408,7 @@ h3 {
   color: rgb(var(--green-1-rgb)) !important;
 }
 
-.garden-page-search {
+.padding-20 {
   padding: 20px;
 }
 
@@ -433,4 +433,61 @@ h3 {
   width: 100%;
   height: auto;
   aspect-ratio: 1/1;
+}
+
+/** FORDA ADD PLANT BUTTON **/
+.add-plant-wrapper {
+  display: none;
+
+  position: fixed;
+  bottom: 75px;
+  background-color: white;
+  width: 100%;
+  border-top: 2px solid #D9D9D9;
+  border-radius: 20px 20px 0px 0px;
+  filter: drop-shadow(0px -20px 12px rgba(0,0,0,0.1));
+
+  animation: all 300ms ease;
+}
+
+.add-plant-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-plant-wrapper h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  color: rgb(var(--green-2-rgb));
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.add-plant-wrapper .search-section {
+  padding: 0px;
+  padding-bottom: 20px;
+}
+
+.add-plant-wrapper .search-section img {
+  right: 17px;
+}
+
+.add-plant-wrapper .close-button {
+  position: relative;
+  display: flex;
+  right: 0px;
+}
+
+.padding-0 {
+  padding: 0px;
+}
+
+#add-plants-list {
+  overflow: auto;
+  max-height: 380px;
+}
+
+#add-plant-circle-button {
+  transform: rotate(0deg);
+  animation: transform 300ms ease;
 }

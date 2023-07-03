@@ -1,6 +1,12 @@
 import { userData } from "./data.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { displayMyPlants } from "./utils.js";
+import { displayMyPlants, toggleAddPlants } from "./utils.js";
+
+/**
+ * Select add plant buttons and add the `toggleAddPlants` event
+ */
+Array.from(document.getElementsByClassName('add-plant-button'))
+  .forEach(button => button.addEventListener('click', toggleAddPlants));
 
 /**
  * Waits for the home page to finish loading, retrieves a username from sessionStorage.

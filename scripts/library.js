@@ -1,5 +1,11 @@
-import { displayAllPlants } from "./utils.js";
+import { displayAllPlants, toggleAddPlants } from "./utils.js";
 import { getPlant } from "./api/plantApi.js";
+
+/**
+ * Select add plant buttons and add the `toggleAddPlants` event
+ */
+Array.from(document.getElementsByClassName('add-plant-button'))
+  .forEach(button => button.addEventListener('click', toggleAddPlants));
 
 getPlant({
   action: 'get-all-plants',

@@ -1,3 +1,5 @@
+import { getPlant } from '../scripts/api/plantApi.js';
+
 export const notifyElements = {
   notifyMessageElement: document.getElementById("notify-message"),
   labelNotifyMessageElement: document.getElementById("label-notify-message"),
@@ -165,7 +167,6 @@ export function generateDateTime() {
  * @returns 
  */
 export function displayMyPlants(plants) {
-  const template = document.getElementById("plant-item-template");
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
 
@@ -179,26 +180,35 @@ export function displayMyPlants(plants) {
   }
 
   for (const plant of plants) {
-    const plantItem = template.content.cloneNode(true);
-
-    // Plant name
-    const nameElement = plantItem.querySelector(".name");
-    nameElement.textContent = plant.name;
-
-    // Plant water schedule
-    const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    waterScheduleElement.textContent = getWaterReminder(getNextWateringTime(plant));
-
-    // Plant image
-    const imageElement = plantItem.querySelector("img");
-    imageElement.src = plant.image_url;
-
-    nameElement.addEventListener("click", function () {
-      window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
-    });
-
+    const plantItem = createUserPlantItem(plant);
     container.appendChild(plantItem);
   }
+}
+
+/**
+ * Creates a user plant item HTML element. Important: you need plant-item-template in your HTML
+ * @param {Object} plant 
+ * @returns {HTML} 
+ */
+function createUserPlantItem(userPlant) {
+  const template = document.getElementById("plant-item-template");
+  const userPlantItem = template.content.cloneNode(true);
+
+  const nameElement = userPlantItem.querySelector(".name");
+  nameElement.textContent = userPlant.name;
+
+  const waterScheduleElement = userPlantItem.querySelector(".water-schedule");
+  if (userPlant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
+  else waterScheduleElement.textContent = `Water every ${userPlant.watering_frequency} days`;
+
+  const imageElement = userPlantItem.querySelector("img");
+  imageElement.src = userPlant.image_url;
+
+  nameElement.addEventListener("click", function () {
+    window.location.href = "explore-plant.html?plant_id=" + userPlant.plant_id;
+  });
+
+  return userPlantItem;
 }
 
 /**
@@ -206,28 +216,41 @@ export function displayMyPlants(plants) {
  * @param {object} plants 
  */
 export function displayAllPlants(plants) {
-  const template = document.getElementById("plant-item-template");
   const container = document.getElementById("explore-plants");
 
-  for (const plant of plants) {
-    const plantItem = template.content.cloneNode(true);
-
-    const nameElement = plantItem.querySelector(".name");
-    nameElement.textContent = plant.name;
-
-    const waterScheduleElement = plantItem.querySelector(".water-schedule");
-    if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
-    else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
-
-    const imageElement = plantItem.querySelector("img");
-    imageElement.src = plant.image_url;
-
-    nameElement.addEventListener("click", function () {
-      window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
-    });
-
-    container.appendChild(plantItem);
+  for (const plant of plants) { 
+    const userPlantItem = createUserPlantItem(plant);
+    container.appendChild(userPlantItem);
   }
+}
+
+/**
+ * Creates a plant item HTML element. Important: you need plant-item-template in your HTML
+ * @param {Object} plant 
+ * @returns {HTML} 
+ */
+function createPlantItem(plant) {
+  const template = document.getElementById("plant-item-template");
+  const plantItem = template.content.cloneNode(true);
+
+  // Plant name
+  const nameElement = plantItem.querySelector(".name");
+  nameElement.textContent = plant.name;
+
+  // Plant water schedule
+  const waterScheduleElement = plantItem.querySelector(".water-schedule");
+  if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
+  else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
+
+  // Plant image
+  const imageElement = plantItem.querySelector("img");
+  imageElement.src = plant.image_url;
+
+  nameElement.addEventListener("click", function () {
+    window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
+  });
+
+  return plantItem;
 }
 
 /**
@@ -270,8 +293,45 @@ function removeDisplayResultPopup() {
 }
 
 /**
+ * @type {Boolean}
+ */
+var addPlantButtonToggled = false;
+;
+/**
  * Toggles the add plants display.
  */
 export function toggleAddPlants () {
-  console.log('toggleAddPlants function called')
+  addPlantButtonToggled = !addPlantButtonToggled;
+
+  const addPlantWrapper = document.querySelector('.add-plant-wrapper');
+  const plantsContainer = document.querySelector('#add-plants-list');
+  const addPlantButton = document.querySelector('#add-plant-circle-button');
+  const closeButton = addPlantWrapper.querySelector('.close-button');
+
+  if(addPlantButtonToggled) {
+    addPlantWrapper.style.display = 'block'; 
+    if(plantsContainer) {
+      getPlant({
+        action: 'get-all-plants'
+      })
+      .then((plants) => {
+        for(const plant of plants) {
+          const plantItem = createPlantItem(plant);
+          plantsContainer.appendChild(plantItem);
+        }
+  
+        const loading = document.querySelector('#add-plants-loading-group');
+        loading.style.display = 'none';
+      })
+    }
+
+    closeButton.addEventListener("click", () => {
+      addPlantWrapper.style.display = 'none';
+      addPlantButton.style.transform = 'rotateZ(0deg)';
+    })
+    addPlantButton.style.transform = 'rotateZ(45deg)';
+  } else {
+    addPlantWrapper.style.display = 'none';
+    addPlantButton.style.transform = 'rotateZ(0deg)';
+  }
 }
