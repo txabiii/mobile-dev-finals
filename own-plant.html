@@ -165,6 +165,30 @@
     </a>
   </div>
 
+  <div class="add-plant-wrapper">
+    <div class="add-plant-header">
+      <h2>Add a new plant!</h2>
+      <div class="close-button">
+        <img src="./assets/icons/x.svg" alt="x button">
+      </div>
+    </div>
+    <div class="search-section">
+      <input type="text" placeholder="Search plant" class="search" />
+      <img
+        src="./assets/search-icon.svg"
+        alt="search icon"
+        class="search-icon"
+      />
+    </div>
+    <div id="add-plants-loading-group" class="grid-layout padding-0">
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+      <div class="loading-box loading"></div>
+    </div>
+    <div id="add-plants-list" class="grid-layout padding-0"></div>
+  </div>
+
   <template id="tip-template">
     <div class="tip">
       <h4></h4>

@@ -198,8 +198,7 @@ function createUserPlantItem(userPlant) {
   nameElement.textContent = userPlant.name;
 
   const waterScheduleElement = userPlantItem.querySelector(".water-schedule");
-  if (userPlant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
-  else waterScheduleElement.textContent = `Water every ${userPlant.watering_frequency} days`;
+  waterScheduleElement.textContent = getWaterReminder(getNextWateringTime(userPlant));
 
   const imageElement = userPlantItem.querySelector("img");
   imageElement.src = userPlant.image_url;

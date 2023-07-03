@@ -438,6 +438,8 @@ h3 {
 /** FORDA ADD PLANT BUTTON **/
 .add-plant-wrapper {
   display: none;
+  padding: 20px;
+  padding-bottom: 0px;
 
   position: fixed;
   bottom: 75px;
