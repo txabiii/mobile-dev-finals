@@ -1,7 +1,8 @@
 import { getPlant } from './api/plantApi.js';
 import { createUserPlant } from './api/userPlantsApi.js';
-import { userData } from './data.js';
 import { generateDateTime, toggleAddPlants } from './utils.js';
+
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
@@ -93,7 +94,7 @@ function displayPlantData(id) {
       createUserPlant({
         action: 'create-plant',
         plantId: plant.plant_id,
-        userId: userData.id,
+        userId: userData.user_id,
         dateTime: generateDateTime()
       })
     })

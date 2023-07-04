@@ -1,6 +1,7 @@
 import { toggleAddPlants, getNextWateringTime, getFormattedTime, getWaterReminder } from "./utils.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { userData } from "./data.js";
+
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
@@ -36,7 +37,7 @@ const beyondPlants = Array();
 // Get users plants and sort them by watering schedule group
 getUserPlants({
   action: "get-all-user-plants",
-  userId: userData.id,
+  userId: userData.user_id,
 })
 .then((plants) => {
   if(plants.length === 0) {

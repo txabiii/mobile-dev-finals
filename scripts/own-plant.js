@@ -1,8 +1,9 @@
 import { getNextWateringTime, getWaterReminder, generateDateTime, displayResultPopup, toggleAddPlants } from "./utils.js";
 import { getUserPlants, deleteUserPlant } from './api/userPlantsApi.js';
-import { userData } from './data.js';
 import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
+
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
@@ -35,7 +36,7 @@ const plantId = urlParameters.get("plant_id");
 getUserPlants({
   action: 'get-specific-user-plant',
   plantId: plantId,
-  userId: userData.id
+  userId: userData.user_id
 })
 .then((userPlants) => {
   const plantOverviewLoadingPlaceholder = document.querySelector('#plant-overview-loading');
@@ -122,7 +123,7 @@ function displayPlantData(plant) {
   });
 
   const dateAddedStat = document.querySelector('#date-added-stats');
-  dateAddedStat.querySelector('#text').innerHTML = `You added Bougainvillea on <span class="data">${dateOnly}</span>`;
+  dateAddedStat.querySelector('#text').innerHTML = `You added <span class="data">${plant.name}</span> on <span class="data">${dateOnly}</span>`;
 
   const daysSpentStat = document.querySelector('#days-spent-stats');
   const daysDifference = getDayDifferenceFromToday(plant.datetime_added);
@@ -134,7 +135,7 @@ function displayPlantData(plant) {
   const waterRecordedStat = document.querySelector('#water-recorded-stats');
   getWateringHistory({
     action: 'get-user-specific-plant-watering-history',
-    userId: userData.id,
+    userId: userData.user_id,
     plantId: plant.plant_id
   })
   .then((data) => {
@@ -310,7 +311,7 @@ function handleWaterReminder(plant){
   // Get the latest watering date, handle different states accordingly
   getWateringHistory({
     action: 'get-user-specific-plant-watering-history',
-    userId: userData.id,
+    userId: userData.user_id,
     plantId: plant.plant_id
   })
   .then((wateringData) => {
@@ -346,7 +347,7 @@ function handleWaterReminder(plant){
           WaterReminderTextElement.innerHTML = `It's about time to water your <span>${plant.name}</span>. Click here to record your progress.`
 
           WaterReminderTextElement.addEventListener("click", () => createWateringHistory({
-            userId: userData.id,
+            userId: userData.user_id,
             plantId: plant.plant_id,
             datetime: generateDateTime()
           })
