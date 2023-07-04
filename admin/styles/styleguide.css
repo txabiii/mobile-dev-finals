@@ -1,0 +1,47 @@
+:root { 
+  --apple: #4caf50;
+  --aqua-deep: #054d3b;
+  --black: #000000;
+  --white: #ffffff;
+ 
+  --font-size-l: 16px;
+  --font-size-m: 15px;
+  --font-size-s: 14px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 20px;
+  --font-size-xxxl: 30px;
+ 
+  --font-family-barlow: "Barlow", Helvetica;
+  --font-family-rajdhani: "Rajdhani", Helvetica;
+}
+.barlow-medium-aqua-deep-18px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.barlow-medium-aqua-deep-15px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.barlow-bold-aqua-deep-30px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xxxl);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.barlow-medium-aqua-deep-20px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 500;
+}

@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow:400|Rajdhani:700");
+
+:root {
+    --black: rgba(0, 0, 0, 1);
+    --aqua-deep: rgba(5, 77, 59, 1);
+    --cararra: rgba(236, 236, 236, 0.502);
+    --white: rgba(255, 255, 255, 1);
+
+    --font-size-s: 18px;
+    --font-size-m: 20px;
+    --font-size-l: 30px;
+
+    --font-family-barlow: "Barlow";
+    --font-family-rajdhani: "Rajdhani";
+}
+
+.barlow-normal-black-18px {
+    color: var(--black);
+    font-family: var(--font-family-barlow);
+    font-size: var(--font-size-s);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.barlow-normal-black-20px {
+    color: var(--black);
+    font-family: var(--font-family-barlow);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.login {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px none;
+    display: flex;
+    flex-direction: column;
+    padding: 98px 381px;
+    width: 1440px;
+}
+
+.hidden,
+.hidden *{
+    pointer-events:none;
+    visibility: none;
+}
+
+.group-10 {
+    align-items: flex-start;
+    display: flex;
+    margin-top: 15px;
+    min-width: 676px;
+}
+
+.x-container {
+    align-items: center;
+    background-color: var(--cararra);
+    border-radius: 20px;
+    display: flex;
+    gap: 11px;
+    height: 60px;
+    min-width: 674px;
+    padding: 0 20px;
+}
+
+.mdipassword {
+    height: 30px;
+    width: 30px;
+}
+
+.password {
+    letter-spacing: 0;
+    line-height: normal;
+    min-height: 24px;
+    opacity: 0.7;
+    white-space: nowrap;
+    width: 133px;
+}
+
+.group-9 {
+    align-items: flex-start;
+    display: flex;
+    margin-top: 69px;
+    min-width: 676px;
+}
+
+.phuser-bold {
+    height: 30px;
+    width: 30px;
+}
+
+.username-or-email-address {
+    letter-spacing: 0;
+    line-height: normal;
+    min-height: normal;
+    min-width: 235px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.group-12 {
+    align-items: flex-start;
+    display: flex;
+    gap: 341px;
+    margin-top: 14px;
+    min-width: 676px;
+}
+
+.forgot-password {
+    letter-spacing: 0;
+    line-height: normal;
+    min-height: 22px;
+    opacity: 0.7;
+}
+
+.group-11 {
+    align-items: center;
+    display: flex;
+    gap: 7px;
+    height: 22px;
+    min-width: 194px;
+}
+
+.rectangle-21 {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--aqua-deep);
+    height: 20px;
+    width: 20px;
+}
+
+.remember-password {
+    letter-spacing: 0;
+    line-height: normal;
+    min-height: 22px;
+    min-width: 165px;
+    opacity: 0.7;
+}
+
+.group-13 {
+    align-items: flex-start;
+    align-self: center;
+    display: flex;
+    margin-left: 3px;
+    margin-top: 152px;
+    min-width: 329px;
+}
+
+.overlap-group2 {
+    align-items: center;
+    background-color: var(--aqua-deep);
+    border-radius: 20px;
+    display: flex;
+    height: 45px;
+    justify-content: center;
+    min-width: 100px;
+    padding: 8px 129px;
+}
+
+.title {
+    color: var(--white);
+    font-family: var(--font-family-rajdhani);
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    min-height: 38px;
+    min-width: 68px; 
+}
+
+.plant-parenthood-1 {
+    align-self: center;
+    height: 381px;
+    width: 674px;
+}
