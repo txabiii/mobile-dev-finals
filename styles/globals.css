@@ -53,6 +53,7 @@ html {
   font-family: 'Rajdhani', sans-serif;
   font-size: 30px;
   font-weight: 700;
+  max-width: 269px;
 }
 
 .banner h1 {
@@ -64,6 +65,11 @@ html {
 
 .banner button {
   margin-top: 18px;
+}
+
+.shorter-banner {
+  height: 122px;
+  background-position: center bottom;
 }
 
 /* LOADING ANIMATION */
@@ -90,7 +96,7 @@ html {
 }
 
 .green-loading {
-  background: linear-gradient(to right, #c2d5c4 8%, #cbedd9 18%, #c2d5c4 33%);
+  background: linear-gradient(to right, #D2EBD3 8%, #E5FAEA 18%, #D2EBD3 33%);
   background-size: 800px 104px;
   animation: shimmer 1.5s infinite linear;
 }
@@ -388,6 +394,20 @@ h3 {
   object-fit: cover;
 }
 
+.small-water-reminder {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  display: none;
+  background-color: rgb(var(--green-2-rgb));
+  border-radius: 0px 0px 0px 10px;
+}
+
+.small-water-reminder img {
+  height: 24px;
+  width: 24px;
+}
+
 /* SHARED CSS BETWEEN OWN_PLANT.HTML AND EXPLORE-PLANT.HTML */
 
 .go-back {
@@ -402,11 +422,7 @@ h3 {
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
-/* SHARED CSS BETWEEN GARDEN.HTML AND LIBRARY.HTML */
-
-.garden-welcome-label {
-  color: rgb(var(--green-1-rgb)) !important;
-}
+/* SHARED CSS BETWEEN GARDEN.HTML AND REMINDER.HTML */
 
 .padding-20 {
   padding: 20px;
@@ -438,6 +454,9 @@ h3 {
 /** FORDA ADD PLANT BUTTON **/
 .add-plant-wrapper {
   display: none;
+  padding: 20px;
+  padding-bottom: 0px;
+  z-index: 5;
 
   position: fixed;
   bottom: 75px;

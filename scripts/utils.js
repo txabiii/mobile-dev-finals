@@ -166,7 +166,7 @@ export function generateDateTime() {
  * @param {object} plants 
  * @returns 
  */
-export function displayMyPlants(plants) {
+export function displayUserPlants(plants) {
   const container = document.getElementById("my-plants");
   const noPlantsContainer = document.getElementById("no-plants");
 
@@ -198,14 +198,21 @@ function createUserPlantItem(userPlant) {
   nameElement.textContent = userPlant.name;
 
   const waterScheduleElement = userPlantItem.querySelector(".water-schedule");
-  if (userPlant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
-  else waterScheduleElement.textContent = `Water every ${userPlant.watering_frequency} days`;
+  const nextWateringTime = getNextWateringTime(userPlant)
+  waterScheduleElement.textContent = getWaterReminder(nextWateringTime);
 
-  const imageElement = userPlantItem.querySelector("img");
+  const oneDay = 60 * 60 * 1000 * 24;
+  if(nextWateringTime < oneDay) {
+    const smallWaterReminder = userPlantItem.querySelector('.small-water-reminder');
+    smallWaterReminder.style.display = 'block'
+  }
+
+  const imageElement = userPlantItem.querySelector("#plant-image");
+  console.log(imageElement);
   imageElement.src = userPlant.image_url;
 
   nameElement.addEventListener("click", function () {
-    window.location.href = "explore-plant.html?plant_id=" + userPlant.plant_id;
+    window.location.href = "own-plant.html?plant_id=" + userPlant.plant_id;
   });
 
   return userPlantItem;
@@ -219,7 +226,7 @@ export function displayAllPlants(plants) {
   const container = document.getElementById("explore-plants");
 
   for (const plant of plants) { 
-    const userPlantItem = createUserPlantItem(plant);
+    const userPlantItem = createPlantItem(plant);
     container.appendChild(userPlantItem);
   }
 }
@@ -243,11 +250,11 @@ function createPlantItem(plant) {
   else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
 
   // Plant image
-  const imageElement = plantItem.querySelector("img");
+  const imageElement = plantItem.querySelector("#plant-image");
   imageElement.src = plant.image_url;
 
   nameElement.addEventListener("click", function () {
-    window.location.href = "own-plant.html?plant_id=" + plant.plant_id;
+    window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
   });
 
   return plantItem;
@@ -296,7 +303,6 @@ function removeDisplayResultPopup() {
  * @type {Boolean}
  */
 var addPlantButtonToggled = false;
-;
 /**
  * Toggles the add plants display.
  */
@@ -311,10 +317,12 @@ export function toggleAddPlants () {
   if(addPlantButtonToggled) {
     addPlantWrapper.style.display = 'block'; 
     if(plantsContainer) {
+      if(plantsContainer.innerHTML !== '') return;
       getPlant({
         action: 'get-all-plants'
       })
       .then((plants) => {
+        plantsContainer.innerHTML = '';
         for(const plant of plants) {
           const plantItem = createPlantItem(plant);
           plantsContainer.appendChild(plantItem);
@@ -334,4 +342,17 @@ export function toggleAddPlants () {
     addPlantWrapper.style.display = 'none';
     addPlantButton.style.transform = 'rotateZ(0deg)';
   }
+}
+
+/**
+ * Returns a time in AM or PM format
+ * @param {Numbee} time in milliseconds 
+ * @returns 
+ */
+export function getFormattedTime(time) {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  }).format(new Date(`2000-01-01T${time}`));
 }

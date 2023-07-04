@@ -22,9 +22,11 @@ export function createUserPlant(payload) {
       displayResultPopup(result);
       resolve(result.message);
     })
-    .catch(error => {
-      displayResultPopup(error);
-      reject(error);
+    .catch(() => {
+      displayResultPopup({
+        success: false,
+        message: 'Failed to add this plant.'
+      });
     });
   });
 }

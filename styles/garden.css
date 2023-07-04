@@ -1,11 +1,12 @@
-.garden-welcome-label {
-  color: rgb(var(--green-1-rgb)) !important;
-}
-
 #my-plants {
   display: grid !important;
 }
 
 .button-wrapper {
   padding: 0px 20px 20px 20px;
+}
+
+.no-plants {
+  padding-right: 0px;
+  margin-bottom: 20px;
 }
