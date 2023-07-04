@@ -89,6 +89,7 @@ class UserPlantController extends DB {
       } else {
         echo json_encode(array('success' => false, 'message' => 'Failed to delete user plant record'));
       }
+      $this->connection->close();
     }
   }
 }

@@ -10,12 +10,13 @@ class PostsController extends DB {
 
     $result = $this->connection->query($query);
   
-    $posts = $result->fetch_all(MYSQLI_ASSOC);
-    if ($posts) {
+    if ($result) {
+      $posts = $result->fetch_all(MYSQLI_ASSOC);
       echo json_encode(array('success' => true, 'message' => 'Posts fetched successfully', 'data' => $posts));
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to fetch posts'));
     }
+    $this->connection->close();
   }
 
   public function httpPost($payload) {
@@ -34,6 +35,7 @@ class PostsController extends DB {
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to create post'));
     }
+    $this->connection->close();
   }
 
   public function httpDelete() {
@@ -49,6 +51,7 @@ class PostsController extends DB {
     } else {
       echo json_encode(array('success' => false, 'message' => 'Failed to delete post'));
     }
+    $this->connection->close();
   } 
 }
 

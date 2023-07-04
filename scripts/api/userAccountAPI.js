@@ -1,6 +1,8 @@
+import { SERVER_URL } from "../config.js";
+
 export function getUserAccount(payload) {
   return new Promise((resolve, reject) => {
-    const url = `./php/user-account.php?email=${encodeURIComponent(
+    const url = `${SERVER_URL}/user-account.php?email=${encodeURIComponent(
       payload.email
     )}&action=${encodeURIComponent(payload.action)}`;
 
@@ -23,7 +25,7 @@ export function getUserAccount(payload) {
 
 export function addUserAccount(payload) {
   return new Promise((resolve, reject) => {
-    fetch("./php/user-account.php", {
+    fetch(`${SERVER_URL}/user-account.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +44,7 @@ export function addUserAccount(payload) {
 
 export function loginAccount(payload) {
   return new Promise((resolve, reject) => {
-    fetch("./php/user-account.php", {
+    fetch(`${SERVER_URL}/user-account.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
