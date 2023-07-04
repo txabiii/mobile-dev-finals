@@ -10,7 +10,7 @@ class UserPlantController extends DB {
     if($action === 'get-all-user-plants') {
       $query = "SELECT up.*, p.name, p.watering_frequency, p.image_url FROM user_plants_tb AS up
       JOIN plants_tb AS p ON up.plant_id = p.plant_id
-      WHERE up.id = ?";
+      WHERE up.id = ? ORDER BY up.datetime_added";
 
       $stmt = $this->connection->prepare($query);
     
@@ -65,10 +65,12 @@ class UserPlantController extends DB {
 
       $stmt->bind_param("iis", $user_id, $plant_id, $date_time_added);
 
-      if ($stmt->execute()) {
+      $result = $stmt->get_result();
+
+      if ($result) {
         echo json_encode(array('success' => true, 'message' => 'User plant record created'));
       } else {
-        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record. Check if you already have a record for this plant'));
       }
       $this->connection->close();
     }

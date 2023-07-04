@@ -343,3 +343,16 @@ export function toggleAddPlants () {
     addPlantButton.style.transform = 'rotateZ(0deg)';
   }
 }
+
+/**
+ * Returns a time in AM or PM format
+ * @param {Numbee} time in milliseconds 
+ * @returns 
+ */
+export function getFormattedTime(time) {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  }).format(new Date(`2000-01-01T${time}`));
+}

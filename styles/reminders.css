@@ -1,0 +1,97 @@
+.reminder-no-plants {
+  display: none;
+  padding: 20px;
+  margin-bottom: 20px;
+  flex-direction: column;
+  background-color: rgba(var(--green-1-rgb), 0.25);
+  border-radius: 15px;
+
+  font-size: 18px;
+  font-family: 'Barlow', sans-serif;
+  color: rgb(var(--green-1-rgb));
+}
+
+.reminder-no-plants img {
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+}
+
+.plant-reminder {
+  height: 120px;
+  display: flex;
+  background-color: rgb(var(--green-1-rgb));
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.plant-reminder img {
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.plant-reminder .data {
+  flex-grow: 1;
+  background-color: #D2EBD3;
+  padding: 20px 15px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  color: rgb(var(--green-2-rgb));
+  border-radius: 0px 15px 15px 0px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.plant-reminder .data .filler {
+  flex: 1;
+}
+
+.plant-reminder .data h4 {
+  font-size: 22px;
+}
+
+.plant-reminder .data .water-schedule {
+  display: flex;
+  gap: 5px;
+}
+
+.plant-reminder .data .water-schedule p {
+  font-weight: 700;
+}
+
+.plant-reminder .buttons {
+  flex-basis: 70px;
+  padding: 20px 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plant-reminder .buttons img {
+  position: relative;
+  height: 28px;
+  width: 28px;
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+.plant-reminder .buttons .plant {
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
+.green-loading {
+  height: 120px;
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 20px;
+
+}

@@ -96,7 +96,7 @@ html {
 }
 
 .green-loading {
-  background: linear-gradient(to right, #c2d5c4 8%, #cbedd9 18%, #c2d5c4 33%);
+  background: linear-gradient(to right, #D2EBD3 8%, #E5FAEA 18%, #D2EBD3 33%);
   background-size: 800px 104px;
   animation: shimmer 1.5s infinite linear;
 }
@@ -399,6 +399,8 @@ h3 {
   right: 0;
   padding: 10px;
   display: none;
+  background-color: rgb(var(--green-2-rgb));
+  border-radius: 0px 0px 0px 10px;
 }
 
 .small-water-reminder img {
@@ -420,7 +422,7 @@ h3 {
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
-/* SHARED CSS BETWEEN GARDEN.HTML AND LIBRARY.HTML */
+/* SHARED CSS BETWEEN GARDEN.HTML AND REMINDER.HTML */
 
 .padding-20 {
   padding: 20px;
