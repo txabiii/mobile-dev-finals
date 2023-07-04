@@ -8,6 +8,7 @@
 
   font-size: 18px;
   font-family: 'Barlow', sans-serif;
+  text-align: center;
   color: rgb(var(--green-1-rgb));
 }
 
@@ -21,6 +22,9 @@
   background-color: rgb(var(--green-1-rgb));
   border-radius: 15px;
   overflow: hidden;
+}
+
+.grid-on-landscape {
   margin-bottom: 20px;
 }
 
@@ -34,7 +38,7 @@
 .plant-reminder .data {
   flex-grow: 1;
   background-color: #D2EBD3;
-  padding: 20px 15px;
+  padding: 10px 15px;
   font-family: 'Barlow', sans-serif;
   font-size: 16px;
   color: rgb(var(--green-2-rgb));
@@ -95,7 +99,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    grid-row-gap: 30px;
     grid-auto-columns: 1fr;
   }
 }

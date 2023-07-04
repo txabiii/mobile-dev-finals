@@ -208,7 +208,6 @@ function createUserPlantItem(userPlant) {
   }
 
   const imageElement = userPlantItem.querySelector("#plant-image");
-  console.log(imageElement);
   imageElement.src = userPlant.image_url;
 
   nameElement.addEventListener("click", function () {

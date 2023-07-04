@@ -16,7 +16,7 @@ Array.from(document.getElementsByClassName("add-plant-button"))
  */
 const goBackImage = document.getElementById("go-back-image");
 goBackImage.addEventListener("click", function() {
-  window.location.href = "garden.html";
+  window.history.back();
 });
 
 /**
@@ -345,24 +345,26 @@ function handleWaterReminder(plant){
         hour12: true
       }).format(new Date(`2000-01-01T${scheduledWateringTime}`));
 
-      const latestWateringDate = new Date(Date.parse(wateringData[0].datetime_watered));
       const dateToday = new Date();
-
-      const latestWateringDay = latestWateringDate.getDay()
       const today = dateToday.getDay();
 
-      if(wateringData.length !== 0) {
+      const nextWateringDate = new Date(dateToday.getTime() + timeDifference);
+      const todayOrTomorrow = nextWateringDate.getDay() === today ? ' today ' : ' tomorrow ';
+      
+      if(wateringData.length !== 0) {  
+        const latestWateringDate = new Date(Date.parse(wateringData[0].datetime_watered));  
+        const latestWateringDay = latestWateringDate.getDay();
+
         if(latestWateringDay === today) {
           styleFloatingReminderGreen();
           WaterReminderTextElement.innerHTML = `You've watered your <span>${plant.name}</span> today at ${latestWateringDate.toLocaleTimeString()} Give yourself a pat in the back!`;
         } else {
           styleFloatingReminderGreen();
-          WaterReminderTextElement.innerHTML = `You're scheduled to water your <span>${plant.name}</span> at <span>${formattedScheduledWateringTime}</span>. Don't forget!`
+          WaterReminderTextElement.innerHTML = `You're scheduled to water your <span>${plant.name}</span> at <span>${formattedScheduledWateringTime + todayOrTomorrow}</span>. Don't forget!`
         }
       } else {
-        console.log("here")
         styleFloatingReminderGreen();
-        WaterReminderTextElement.innerHTML = `You're scheduled to water your <span>${plant.name}</span> at <span>${formattedScheduledWateringTime}</span>. Don't forget!`
+        WaterReminderTextElement.innerHTML = `You're scheduled to water your <span>${plant.name}</span> at <span>${formattedScheduledWateringTime + todayOrTomorrow}</span>. Don't forget!`
       }
     } else {
       waterReminderWrapper.style.display = 'none'; 

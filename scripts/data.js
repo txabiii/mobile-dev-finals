@@ -23,4 +23,6 @@ export let allPlantsData = []
 
 export const userData = {
   id: 2,
+  profile_image_url: './assets/users/default.png',
+  username: 'txabsss',
 }
