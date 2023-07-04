@@ -3,10 +3,9 @@ import { toggleAddPlants } from "./utils.js";
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
  */
-Array.from(document.getElementsByClassName("add-plant-button"))
-  .forEach(button => button.addEventListener("click", toggleAddPlants));
-
-console.log(document.getElementsByClassName("add-plant-button"))
+Array.from(document.getElementsByClassName("add-plant-button")).forEach(
+  (button) => button.addEventListener("click", toggleAddPlants)
+);
 
 const editProfile = document.getElementById("label-edit-button");
 
