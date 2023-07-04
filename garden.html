@@ -17,13 +17,11 @@
     />
   </div>
 
-  <div class="banner">
-    <h2 class="garden-welcome-label">Welcome to your mini garden,</h2>
-    <h1 id="name">Name!</h1>
-    <button class="standard-button">+ Add a plant</button>
+  <div class="banner shorter-banner">
+    <h2>Welcome to your mini garden!</h2>
   </div>
 
-  <div class="search-section padding-20">
+  <div id="search-plant" class="search-section padding-20">
     <input type="text" placeholder="Search plant" class="search" />
     <img
       src="./assets/search-icon.svg"
@@ -39,35 +37,40 @@
     <div class="loading-box loading"></div>
   </div>
   <div class="grid-layout" id="my-plants"></div>
-  <div class="no-plants" id="no-plants">
+
+  <div class="no-plants add-plant-button" id="no-plants">
     <div class="add-first-plant">
       <img src="./assets/plus-icon.svg" alt="add plant button" />
     </div>
     <p>Become a plant parent by adding your plants to your list</p>
   </div>
 
-  <div class="center-items button-wrapper">
+  <div id="explore-new-plants" class="center-items button-wrapper">
     <button class="standard-button green-background add-plant-button">Explore new plants</button>
   </div>
 
   <div class="bottom-navbar-filler"></div>
   <div class="bottom-navbar">
-    <a href="home.html">
-      <img class="inactive" src="./assets/icons/home.svg" alt="home">
+    <a class="inactive icon" href="home.html">
+      <img src="./assets/icons/home.svg" alt="home">
+      <p>Home</p>
     </a>
-    <a href="garden.html">
-      <img class="active" src="./assets/icons/garden.svg" alt="garden">
+    <a class="active icon" href="garden.html">
+      <img src="./assets/icons/garden.svg" alt="garden">
+      <p>Garden</p>
     </a>
-    <img id="add-plant-circle-button" class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
-    <a href="library.html">        
-      <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
+    <img id="add-plant-circle-button" class="add-plant-button" src="./assets/icons/add.svg" alt="add">
+    <a class="inactive icon" href="reminder.html">        
+      <img src="./assets/icons/can-black.svg" alt="reminder">
+      <p>Reminder</p>
     </a>
-    <a href="profile.html">
-      <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
+    <a class="inactive icon" href="profile.html">
+      <img src="./assets/icons/profile.svg" alt="profile">
+      <p>Profile</p>
     </a>
   </div>
 
-  <div class="add-plant-wrapper padding-20">
+  <div class="add-plant-wrapper">
     <div class="add-plant-header">
       <h2>Add a new plant!</h2>
       <div class="close-button">
@@ -92,12 +95,15 @@
   </div>
 
   <template id="plant-item-template">
-    <div class="plant-item">
-      <div class="details">
+      <div class="plant-item">
+        <div class="small-water-reminder">
+          <img src="./assets/icons/can.svg" alt="can">
+        </div>
+        <div class="details">
         <h4 class="name">Plant Name</h4>
         <h4 class="water-schedule">Water Schedule</h4>
       </div>
-      <img src="./assets/missing-image-small.png" alt="missing image" />
+        <img id="plant-image" src="./assets/missing-image-small.png" alt="missing image" />
     </div>
   </template>
 

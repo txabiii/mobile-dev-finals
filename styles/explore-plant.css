@@ -26,10 +26,6 @@
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
-#plant-image {
-  visibility: hidden;
-}
-
 .plant-image-wrapper {
   width: 100vw;
   position: relative;
@@ -129,7 +125,7 @@
 
 .extra-details-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Set two columns per row */
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   grid-row-gap: 30px;
   grid-auto-columns: 1fr;
@@ -197,7 +193,7 @@
   justify-content: space-between;
 }
 
-.icon {
+.shop-icons .icon {
   height: 62px;
   width: 62px;
   border-radius: 10px;
@@ -208,4 +204,16 @@
   font-family: 'Barlow', sans-serif;
   font-size: 14px;
   opacity: 0.75;
+}
+
+@media screen and (orientation: landscape) {
+  .plant-image-wrapper {
+    height: calc(100svh - (56px * 2) - 39px);
+  }
+
+  .plant-image-wrapper img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: unset;
+  }
 }

@@ -16,6 +16,10 @@ html {
   --gray-rgb: 236, 236, 236;
 }
 
+a {
+  text-decoration: none;
+}
+
 .center-items {
   display: flex;
   align-items: center;
@@ -30,15 +34,26 @@ html {
   justify-content: space-between;
   background-color: white;
   z-index: 2;
+  height: 74px;
 
   position: sticky;
   top: 0;
 }
 
 .navbar img {
-  height: 50px;
+  height: 100%;
   width: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
+
+@media screen and (orientation: landscape) {
+  .navbar {
+    height: 56px;
+    padding: 6px 20px;
+  }
+}
+
 
 /* BANNER */
 
@@ -53,6 +68,7 @@ html {
   font-family: 'Rajdhani', sans-serif;
   font-size: 30px;
   font-weight: 700;
+  max-width: 269px;
 }
 
 .banner h1 {
@@ -64,6 +80,11 @@ html {
 
 .banner button {
   margin-top: 18px;
+}
+
+.shorter-banner {
+  height: 122px;
+  background-position: center bottom;
 }
 
 /* LOADING ANIMATION */
@@ -90,7 +111,7 @@ html {
 }
 
 .green-loading {
-  background: linear-gradient(to right, #c2d5c4 8%, #cbedd9 18%, #c2d5c4 33%);
+  background: linear-gradient(to right, #D2EBD3 8%, #E5FAEA 18%, #D2EBD3 33%);
   background-size: 800px 104px;
   animation: shimmer 1.5s infinite linear;
 }
@@ -116,7 +137,8 @@ html {
   height: 100vh;
   width: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
-  z-index: 3;
+  z-index: 6;
+  width: 100vw;
 }
 
 .pop-up {
@@ -128,7 +150,7 @@ html {
   border-radius: 20px;
   padding: 20px;
   background-color: white;
-  z-index: 5;
+  z-index: 7;
   width: calc(100vw - 40px);
 }
 
@@ -225,13 +247,11 @@ html {
 }
 
 .bottom-navbar .active {
-  position: relative;
-  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+  color: rgb(var(--green-1-rgb));
 }
 
-.bottom-navbar .active::after {
-  content: '';
-  position: absolute;
+.bottom-navbar .active img {
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
 }
 
 .bottom-navbar .inactive {
@@ -242,6 +262,43 @@ html {
 .bottom-navbar .inactive:hover {
   transform: translateY(-8px);
 }
+
+.bottom-navbar .icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottom-navbar a {
+  margin-bottom: -5px;
+}
+
+.bottom-navbar .icon p {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bottom-navbar .add-plant-button {
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+}
+
+@media screen and (orientation: landscape) {
+  .icon {
+    flex-direction: row !important;
+    gap: 10px;
+  }
+
+  .bottom-navbar {
+    height: 56px;
+    padding: 6px 20px;
+  }
+
+  .bottom-navbar-filler {
+    height: 56px;
+  }
+}
+
 
 /* SEARCH */
 
@@ -388,6 +445,20 @@ h3 {
   object-fit: cover;
 }
 
+.small-water-reminder {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  display: none;
+  background-color: rgb(var(--green-2-rgb));
+  border-radius: 0px 0px 0px 10px;
+}
+
+.small-water-reminder img {
+  height: 24px;
+  width: 24px;
+}
+
 /* SHARED CSS BETWEEN OWN_PLANT.HTML AND EXPLORE-PLANT.HTML */
 
 .go-back {
@@ -402,11 +473,7 @@ h3 {
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
-/* SHARED CSS BETWEEN GARDEN.HTML AND LIBRARY.HTML */
-
-.garden-welcome-label {
-  color: rgb(var(--green-1-rgb)) !important;
-}
+/* SHARED CSS BETWEEN GARDEN.HTML AND REMINDER.HTML */
 
 .padding-20 {
   padding: 20px;
@@ -435,9 +502,19 @@ h3 {
   aspect-ratio: 1/1;
 }
 
+@media screen and (orientation: landscape) {
+  .grid-layout {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
 /** FORDA ADD PLANT BUTTON **/
 .add-plant-wrapper {
   display: none;
+  padding: 20px;
+  padding-bottom: 0px;
+  z-index: 5;
 
   position: fixed;
   bottom: 75px;
@@ -484,10 +561,25 @@ h3 {
 
 #add-plants-list {
   overflow: auto;
-  max-height: 380px;
+  max-height: 350px;
+  margin-bottom: 20px;
 }
 
 #add-plant-circle-button {
   transform: rotate(0deg);
   animation: transform 300ms ease;
+}
+
+@media screen and (orientation: landscape) {
+  .add-plant-wrapper {
+    border-radius: 0px;
+    border: none;
+    max-height: calc(100svh - 56px);
+    overflow: auto;
+    bottom: 56px;
+  }
+
+  #plant-list {
+    max-height: unset;
+  }
 }

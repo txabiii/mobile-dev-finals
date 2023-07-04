@@ -10,7 +10,7 @@ class UserPlantController extends DB {
     if($action === 'get-all-user-plants') {
       $query = "SELECT up.*, p.name, p.watering_frequency, p.image_url FROM user_plants_tb AS up
       JOIN plants_tb AS p ON up.plant_id = p.plant_id
-      WHERE up.id = ?";
+      WHERE up.id = ? ORDER BY up.datetime_added";
 
       $stmt = $this->connection->prepare($query);
     
@@ -68,7 +68,7 @@ class UserPlantController extends DB {
       if ($stmt->execute()) {
         echo json_encode(array('success' => true, 'message' => 'User plant record created'));
       } else {
-        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record.'));
       }
       $this->connection->close();
     }
@@ -104,6 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $userPlantController->httpDelete($received_data);
 } else {
-  echo json_encode( array('success' => false, "message" => "Invalid request method"));
+  echo json_encode(array('success' => false, "message" => "Invalid request method"));
 }
 ?>
