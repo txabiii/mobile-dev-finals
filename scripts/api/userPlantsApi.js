@@ -12,9 +12,6 @@ export function createUserPlant(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/user_plants_controller.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(payload)
     })
     .then(response => response.json())

@@ -2,6 +2,7 @@
 require_once '../db.php';
 
 class PostsController extends DB {
+  
   public function httpGet() {
     $query = "SELECT p.*, u.profile_image_url, u.username
             FROM posts_tb p 

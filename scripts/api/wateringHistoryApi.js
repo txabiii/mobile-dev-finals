@@ -10,9 +10,6 @@ export function createWateringHistory(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/watering_history_controller.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(payload)
     })
     .then(response => response.json())

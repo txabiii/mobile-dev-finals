@@ -29,9 +29,6 @@ export function createPlant(plantData) {
   return new Promise((resolve, reject) => {
     fetch('/api/plants_controller.php', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(plantData)
     })
     .then(response => response.json())
@@ -56,9 +53,6 @@ export function updatePlant(plantId, updatedData) {
   return new Promise((resolve, reject) => {
     fetch(`/api/plants_controller.php/${plantId}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(updatedData)
     })
     .then(response => response.json())
@@ -81,9 +75,6 @@ export function deletePlant(plantId) {
   return new Promise((resolve, reject) => {
     fetch(`/api/plants_controller.php/${plantId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
     })
     .then(response => response.json())
     .then(data => {      

@@ -11,9 +11,6 @@ export function createReport(payload) {
 
     fetch(`${SERVER_URL}/api/reports_controller.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(payload)
     })
       .then(response => response.json())
@@ -36,9 +33,6 @@ export function deleteReport(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/reports_controller.php`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(payload)
     })
       .then(response => response.json())

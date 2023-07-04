@@ -6,9 +6,6 @@ export function createTip(plant_id, title, content) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/tips_controller.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         plant_id: plant_id,
         title: title,
@@ -45,9 +42,6 @@ export function updateTip(tip_id, title, content) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/tips_controller.php`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         tip_id: tip_id,
         title: title,
@@ -65,9 +59,6 @@ export function deleteTip(tip_id) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/tips_controller.php`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         tip_id: tip_id,
       }),

@@ -5,9 +5,6 @@ export function createPost(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/posts_controller.php`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(payload),
     })
     .then(response => response.json())
@@ -49,12 +46,7 @@ export function deletePost(postId) {
 
 export function getPosts() {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts_controller.php`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(`${SERVER_URL}/api/posts_controller.php`)
     .then(response => response.json())
     .then(data => {
       const posts = data.data;
