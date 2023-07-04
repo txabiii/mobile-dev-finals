@@ -65,12 +65,10 @@ class UserPlantController extends DB {
 
       $stmt->bind_param("iis", $user_id, $plant_id, $date_time_added);
 
-      $result = $stmt->get_result();
-
-      if ($result) {
+      if ($stmt->execute()) {
         echo json_encode(array('success' => true, 'message' => 'User plant record created'));
       } else {
-        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record. Check if you already have a record for this plant'));
+        echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record.'));
       }
       $this->connection->close();
     }
@@ -106,6 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $userPlantController->httpDelete($received_data);
 } else {
-  echo json_encode( array('success' => false, "message" => "Invalid request method"));
+  echo json_encode(array('success' => false, "message" => "Invalid request method"));
 }
 ?>

@@ -5,3 +5,8 @@
 .button-wrapper {
   padding: 0px 20px 20px 20px;
 }
+
+.no-plants {
+  padding-right: 0px;
+  margin-bottom: 20px;
+}

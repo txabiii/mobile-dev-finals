@@ -133,8 +133,9 @@ function displayPlantData(plant) {
 
   const waterRecordedStat = document.querySelector('#water-recorded-stats');
   getWateringHistory({
-    action: 'get-user-watering-history',
-    userId: userData.id
+    action: 'get-user-specific-plant-watering-history',
+    userId: userData.id,
+    plantId: plant.plant_id
   })
   .then((data) => {
     if(data.length === 0) {

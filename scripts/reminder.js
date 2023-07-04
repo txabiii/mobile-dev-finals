@@ -39,6 +39,15 @@ getUserPlants({
   userId: userData.id,
 })
 .then((plants) => {
+  if(plants.length === 0) {
+    const noPlantsMessage = document.getElementById('no-plants');
+    noPlantsMessage.style.display = 'flex';
+
+    const reminderContainer = document.getElementById('reminder-container');
+    reminderContainer.style.display = 'none';
+    return;
+  }
+
   // Sort plants by next watering time
   for(const plant of plants) {
     const nextWateringTime = getNextWateringTime(plant);
@@ -71,21 +80,21 @@ getUserPlants({
     const plantElement = generatePlantReminder(plant);
     plantsToday.appendChild(plantElement);
   }
-  if(todayPlants.length === 0) noPlantsToday.style.display = 'block';
+  if(todayPlants.length === 0) noPlantsToday.style.display = 'flex';
   plantsTodayLoading.style.display = 'none';
 
   for(const plant of nextSevenDayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsNextSevenDays.appendChild(plantElement);
   }
-  if(nextSevenDayPlants.length === 0) noPlantsNextSevenDays.style.display = 'block';
+  if(nextSevenDayPlants.length === 0) noPlantsNextSevenDays.style.display = 'flex';
   plantsNextSevenDaysLoading.style.display = 'none';
 
   for(const plant of beyondPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsBeyond.appendChild(plantElement);
   }
-  if(beyondPlants.length === 0) noPlantsBeyond.style.display = 'block';
+  if(beyondPlants.length === 0) noPlantsBeyond.style.display = 'flex';
   plantsBeyondLoading.style.display = 'none';
 });
 
