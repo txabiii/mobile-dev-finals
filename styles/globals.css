@@ -16,6 +16,10 @@ html {
   --gray-rgb: 236, 236, 236;
 }
 
+a {
+  text-decoration: none;
+}
+
 .center-items {
   display: flex;
   align-items: center;
@@ -558,6 +562,7 @@ h3 {
 #add-plants-list {
   overflow: auto;
   max-height: 350px;
+  margin-bottom: 20px;
 }
 
 #add-plant-circle-button {

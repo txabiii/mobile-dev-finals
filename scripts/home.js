@@ -210,7 +210,6 @@ function reportPost(post) {
       reason: reasonElement.value,
     };
     createReport(payload).then(() => {
-      console.log("report popup should go away now");
       closeReport();
     });
   });

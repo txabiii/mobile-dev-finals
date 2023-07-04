@@ -50,7 +50,7 @@ class WateringHistoryController extends DB {
       $user_id = $_GET['userId'];
       $plant_id = $_GET['plantId'];
 
-      $query = 'SELECT * FROM watering_history_tb WHERE user_id = ? AND plant_id = ?';
+      $query = 'SELECT * FROM watering_history_tb WHERE user_id = ? AND plant_id = ? ORDER BY datetime_watered DESC';
 
       $stmt = $this->connection->prepare($query);
 
@@ -68,7 +68,7 @@ class WateringHistoryController extends DB {
       $this->connection->close();
 
     } elseif($action === 'get-all-users-watering-history') {
-      $query = 'SELECT * FROM watering_history_tb';
+      $query = 'SELECT * FROM watering_history_tb ORDER BY datetime_watered DESC';
       $result = $this->connection->query($query);
 
       if ($result) {

@@ -74,8 +74,6 @@ getUserPlants({
     }
   }
 
-  console.log(plants)
-
   for(const plant of todayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsToday.appendChild(plantElement);

@@ -285,8 +285,6 @@ export function displayResultPopup(result) {
     const body = document.getElementsByTagName("body")[0];
     const firstChild = body.firstChild;
     body.insertBefore(popupElement, firstChild);
-  } else {
-    console.log("Make sure popup template is in the HTML where the script calling this function exists.")
   }
 }
 

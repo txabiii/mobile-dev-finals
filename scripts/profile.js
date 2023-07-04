@@ -5,9 +5,7 @@ import { toggleAddPlants } from "./utils.js";
  */
 Array.from(document.getElementsByClassName("add-plant-button"))
   .forEach(button => button.addEventListener("click", toggleAddPlants));
-
-console.log(document.getElementsByClassName("add-plant-button"))
-
+  
 const editProfile = document.getElementById("label-edit-button");
 
 editProfile.addEventListener("click", function () {

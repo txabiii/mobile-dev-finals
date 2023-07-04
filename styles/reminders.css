@@ -22,13 +22,20 @@
   background-color: rgb(var(--green-1-rgb));
   border-radius: 15px;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .grid-on-landscape {
   margin-bottom: 20px;
 }
 
-.plant-reminder img {
+#plant-image {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plant-reminder .data img {
   width: auto;
   height: 100%;
   aspect-ratio: 1/1;
@@ -100,6 +107,10 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     grid-auto-columns: 1fr;
+  }
+
+  .plant-reminder {
+    margin-bottom: 0px;
   }
 }
 

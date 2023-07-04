@@ -205,3 +205,15 @@
   font-size: 14px;
   opacity: 0.75;
 }
+
+@media screen and (orientation: landscape) {
+  .plant-image-wrapper {
+    height: calc(100svh - (56px * 2) - 39px);
+  }
+
+  .plant-image-wrapper img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: unset;
+  }
+}
