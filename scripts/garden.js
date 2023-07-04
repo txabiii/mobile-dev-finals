@@ -1,6 +1,6 @@
 import { userData } from "./data.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { displayMyPlants, toggleAddPlants } from "./utils.js";
+import { displayUserPlants, toggleAddPlants } from "./utils.js";
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
@@ -29,5 +29,5 @@ getUserPlants({
   const loading = document.querySelector("#garden-plants-loading-group");
   loading.style.display = "none";
 
-  displayMyPlants(userPlants);
+  displayUserPlants(userPlants);
 });

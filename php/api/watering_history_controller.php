@@ -52,6 +52,8 @@ class WateringHistoryController extends DB {
 
       $query = 'SELECT * FROM watering_history_tb WHERE user_id = ? AND plant_id = ?';
 
+      $stmt = $this->connection->prepare($query);
+
       $stmt->bind_param("ii", $user_id, $plant_id);
 
       $stmt->execute();

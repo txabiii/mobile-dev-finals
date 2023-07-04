@@ -1,7 +1,13 @@
 import { getPlant } from './api/plantApi.js';
 import { createUserPlant } from './api/userPlantsApi.js';
 import { userData } from './data.js';
-import { generateDateTime } from './utils.js';
+import { generateDateTime, toggleAddPlants } from './utils.js';
+
+/**
+ * Select add plant buttons and add the `toggleAddPlants` event
+ */
+Array.from(document.getElementsByClassName("add-plant-button"))
+  .forEach(button => button.addEventListener("click", toggleAddPlants));
 
 /**
  * The image element for returning back.

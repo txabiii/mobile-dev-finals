@@ -1,5 +1,5 @@
 import { userData } from "./data.js";
-import { displayMyPlants, displayAllPlants, toggleAddPlants } from "./utils.js";
+import { displayUserPlants, displayAllPlants, toggleAddPlants } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -32,7 +32,7 @@ getUserPlants({
   const loading = document.querySelector("#my-plants-loading-group");
   loading.style.display = "none";
 
-  displayMyPlants(userPlants);
+  displayUserPlants(userPlants);
 });
 
 /**

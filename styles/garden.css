@@ -1,7 +1,3 @@
-.garden-welcome-label {
-  color: rgb(var(--green-1-rgb)) !important;
-}
-
 #my-plants {
   display: grid !important;
 }

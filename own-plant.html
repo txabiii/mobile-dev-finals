@@ -158,7 +158,7 @@
     </a>
     <img id="add-plant-circle-button" class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
     <a href="library.html">        
-      <img class="inactive" src="./assets/icons/explore.svg" alt="explore">
+      <img class="inactive" src="./assets/icons/can-black.svg" alt="explore">
     </a>
     <a href="profile.html">
       <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
@@ -188,6 +188,19 @@
     </div>
     <div id="add-plants-list" class="grid-layout padding-0"></div>
   </div>
+
+  <template id="plant-item-template">
+      <div class="plant-item">
+        <div class="small-water-reminder">
+          <img src="./assets/icons/can.svg" alt="can">
+        </div>
+        <div class="details">
+        <h4 class="name">Plant Name</h4>
+        <h4 class="water-schedule">Water Schedule</h4>
+      </div>
+        <img id="plant-image" src="./assets/missing-image-small.png" alt="missing image" />
+    </div>
+  </template>
 
   <template id="tip-template">
     <div class="tip">

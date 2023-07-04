@@ -53,6 +53,7 @@ html {
   font-family: 'Rajdhani', sans-serif;
   font-size: 30px;
   font-weight: 700;
+  max-width: 269px;
 }
 
 .banner h1 {
@@ -64,6 +65,11 @@ html {
 
 .banner button {
   margin-top: 18px;
+}
+
+.shorter-banner {
+  height: 122px;
+  background-position: center bottom;
 }
 
 /* LOADING ANIMATION */
@@ -388,6 +394,18 @@ h3 {
   object-fit: cover;
 }
 
+.small-water-reminder {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  display: none;
+}
+
+.small-water-reminder img {
+  height: 24px;
+  width: 24px;
+}
+
 /* SHARED CSS BETWEEN OWN_PLANT.HTML AND EXPLORE-PLANT.HTML */
 
 .go-back {
@@ -403,10 +421,6 @@ h3 {
 }
 
 /* SHARED CSS BETWEEN GARDEN.HTML AND LIBRARY.HTML */
-
-.garden-welcome-label {
-  color: rgb(var(--green-1-rgb)) !important;
-}
 
 .padding-20 {
   padding: 20px;
@@ -440,6 +454,7 @@ h3 {
   display: none;
   padding: 20px;
   padding-bottom: 0px;
+  z-index: 5;
 
   position: fixed;
   bottom: 75px;
