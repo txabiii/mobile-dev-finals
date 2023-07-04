@@ -78,12 +78,6 @@
   filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
 }
 
-@keyframes pulse {
-  50% {
-    transform: scale(1.5);
-  }
-}
-
 .plant-reminder .buttons .plant {
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
@@ -95,3 +89,15 @@
   margin-bottom: 20px;
 
 }
+
+@media screen and (orientation: landscape) {
+  .grid-on-landscape {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    grid-row-gap: 30px;
+    grid-auto-columns: 1fr;
+  }
+}
+
+
