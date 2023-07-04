@@ -181,9 +181,9 @@ class API extends DB
 		} else if ($action === 'update_user_credentials') {
 			$user_id = $payload['user_id'];
 
-			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?";
+			$search_existing_user = 'SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?';
 			$statement = $this->connection->prepare($search_existing_user);
-			$statement->bind_param("ss", $payload['email'], $payload['username']);
+			$statement->bind_param('ss', $payload['email'], $payload['username']);
 			$statement->execute();
 			$result = $statement->get_result();
 
@@ -198,29 +198,35 @@ class API extends DB
 			} else {
 				$update_user_credentials_query = "UPDATE user_accounts_tb SET ";
 				$update_params = array();
-				$param_types = "";
+				$param_types = '';
 
 				if (isset($payload['username'])) {
 					$update_user_credentials_query .= "username = ?, ";
 					$update_params[] = $payload['username'];
-					$param_types .= "s";
+					$param_types .= 's';
 				}
 
 				if (isset($payload['email'])) {
 					$update_user_credentials_query .= "email = ?, ";
 					$update_params[] = $payload['email'];
-					$param_types .= "s";
+					$param_types .= 's';
 				}
 
 				if (isset($payload['password'])) {
 					$hashed_password = password_hash($payload['password'], PASSWORD_DEFAULT);
 					$update_user_credentials_query .= "password = ?, ";
 					$update_params[] = $hashed_password;
-					$param_types .= "s";
+					$param_types .= 's';
 					$user_data['password'] = $payload['password'];
 				}
 
-				$update_user_credentials_query = rtrim($update_user_credentials_query, ", ");
+				if (isset($payload['profilePictureFile'])) {
+					$update_user_credentials_query .= "profile_image_url = ?, ";
+					$update_params[] = './assets/users/' . $payload['profilePictureFile'];
+					$param_types .= 's';
+				}
+
+				$update_user_credentials_query = rtrim($update_user_credentials_query, ', ');
 				$update_user_credentials_query .= " WHERE user_id = $user_id";
 				$statement = $this->connection->prepare($update_user_credentials_query);
 
@@ -231,9 +237,14 @@ class API extends DB
 				$execution = $statement->execute();
 
 				if ($execution) {
-					$search_user = "SELECT * FROM user_accounts_tb WHERE user_id = ?";
+					// if (isset($payload['profilePictureFile'])) {
+					// 	$folder = '.mobile-dev-finals/assets/users/' . basename($payload['profilePictureFile']);
+					// 	copy($payload['profilePictureFile'], $folder);
+					// }
+
+					$search_user = 'SELECT * FROM user_accounts_tb WHERE user_id = ?';
 					$statement = $this->connection->prepare($search_user);
-					$statement->bind_param("s", $user_id);
+					$statement->bind_param('s', $user_id);
 					$statement->execute();
 					$result = $statement->get_result();
 
@@ -243,6 +254,7 @@ class API extends DB
 						'user_id' => $user['user_id'],
 						'username' => $user['username'],
 						'email' => $user['email'],
+						'profile_image_url' => $user['profile_image_url']
 					);
 					echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
 				} else {

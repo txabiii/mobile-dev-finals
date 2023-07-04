@@ -15,6 +15,7 @@ const formFields = {
   username: document.getElementById("actual-username-input"),
   email: document.getElementById("actual-email-address-input"),
   password: document.getElementById("actual-password-input"),
+  profilePictureFile: document.getElementById("change-photo-file"),
 };
 
 addFocusEventListenerToFields(formFields);
@@ -28,6 +29,7 @@ function getFormInputValues() {
   const newUsername = formFields.username.value.trim();
   const newEmail = formFields.email.value.trim();
   const newPassword = formFields.password.value.trim();
+  const newProfilePictureFile = formFields.profilePictureFile.files[0];
 
   if (newUsername !== userData.username) {
     payload.username = newUsername;
@@ -39,6 +41,10 @@ function getFormInputValues() {
 
   if (newPassword !== "") {
     payload.password = newPassword;
+  }
+
+  if (newProfilePictureFile) {
+    payload.profilePictureFile = newProfilePictureFile.name;
   }
 
   return payload;
@@ -90,12 +96,10 @@ cancelButton.addEventListener("click", function () {
 
 saveButton.addEventListener("click", function () {
   const form = getFormInputValues();
-
   if (validateEditForm()) {
     updateUserAccount(form).then((data) => {
-      localStorage.setItem("user_data", JSON.stringify(data.data));
-
       if (data.status === "success") {
+        localStorage.setItem("user_data", JSON.stringify(data.data));
         displaySuccessMessage(data.message);
         redirectWithTimeout(formFields, "profile.html");
       } else {
