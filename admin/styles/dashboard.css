@@ -146,5 +146,36 @@ a:hover {
   background: none;
 }
 
+.header {
+  background-color: var(--aqua-deep);
+  display: flex;
+  flex-direction: column;
+  left: 243px;
+  padding: 23px 16px;
+  position: absolute;
+  width: 100%;
+}
+
+.header-text{
+  color: var(--white);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xxxl);
+  font-weight: 700;
+  height: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.header-subtext{
+  color: var(--white);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+  height: 18px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
 
 
