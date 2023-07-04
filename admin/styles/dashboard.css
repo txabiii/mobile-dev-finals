@@ -178,4 +178,61 @@ a:hover {
   white-space: nowrap;
 }
 
+.dashboard-info {
+  flex-direction: row;
+  gap: 8px;
+  left: 287px;
+  min-height: 860px;
+  position: absolute;
+  top: 129px;
+  width: 1114px;
+  align-items: flex-start;
+  display: flex;
+  height: 205px;
+  min-width: 1114px;
+}
 
+.green-box {
+  align-items: flex-start;
+  background-color: var(--white);
+  border: 2px solid;
+  border-color: var(--apple);
+  border-radius: 20px;
+  display: flex;
+  gap: 85px;
+  height: 140px;
+  justify-content: flex-end;
+  min-width: 270px;
+  padding: 23px 13px;
+  margin-left: 10px;
+}
+
+.green-box-format {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  min-height: 85px;
+  width: 110px;
+}
+
+.green-box-img {
+  height: 50px;
+  width: 50px;
+}
+
+.green-box-txt{
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.green-box-number {
+  align-self: flex-end;
+  letter-spacing: 0;
+  height: 36px;
+  margin-bottom: 2px;
+  min-width: 45px;
+  line-height: normal;
+  white-space: nowrap;
+}
