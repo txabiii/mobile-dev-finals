@@ -147,5 +147,10 @@ body {
 @media screen and (orientation: landscape) {
   body {
     flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .profile {
+    padding-bottom: 20px;
   }
 }
