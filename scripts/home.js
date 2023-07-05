@@ -1,4 +1,9 @@
-import { displayUserPlants, displayAllPlants, toggleAddPlants } from "./utils.js";
+import { 
+  displayUserPlants, 
+  displayAllPlants, 
+  toggleAddPlants,
+  makeSearchInputsWork
+} from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -41,7 +46,6 @@ getUserPlants({
  */
 getPlant({
   action: "get-all-plants",
-  plantId: null,
 }).then((plants) => {
   const loading = document.querySelector("#explore-plants-loading-group");
   loading.style.display = "none";
@@ -226,3 +230,5 @@ function closeReport() {
   const removeReportElement = document.querySelector(".report-wrapper");
   removeReportElement.remove();
 }
+
+makeSearchInputsWork();

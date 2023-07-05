@@ -1,6 +1,6 @@
 import { getPlant } from './api/plantApi.js';
 import { createUserPlant } from './api/userPlantsApi.js';
-import { generateDateTime, toggleAddPlants } from './utils.js';
+import { generateDateTime, toggleAddPlants, makeSearchInputsWork } from './utils.js';
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 
@@ -171,3 +171,5 @@ function addShopClickEvents(plantName) {
     window.open(`https://spruceplantshop.com/search?q=${preparedPlantName.replace(/\s/g, "+")}`, '_blank')
   })
 }
+
+makeSearchInputsWork();

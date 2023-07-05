@@ -7,14 +7,17 @@ import { displayResultPopup } from "../utils.js";
  */
 export function getPlant(payload) {
   return new Promise((resolve, reject) => {
-    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
+    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}&search=${payload.search}`)
       .then(response => response.json())
       .then(result => {
         if(!result.success) displayResultPopup(data);
         resolve(result.data)
       }) 
       .catch(error => {        
-        displayResultPopup(result);
+        displayResultPopup({
+          success: false,
+          message: 'Failed to get plant'
+        });
         reject(error)
       });
   });
@@ -37,7 +40,10 @@ export function createPlant(plantData) {
       resolve(data)
     })
     .catch(error => {        
-      displayResultPopup(result);
+      displayResultPopup({
+        success: false,
+        message: 'Failed to create plant'
+      });
       reject(error)
     });
   });

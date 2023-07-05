@@ -38,7 +38,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   background-color: white;
-  z-index: 2;
+  z-index: 4;
   height: 74px;
 
   position: sticky;
@@ -239,6 +239,7 @@ input:focus {
 
 .bottom-navbar {
   position: fixed;
+  z-index: 4;
   bottom: 0;
   width: 100vw;
 
@@ -347,15 +348,70 @@ input:focus {
 }
 
 .search-result {
+  display: none;
+
   position: absolute;
   width: calc(100% - 40px);
   background-color: rgb(var(--green-3-rgb));
-  height: 250px;  
-  top: 0px;
+  top: 0;
   z-index: 1;
-  border-radius: 0px 0px 20px 20px;
+  padding: 20px;
+  padding-top: 20px;
+  border-radius: 0px 0px 15px 15px;
+  font-family: 'Barlow', sans-serif;
+}
 
-  height: 0px;
+.search-result h2 {
+  color: rgb(var(--green-2-rgb));
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(var(--green-2-rgb), 0.6);
+}
+
+#search-result-list {
+  max-height: 250px;
+  overflow: auto;
+}
+
+.empty-search-result {
+  display: none;
+}
+
+.result-item {
+  background-color: rgb(var(--green-1-rgb));
+  border-radius: 10px;
+  padding: 10px;
+  height: 75px;
+  margin-bottom: 10px;
+
+  color: white;
+
+  display: flex;
+}
+
+.result-item:last-child {
+  margin: 0px;
+}
+
+.result-item img {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.result-item .data {
+  padding: 10px 10px;
+}
+
+.result-item h3 {
+  font-size: 22px;
+  line-height: 16px;
+}
+
+.result-item p {
+  font-size: 14px;
 }
 
 /* PLANT ITEMS */

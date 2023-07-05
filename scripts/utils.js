@@ -72,6 +72,24 @@ export function redirectWithTimeout(formFields, destination) {
 }
 
 /**
+ * A helper function to delay events
+ * @param {number} func 
+ * @param {number} delay 
+ * @returns 
+ */
+export function debounce(func, delay) {
+  let timer;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(context, args);
+    }, delay);
+  };
+}
+
+/**
  * Computes the amount of time between now and the next water scheduling
  * @param {object} plant - The object the data of the plant
  * @returns {Number} A number in milliseconds of the remaining time before the next water schedule
@@ -352,4 +370,59 @@ export function getFormattedTime(time) {
     minute: 'numeric',
     hour12: true
   }).format(new Date(`2000-01-01T${time}`));
+}
+
+export function makeSearchInputsWork() {
+  Array.from(document.getElementsByClassName('search-section'))
+  .forEach(searchSection => {
+    console.log(searchSection)
+    // Relevant HTML elements
+    const searchResultWrapper = searchSection.querySelector("#search-result-wrapper");
+    const searchResultList = searchSection.querySelector("#search-result-list");
+    const emptySearchResult = searchSection.querySelector(".empty-search-result");
+    const searchResultLabel = searchSection.querySelector('#search-result-label');
+
+    const searchInput = searchSection.querySelector(".search-plant-input");
+    searchInput.addEventListener("input", debounce(() => {
+      searchResultList.innerHTML = '';
+    
+      if(searchInput.value === '' || searchInput.value.length < 4) {
+        searchResultWrapper.style.display = 'none';
+        return
+      };
+      console.log(searchInput.value);
+      getPlant({
+        action: 'search-plants',
+        search: searchInput.value
+      })
+      .then((data) => {
+        searchResultWrapper.style.display = 'block';
+
+        for(const plant of data) {
+          const resultItem = createPlantSearchResultItem(plant);
+          searchResultList.appendChild(resultItem);
+        }
+      
+        const hasResult = data.length !== 0 ? true : false;
+      
+        emptySearchResult.style.display = hasResult ? 'none' : 'block';
+        searchResultLabel.style.display = hasResult ? 'block' : 'none';
+      })
+    }, 1000));
+  });
+}
+
+function createPlantSearchResultItem(plant) {
+  const searchResultItemTemplate = document.querySelector(".search-result-item");
+
+  const resultItem = searchResultItemTemplate.content.cloneNode(true);
+  const image = resultItem.querySelector("img");
+  const name = resultItem.querySelector(".name");
+  const wateringFrequency = resultItem.querySelector(".watering-frequency");
+
+  image.src = plant.image_url;
+  name.textContent = plant.name;
+  wateringFrequency.textContent = `Water every ${plant.watering_frequency} days`;
+
+  return resultItem;
 }

@@ -1,4 +1,10 @@
-import { getNextWateringTime, getWaterReminder, generateDateTime, displayResultPopup, toggleAddPlants } from "./utils.js";
+import { 
+  getNextWateringTime, 
+  getWaterReminder, 
+  generateDateTime, 
+  displayResultPopup, 
+  toggleAddPlants, 
+  debounce } from "./utils.js";
 import { getUserPlants, deleteUserPlant } from './api/userPlantsApi.js';
 import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
@@ -268,24 +274,6 @@ getTips({
 .catch(error => {
   console.error('Error fetching tips:', error);
 });
-
-/**
- * A helper function to delay events
- * @param {number} func 
- * @param {number} delay 
- * @returns 
- */
-function debounce(func, delay) {
-  let timer;
-  return function () {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(context, args);
-    }, delay);
-  };
-}
 
 /**
  * Handle the water's reminder data in the HTML

@@ -1,5 +1,5 @@
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { displayUserPlants, toggleAddPlants } from "./utils.js";
+import { displayUserPlants, toggleAddPlants, makeSearchInputsWork} from "./utils.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 
@@ -35,3 +35,5 @@ getUserPlants({
 
   displayUserPlants(userPlants);
 });
+
+makeSearchInputsWork();
