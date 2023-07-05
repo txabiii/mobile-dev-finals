@@ -118,7 +118,7 @@ function generatePlantReminder(plant) {
   const plantReminder = plantReminderTemplate.content.cloneNode(true);
 
   // Insert plant data to the HTML element
-  const plantImageElement = plantReminder.querySelector('#plant-image');
+  const plantImageElement = plantReminder.querySelector('#plant-reminder-image');
   plantImageElement.src = plantImageUrl;
 
   const plantNameElement = plantReminder.querySelector('.plant-name');

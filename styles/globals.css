@@ -12,12 +12,17 @@ html {
 
   --green-1-rgb: 76, 175, 80;
   --green-2-rgb: 5, 77, 59; 
+  --green-3-rgb: 210, 235, 211;
   --red-rgb: 173, 52, 62;
   --gray-rgb: 236, 236, 236;
 }
 
 a {
   text-decoration: none;
+}
+
+input:focus {
+  outline: none;
 }
 
 .center-items {
@@ -315,7 +320,7 @@ a {
   border-radius: 100px;
   border: none;
 
-  background-color: rgba(var(--green-1-rgb), 0.25);
+  background-color: rgb(var(--green-3-rgb));
   color: rgb(var(--green-2-rgb));
 
   font-family: 'Rajdhani', sans-serif;
@@ -323,6 +328,12 @@ a {
   font-size: 15px;
 
   padding: 0px 17px;
+  position: absolute;
+  z-index: 2;
+}
+
+.home-search {
+  width: calc(100% - 40px);
 }
 
 .search::placeholder {
@@ -332,6 +343,19 @@ a {
 .search-section .search-icon {
   position: absolute;
   right: 36px;
+  z-index: 3;
+}
+
+.search-result {
+  position: absolute;
+  width: calc(100% - 40px);
+  background-color: rgb(var(--green-3-rgb));
+  height: 250px;  
+  top: 0px;
+  z-index: 1;
+  border-radius: 0px 0px 20px 20px;
+
+  height: 0px;
 }
 
 /* PLANT ITEMS */
@@ -543,10 +567,17 @@ h3 {
 .add-plant-wrapper .search-section {
   padding: 0px;
   padding-bottom: 20px;
+  height: 60px;
 }
 
 .add-plant-wrapper .search-section img {
   right: 17px;
+  z-index: 3;
+}
+
+.add-plant-wrapper .search-section .search-result {
+  width: 100%;
+  top: 20px;
 }
 
 .add-plant-wrapper .close-button {
