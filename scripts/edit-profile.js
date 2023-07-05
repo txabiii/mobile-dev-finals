@@ -15,30 +15,68 @@ const formFields = {
   username: document.getElementById("actual-username-input"),
   email: document.getElementById("actual-email-address-input"),
   password: document.getElementById("actual-password-input"),
+  profilePictureFile: document.getElementById("change-photo-file"),
 };
 
 addFocusEventListenerToFields(formFields);
 
+// function getFormInputValues() {
+//   const payload = {
+//     action: "update_user_credentials",
+//     user_id: userData.user_id,
+//   };
+
+//   const newUsername = formFields.username.value.trim();
+//   const newEmail = formFields.email.value.trim();
+//   const newPassword = formFields.password.value.trim();
+//   const newProfilePictureFile = JSON.stringify(
+//     formFields.profilePictureFile.files[0]
+//   );
+
+//   if (newUsername !== userData.username) {
+//     payload.username = newUsername;
+//   }
+
+//   if (newEmail !== userData.email) {
+//     payload.email = newEmail;
+//   }
+
+//   if (newPassword !== "") {
+//     payload.password = newPassword;
+//   }
+
+//   if (newProfilePictureFile) {
+//     payload.profilePictureFile = newProfilePictureFile;
+//   }
+
+//   return payload;
+// }
+
 function getFormInputValues() {
-  const payload = {
-    action: "update_user_credentials",
-    user_id: userData.user_id,
-  };
+  const payload = new FormData();
+
+  payload.append("action", "update_user_credentials");
+  payload.append("user_id", userData.user_id);
 
   const newUsername = formFields.username.value.trim();
   const newEmail = formFields.email.value.trim();
   const newPassword = formFields.password.value.trim();
+  const newProfilePictureFile = formFields.profilePictureFile.files[0];
 
   if (newUsername !== userData.username) {
-    payload.username = newUsername;
+    payload.append("username", newUsername);
   }
 
   if (newEmail !== userData.email) {
-    payload.email = newEmail;
+    payload.append("email", newEmail);
   }
 
   if (newPassword !== "") {
-    payload.password = newPassword;
+    payload.append("password", newPassword);
+  }
+
+  if (newProfilePictureFile) {
+    payload.append("profilePictureFile", newProfilePictureFile);
   }
 
   return payload;
@@ -90,22 +128,25 @@ cancelButton.addEventListener("click", function () {
 
 saveButton.addEventListener("click", function () {
   const form = getFormInputValues();
-
-  if (validateEditForm()) {
-    updateUserAccount(form).then((data) => {
-      localStorage.setItem("user_data", JSON.stringify(data.data));
-
-      if (data.status === "success") {
-        displaySuccessMessage(data.message);
-        redirectWithTimeout(formFields, "profile.html");
-      } else {
-        if (data.error === "username") {
-          formFields.username.classList.add("error");
-        } else {
-          formFields.email.classList.add("error");
-        }
-        displayErrorMessage(data.message);
-      }
-    });
-  }
+  updateUserAccount(form);
 });
+
+// saveButton.addEventListener("click", function () {
+//   const form = getFormInputValues();
+//   if (validateEditForm()) {
+//     updateUserAccount(form).then((data) => {
+//       if (data.status === "success") {
+//         localStorage.setItem("user_data", JSON.stringify(data.data));
+//         displaySuccessMessage(data.message);
+//         redirectWithTimeout(formFields, "profile.html");
+//       } else {
+//         if (data.error === "username") {
+//           formFields.username.classList.add("error");
+//         } else {
+//           formFields.email.classList.add("error");
+//         }
+//         displayErrorMessage(data.message);
+//       }
+//     });
+//   }
+// });
