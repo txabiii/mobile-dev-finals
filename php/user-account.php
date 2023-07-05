@@ -115,6 +115,9 @@ class API extends DB
 			} else {
 				echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'User not found.'));
 			}
+		} else if ($action === 'logout') {
+			session_destroy();
+			echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Log out successfully.'));
 		} else {
 			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
