@@ -62,6 +62,7 @@ function getFormInputValues() {
   const newEmail = formFields.email.value.trim();
   const newPassword = formFields.password.value.trim();
   const newProfilePictureFile = formFields.profilePictureFile.files[0];
+  console.log(newProfilePictureFile)
 
   if (newUsername !== userData.username) {
     payload.append("username", newUsername);

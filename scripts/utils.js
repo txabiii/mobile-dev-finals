@@ -375,7 +375,6 @@ export function getFormattedTime(time) {
 export function makeSearchInputsWork() {
   Array.from(document.getElementsByClassName('search-section'))
   .forEach(searchSection => {
-    console.log(searchSection)
     // Relevant HTML elements
     const searchResultWrapper = searchSection.querySelector("#search-result-wrapper");
     const searchResultList = searchSection.querySelector("#search-result-list");
