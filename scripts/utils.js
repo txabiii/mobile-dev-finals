@@ -1,4 +1,4 @@
-import { getPlant } from '../scripts/api/plantApi.js';
+import { getPlant } from "../scripts/api/plantApi.js";
 
 export const notifyElements = {
   notifyMessageElement: document.getElementById("notify-message"),
@@ -99,8 +99,8 @@ export function getNextWateringTime(plant) {
 
 /**
  * Turns Date format variable into human readable string for watering reminder
- * @param {Date} timeDifference 
- * @returns 
+ * @param {Date} timeDifference
+ * @returns
  */
 export function getWaterReminder(timeDifference) {
   const daysLeft = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
@@ -115,10 +115,12 @@ export function getWaterReminder(timeDifference) {
 
   if (daysLeft === 0) {
     if (hoursLeft === 0) {
-      waterReminderText = minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
+      waterReminderText =
+        minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
     } else {
       const hoursText = hoursLeft + (hoursLeft === 1 ? " hour" : " hours");
-      const minutesText = minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
+      const minutesText =
+        minutesLeft + (minutesLeft === 1 ? " minute" : " minutes");
       waterReminderText = `${hoursText} and ${minutesText}`;
     }
   } else {
@@ -132,14 +134,15 @@ export function getWaterReminder(timeDifference) {
 
 /**
  * Checks whether the time between two dates is under one hour
- * @param {Date} dateNumberOne 
- * @param {Date} dateNumberTwo 
- * @returns 
+ * @param {Date} dateNumberOne
+ * @param {Date} dateNumberTwo
+ * @returns
  */
 export function isTimeDifferenceUnderHour(dateNumberOne, dateNumberTwo) {
   const oneHourInMilliseconds = 60 * 60 * 1000; // 1 hour in milliseconds
 
-  const timeDifference = dateNumberTwo.getTime() - new Date(dateNumberOne).getTime();
+  const timeDifference =
+    dateNumberTwo.getTime() - new Date(dateNumberOne).getTime();
 
   return timeDifference < oneHourInMilliseconds;
 }
@@ -152,19 +155,19 @@ export function generateDateTime() {
   const now = new Date();
 
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 /**
  * Displays plants' data. Important: requires plant-item-template on the HTML page
- * @param {object} plants 
- * @returns 
+ * @param {object} plants
+ * @returns
  */
 export function displayUserPlants(plants) {
   const container = document.getElementById("my-plants");
@@ -187,8 +190,8 @@ export function displayUserPlants(plants) {
 
 /**
  * Creates a user plant item HTML element. Important: you need plant-item-template in your HTML
- * @param {Object} plant 
- * @returns {HTML} 
+ * @param {Object} plant
+ * @returns {HTML}
  */
 function createUserPlantItem(userPlant) {
   const template = document.getElementById("plant-item-template");
@@ -198,13 +201,15 @@ function createUserPlantItem(userPlant) {
   nameElement.textContent = userPlant.name;
 
   const waterScheduleElement = userPlantItem.querySelector(".water-schedule");
-  const nextWateringTime = getNextWateringTime(userPlant)
+  const nextWateringTime = getNextWateringTime(userPlant);
   waterScheduleElement.textContent = getWaterReminder(nextWateringTime);
 
   const oneDay = 60 * 60 * 1000 * 24;
-  if(nextWateringTime < oneDay) {
-    const smallWaterReminder = userPlantItem.querySelector('.small-water-reminder');
-    smallWaterReminder.style.display = 'block'
+  if (nextWateringTime < oneDay) {
+    const smallWaterReminder = userPlantItem.querySelector(
+      ".small-water-reminder"
+    );
+    smallWaterReminder.style.display = "block";
   }
 
   const imageElement = userPlantItem.querySelector("#plant-image");
@@ -219,12 +224,12 @@ function createUserPlantItem(userPlant) {
 
 /**
  * Displays the plant's data into their respective HTML elements. Important: requires plant-item-template on the HTML page
- * @param {object} plants 
+ * @param {object} plants
  */
 export function displayAllPlants(plants) {
   const container = document.getElementById("explore-plants");
 
-  for (const plant of plants) { 
+  for (const plant of plants) {
     const userPlantItem = createPlantItem(plant);
     container.appendChild(userPlantItem);
   }
@@ -232,8 +237,8 @@ export function displayAllPlants(plants) {
 
 /**
  * Creates a plant item HTML element. Important: you need plant-item-template in your HTML
- * @param {Object} plant 
- * @returns {HTML} 
+ * @param {Object} plant
+ * @returns {HTML}
  */
 function createPlantItem(plant) {
   const template = document.getElementById("plant-item-template");
@@ -245,8 +250,10 @@ function createPlantItem(plant) {
 
   // Plant water schedule
   const waterScheduleElement = plantItem.querySelector(".water-schedule");
-  if (plant.watering_frequency === 1) waterScheduleElement.textContent = "Water everyday";
-  else waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
+  if (plant.watering_frequency === 1)
+    waterScheduleElement.textContent = "Water everyday";
+  else
+    waterScheduleElement.textContent = `Water every ${plant.watering_frequency} days`;
 
   // Plant image
   const imageElement = plantItem.querySelector("#plant-image");
@@ -261,26 +268,30 @@ function createPlantItem(plant) {
 
 /**
  * Displays in a popup the result from the backend server
- * You can also insert a 'result' object manually, as defined below: 
- * @param {Object = { 'success': Boolean, 'message': String }} result 
+ * You can also insert a 'result' object manually, as defined below:
+ * @param {Object = { 'success': Boolean, 'message': String }} result
  */
 export function displayResultPopup(result) {
   const template = document.getElementById("pop-up-template");
   const popupElement = template.content.cloneNode(true);
 
-  if(popupElement && template) {
-    const headerElement = popupElement.querySelector('h2');
-    headerElement.textContent = result.success ? 'Success' : 'Error';
+  if (popupElement && template) {
+    const headerElement = popupElement.querySelector("h2");
+    headerElement.textContent = result.success ? "Success" : "Error";
 
-    const textElement = popupElement.querySelector('.main-text');
+    const textElement = popupElement.querySelector(".main-text");
     textElement.textContent = result.message;
 
-    const buttonElement = popupElement.querySelector('.standard-button');
-    buttonElement.style.backgroundColor = result.success ? 'rgb(var(--green-1-rgb))' : 'rgb(var(--red-rgb))';
+    const buttonElement = popupElement.querySelector(".standard-button");
+    buttonElement.style.backgroundColor = result.success
+      ? "rgb(var(--green-1-rgb))"
+      : "rgb(var(--red-rgb))";
 
-    const closeButtonElement = popupElement.querySelector('.close-button');
+    const closeButtonElement = popupElement.querySelector(".close-button");
     buttonElement.addEventListener("click", () => removeDisplayResultPopup());
-    closeButtonElement.addEventListener("click", () => removeDisplayResultPopup());
+    closeButtonElement.addEventListener("click", () =>
+      removeDisplayResultPopup()
+    );
 
     const body = document.getElementsByTagName("body")[0];
     const firstChild = body.firstChild;
@@ -292,7 +303,7 @@ export function displayResultPopup(result) {
  * Helper function to remove pop-up
  */
 function removeDisplayResultPopup() {
-  const popupElement = document.querySelector('.pop-up-wrapper');
+  const popupElement = document.querySelector(".pop-up-wrapper");
   popupElement.remove();
 }
 
@@ -303,53 +314,52 @@ var addPlantButtonToggled = false;
 /**
  * Toggles the add plants display.
  */
-export function toggleAddPlants () {
+export function toggleAddPlants() {
   addPlantButtonToggled = !addPlantButtonToggled;
 
-  const addPlantWrapper = document.querySelector('.add-plant-wrapper');
-  const plantsContainer = document.querySelector('#add-plants-list');
-  const addPlantButton = document.querySelector('#add-plant-circle-button');
-  const closeButton = addPlantWrapper.querySelector('.close-button');
+  const addPlantWrapper = document.querySelector(".add-plant-wrapper");
+  const plantsContainer = document.querySelector("#add-plants-list");
+  const addPlantButton = document.querySelector("#add-plant-circle-button");
+  const closeButton = addPlantWrapper.querySelector(".close-button");
 
-  if(addPlantButtonToggled) {
-    addPlantWrapper.style.display = 'block'; 
-    if(plantsContainer) {
-      if(plantsContainer.innerHTML !== '') return;
+  if (addPlantButtonToggled) {
+    addPlantWrapper.style.display = "block";
+    if (plantsContainer) {
+      if (plantsContainer.innerHTML !== "") return;
       getPlant({
-        action: 'get-all-plants'
-      })
-      .then((plants) => {
-        plantsContainer.innerHTML = '';
-        for(const plant of plants) {
+        action: "get-all-plants",
+      }).then((plants) => {
+        plantsContainer.innerHTML = "";
+        for (const plant of plants) {
           const plantItem = createPlantItem(plant);
           plantsContainer.appendChild(plantItem);
         }
-  
-        const loading = document.querySelector('#add-plants-loading-group');
-        loading.style.display = 'none';
-      })
+
+        const loading = document.querySelector("#add-plants-loading-group");
+        loading.style.display = "none";
+      });
     }
 
     closeButton.addEventListener("click", () => {
-      addPlantWrapper.style.display = 'none';
-      addPlantButton.style.transform = 'rotateZ(0deg)';
-    })
-    addPlantButton.style.transform = 'rotateZ(45deg)';
+      addPlantWrapper.style.display = "none";
+      addPlantButton.style.transform = "rotateZ(0deg)";
+    });
+    addPlantButton.style.transform = "rotateZ(45deg)";
   } else {
-    addPlantWrapper.style.display = 'none';
-    addPlantButton.style.transform = 'rotateZ(0deg)';
+    addPlantWrapper.style.display = "none";
+    addPlantButton.style.transform = "rotateZ(0deg)";
   }
 }
 
 /**
  * Returns a time in AM or PM format
- * @param {Numbee} time in milliseconds 
- * @returns 
+ * @param {Numbee} time in milliseconds
+ * @returns
  */
 export function getFormattedTime(time) {
-  return new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   }).format(new Date(`2000-01-01T${time}`));
 }
