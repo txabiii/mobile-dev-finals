@@ -264,6 +264,10 @@ class userAccounts extends DB
 						$tempname = $_FILES['profilePictureFile']['tmp_name'];
 
 						$uploadDirectory = __DIR__ . '/uploads/';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1904817a7b007e7ee01c6353716ed4b07e73f9fa
 						$destination = $uploadDirectory . $filename;
 
 						if(move_uploaded_file($tempname, $destination)) {
