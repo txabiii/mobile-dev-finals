@@ -31,7 +31,6 @@ Array.from(document.getElementsByClassName("add-plant-button")).forEach(
 );
 
 // Time basis
-const anHour = 60 * 60 * 1000;
 const aDay = 24 * 60 * 60 * 1000;
 const aWeek = 24 * 60 * 60 * 1000 * 7;
 
@@ -111,7 +110,7 @@ getUserPlants({
   plantsTodayLoading.style.display = "none";
 
   for (const plant of nextSevenDayPlants) {
-    const plantElement = generatePlantReminder(plant);
+    const plantElement = generatePlantReminder(plant, 'week');
     plantsNextSevenDays.appendChild(plantElement);
   }
   if (nextSevenDayPlants.length === 0) {
@@ -121,7 +120,7 @@ getUserPlants({
   plantsNextSevenDaysLoading.style.display = "none";
 
   for (const plant of beyondPlants) {
-    const plantElement = generatePlantReminder(plant);
+    const plantElement = generatePlantReminder(plant, 'beyond');
     plantsBeyond.appendChild(plantElement);
   }
   if (beyondPlants.length === 0) {
@@ -132,13 +131,11 @@ getUserPlants({
 });
 
 // Generate the plant reminder HTML elemt
-function generatePlantReminder(plant) {
+function generatePlantReminder(plant, scheduleGroup = 'day') {
   // Plant data to display
   const plantImageUrl = plant.image_url;
   const plantName = plant.name;
-  const scheduledWateringTime = getFormattedTime(
-    plant.datetime_added.split(" ")[1]
-  );
+  const scheduledWateringTime = getFormattedTime(plant.datetime_added.split(" ")[1]);
 
   // Clone the HTML template
   const plantReminderTemplate = document.getElementById(
@@ -157,7 +154,16 @@ function generatePlantReminder(plant) {
   waterReminderText.textContent = getWaterReminder(getNextWateringTime(plant));
 
   const waterScheduleData = plantReminder.querySelector(".water-schedule-data");
-  waterScheduleData.textContent = scheduledWateringTime;
+  if(scheduleGroup === 'day') {
+    waterScheduleData.textContent = scheduledWateringTime;
+  } else {
+    const today = new Date();
+    const nextWateringTime = getNextWateringTime(plant);
+    waterScheduleData.textContent = new Date(today.getTime() + nextWateringTime).toDateString();
+
+    const scheduleImage = plantReminder.querySelector('.water-schedule img');
+    scheduleImage.src = '../assets/icons/calendar-green.svg';
+  }
 
   // Handle links
   const linkToUserPlantPage = plantReminder.querySelector("#plant-link");

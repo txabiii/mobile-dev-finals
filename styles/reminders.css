@@ -53,6 +53,8 @@
 
   display: flex;
   flex-direction: column;
+
+  min-width: 80px;
 }
 
 .plant-reminder .data .filler {
@@ -61,11 +63,15 @@
 
 .plant-reminder .data h4 {
   font-size: 22px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .plant-reminder .data .water-schedule {
   display: flex;
   gap: 5px;
+  align-items: center;
 }
 
 .plant-reminder .data .water-schedule p {
