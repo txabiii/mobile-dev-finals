@@ -375,7 +375,6 @@ export function getFormattedTime(time) {
 export function makeSearchInputsWork() {
   Array.from(document.getElementsByClassName('search-section'))
   .forEach(searchSection => {
-    // Relevant HTML elements
     const searchResultWrapper = searchSection.querySelector("#search-result-wrapper");
     const searchResultList = searchSection.querySelector("#search-result-list");
     const emptySearchResult = searchSection.querySelector(".empty-search-result");
@@ -389,7 +388,6 @@ export function makeSearchInputsWork() {
         searchResultWrapper.style.display = 'none';
         return
       };
-      console.log(searchInput.value);
       getPlant({
         action: 'search-plants',
         search: searchInput.value
@@ -407,11 +405,11 @@ export function makeSearchInputsWork() {
         emptySearchResult.style.display = hasResult ? 'none' : 'block';
         searchResultLabel.style.display = hasResult ? 'block' : 'none';
       })
-    }, 1000));
+    }, 500));
   });
 }
 
-function createPlantSearchResultItem(plant) {
+export function createPlantSearchResultItem(plant) {
   const searchResultItemTemplate = document.querySelector(".search-result-item");
 
   const resultItem = searchResultItemTemplate.content.cloneNode(true);

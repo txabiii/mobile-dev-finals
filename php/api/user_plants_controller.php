@@ -50,6 +50,31 @@ class UserPlantController extends DB {
         echo json_encode(array('success' => false, 'message' => 'Failed to retrieve user plant record'));
       }      
       $this->connection->close();
+    } elseif('search-user-plants') {
+      $query = "SELECT name, p.plant_id, watering_frequency, image_url
+                FROM user_plants_tb AS up
+                JOIN plants_tb AS p ON up.plant_id = p.plant_id
+                where up.id = ? and (name like ? or description like ?)";
+      
+      $search = '%' . $_GET['search'] . '%';
+          
+      $stmt = $this->connection->prepare($query);
+      $stmt->bind_param("iss", $user_id, $search, $search);
+      $stmt->execute();
+
+      $result = $stmt->get_result();
+
+      if ($result) {
+          $plants = array();
+          while ($row = $result->fetch_assoc()) {
+              $plants[] = $row;
+          }
+          echo json_encode(array('success' => true, "message" => "Searched plants retrieved successfully", "data" => $plants));
+      } else {
+          echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
+      }
+
+      $stmt->close();
     }
   }
 

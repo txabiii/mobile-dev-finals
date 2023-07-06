@@ -45,7 +45,7 @@
 .plant-reminder .data {
   flex-grow: 1;
   background-color: #D2EBD3;
-  padding: 10px 15px;
+  padding: 10px 10px;
   font-family: 'Barlow', sans-serif;
   font-size: 16px;
   color: rgb(var(--green-2-rgb));

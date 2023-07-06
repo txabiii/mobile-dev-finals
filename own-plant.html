@@ -177,12 +177,19 @@
       </div>
     </div>
     <div class="search-section">
-      <input type="text" placeholder="Search plant" class="search" />
+      <input name="search-plant" type="text" placeholder="Search plant" class="search search-plant search-plant-input" />
       <img
         src="./assets/search-icon.svg"
         alt="search icon"
         class="search-icon"
       />
+      <div id="search-result-wrapper" class="search-result">
+        <h2 id="search-result-label">Search Result</h2>
+        <div id="search-result-list"></div>
+        <div class="empty-search-result">
+          <h2 class="no-search">Sorry, No search Result</h2>
+        </div>
+      </div>
     </div>
     <div id="add-plants-loading-group" class="grid-layout padding-0">
       <div class="loading-box loading"></div>
@@ -192,6 +199,16 @@
     </div>
     <div id="add-plants-list" class="grid-layout padding-0"></div>
   </div>
+
+  <template class="search-result-item">
+    <div class="result-item">
+      <img src="./assets/missing-image-small.png" alt="plant image">
+      <div class="data">
+        <h3 class="name"></h3>
+        <p class="watering-frequency"></p>
+      </div>
+    </div>
+  </template>
 
   <template id="plant-item-template">
       <div class="plant-item">

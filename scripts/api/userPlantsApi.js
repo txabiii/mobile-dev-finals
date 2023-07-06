@@ -58,7 +58,7 @@ export function deleteUserPlant(payload) {
  */
 export function getUserPlants(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/user_plants_controller.php?action=${payload.action}&user_id=${payload.userId}&plant_id=${payload.plantId}`)
+    fetch(`${SERVER_URL}/api/user_plants_controller.php?action=${payload.action}&user_id=${payload.userId}&plant_id=${payload.plantId}&search=${payload.search}`)
       .then(response => response.json())
       .then(result => {
         if (result.success) {

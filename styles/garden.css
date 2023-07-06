@@ -20,9 +20,25 @@
   width: calc(100vw - 40px);
 }
 
-.search-user-plant-section img {
+.search-icon {
   top: 30px;
   position: absolute;
   right: 36px;
   z-index: 3;
+}
+
+.search-result {
+  top: 40px !important;
+}
+
+#my-plants {
+  min-height: 30svh;
+}
+
+.garden-stat:first-of-type img {
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
+h3 {
+  padding: 0px 20px 10px 20px;
 }

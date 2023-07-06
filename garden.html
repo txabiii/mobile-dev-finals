@@ -21,14 +21,23 @@
     <h2>Welcome to your mini garden!</h2>
   </div>
 
-  <div id="search-plant" class="search-user-plant-section padding-20">
-    <input type="text" placeholder="Search plant" class="search" />
+  <div id="user-search-plant" class="search-user-plant-section padding-20">
+    <input name="search-plant" type="text" placeholder="Search plant" class="search search-plant-input" />
     <img
       src="./assets/search-icon.svg"
       alt="search icon"
       class="search-icon"
     />
+    <div id="search-result-wrapper" class="search-result">
+      <h2 id="search-result-label">Search Result</h2>
+      <div id="search-result-list"></div>
+      <div class="empty-search-result">
+        <h2 class="no-search">Sorry, No search Result</h2>
+      </div>
+    </div>
   </div>
+
+  <h3>Your plants</h3>
 
   <div id="garden-plants-loading-group" class="grid-layout">
     <div class="loading-box loading"></div>
@@ -36,6 +45,7 @@
     <div class="loading-box loading"></div>
     <div class="loading-box loading"></div>
   </div>
+  
   <div class="grid-layout" id="my-plants"></div>
 
   <div class="no-plants add-plant-button" id="no-plants">
@@ -88,7 +98,7 @@
         <h2 id="search-result-label">Search Result</h2>
         <div id="search-result-list"></div>
         <div class="empty-search-result">
-          <h2>Sorry, No Search Result</h2>
+          <h2 class="no-search">Sorry, No search Result</h2>
         </div>
       </div>
     </div>

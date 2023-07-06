@@ -377,6 +377,10 @@ input:focus {
   display: none;
 }
 
+.empty-search-result h2 {
+  margin-bottom: 0px !important;
+}
+
 .result-item {
   background-color: rgb(var(--green-1-rgb));
   border-radius: 10px;

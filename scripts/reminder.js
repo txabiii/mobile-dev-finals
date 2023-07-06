@@ -1,7 +1,15 @@
-import { toggleAddPlants, getNextWateringTime, getFormattedTime, getWaterReminder } from "./utils.js";
+import { 
+  toggleAddPlants, 
+  getNextWateringTime, 
+  getFormattedTime, 
+  getWaterReminder, 
+  makeSearchInputsWork 
+} from "./utils.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
+
+makeSearchInputsWork();
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event

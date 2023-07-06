@@ -4,12 +4,15 @@ import {
   generateDateTime, 
   displayResultPopup, 
   toggleAddPlants, 
+  makeSearchInputsWork,
   debounce } from "./utils.js";
 import { getUserPlants, deleteUserPlant } from './api/userPlantsApi.js';
 import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
+
+makeSearchInputsWork();
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
