@@ -8,41 +8,34 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
           google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawBackgroundColor);
+          google.charts.setOnLoadCallback(drawBackgroundColor);
 
-function drawBackgroundColor() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'Dogs');
+            function drawBackgroundColor() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'X');
+                data.addColumn('number', 'New Users');
 
-      data.addRows([
-        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72], [68, 75], [69, 80]
-      ]);
+                data.addRows([
+                    [new Date(2023, 5, 29), 5],  [new Date(2023, 5, 30), 10], [new Date(2023, 6, 1), 5],
+                    [new Date(2023, 6, 2), 15], [new Date(2023, 6, 3), 10], [new Date(2023, 6, 4), 30],
+                    [new Date(2023, 6, 5), 25]
+                ]);
 
-      var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'Popularity'
-        },
-        backgroundColor: '#f1f8e9'
-      };
+                var options = {
+                    legend: 'none',
+                    series: {
+                        0: { color: '#054d3b' },
+                    },
+                    hAxis: {
+                    format: 'MMM dd, yyyy',
+                    gridlines: {count: 7}
+                    },
+                    'chartArea': {'width': '80%', 'height': '80%'},
+                };
 
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+                }
         </script>
     </head>
     <body>
@@ -122,18 +115,17 @@ function drawBackgroundColor() {
             <h1 class="analytics-name">Analytics</h1>
             <div class="green-dashboard-box">
                 <div class="dashboard-buttons">
-                    <div class="navbar-link-new-users">New Users</div>
-                    <div class="navbar-link-popular-plant barlow-medium-aqua-deep-20px">Popular Plant</div>
-                    <div class="navbar-link-popular-plant barlow-medium-aqua-deep-20px">Number of Post</div> 
-                    <div class="navbar-link-today barlow-medium-aqua-deep-20px">Today</div>
-                    <div class="navbar-link-address">7 Days</div>
-                    <div class="navbar-link-popular-plant barlow-medium-aqua-deep-20px">Last Month</div>
+                    <button class="dashboard-button-left-selected">New Users</button>
+                    <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Popular Plant</button>
+                    <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Number of Post</button> 
+                    <div class="right-side">
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px">Today</button>
+                        <button class="dashboard-button-right-selected" type="button">7 Days</button>
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px" type="button">Last Month</button> 
+                    </div>
                 </div>
-                <div id="chart_div" style="width: 900px; height: 500px"></div>
+                <div id="chart_div" style="width: 99%; height: 575px"></div>
             </div>
         </div>
-        
-        
-        
     </body>
 </html>

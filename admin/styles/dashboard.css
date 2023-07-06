@@ -266,6 +266,7 @@ a:hover {
 }
 
 .dashboard-buttons {
+  z-index: 10;
   flex-wrap: wrap;
   align-items: flex-start;
   display: flex;
@@ -277,8 +278,12 @@ a:hover {
 }
 
 
-.navbar-link-new-users {
+.dashboard-button-left-selected {
+  z-index: 10;
+  background: none;
+  border: none;
   color: var(--aqua-deep);
+  text-decoration: underline;
   font-family: var(--font-family-barlow);
   font-size: var(--font-size-xxl);
   font-weight: 700;
@@ -290,7 +295,10 @@ a:hover {
   white-space: nowrap;
 }
 
-.navbar-link-popular-plant {
+.dashboard-button-left-not {
+  z-index: 10;
+  background: none;
+  border: none;
   letter-spacing: 0;
   line-height: normal;
   margin-left: 25px;
@@ -300,18 +308,24 @@ a:hover {
   white-space: nowrap;
 }
 
-.navbar-link-today {
-  letter-spacing: 0;
-  line-height: normal;
-  margin-left: 403px;
-  min-height: 24px;
-  min-width: 52px;
-  text-align: center;
+.right-side {
+  z-index: 10;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  min-width: 400px;
+  padding-left: 8%;
+  margin-left: 20%;
   white-space: nowrap;
 }
 
-.navbar-link-address {
+.dashboard-button-right-selected {
+  z-index: 10;
+  background: none;
+  border: none;
   color: var(--aqua-deep);
+  text-decoration: underline;
   font-family: var(--font-family-barlow);
   font-size: var(--font-size-xxl);
   font-weight: 700;
@@ -324,12 +338,20 @@ a:hover {
   white-space: nowrap;
 }
 
-.navbar-link-last-month {
+
+.dashboard-button-right-not {
+  z-index: 10;
   letter-spacing: 0;
+  background: none;
+  border: none;
   line-height: normal;
-  margin-left: 25px;
   min-height: 24px;
-  min-width: 98px;
+  min-width: 52px;
+  margin-left: 24px;
   text-align: center;
   white-space: nowrap;
+}
+
+button:hover {
+  font-weight: 700;
 }
