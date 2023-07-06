@@ -99,9 +99,12 @@ class userAccounts extends DB
 					'user_id' => $user['user_id'],
 					'username' => $user['username'],
 					'email' => $user['email'],
-					'password' => $password,
-					'profile_image_url' => $user['profile_image_url']
+					'password' => $password
 				);
+				
+				if ($user['profile_image_url'] !== null) {
+					$user_data['profile_image_url'] = $user['profile_image_url'];
+				}
 
 				if ($user['email_verified_at'] !== null) {
 					if (password_verify($password, $user['password'])) {
@@ -282,8 +285,12 @@ class userAccounts extends DB
 						'user_id' => $user['user_id'],
 						'username' => $user['username'],
 						'email' => $user['email'],
-						'profile_image_url' => $user['profile_image_url']
 					);
+					
+					if ($user['profile_image_url'] !== null) {
+						$user_data['profile_image_url'] = $user['profile_image_url'];
+					}
+
 					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
 				} else {
 					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to update user profile.'));
