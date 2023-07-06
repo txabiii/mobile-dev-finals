@@ -74,27 +74,34 @@ getUserPlants({
     }
   }
 
-  console.log(plants)
-
   for(const plant of todayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsToday.appendChild(plantElement);
   }
-  if(todayPlants.length === 0) noPlantsToday.style.display = 'flex';
+  if(todayPlants.length === 0) {
+    noPlantsToday.style.display = 'flex';
+    plantsToday.style.display = 'none';
+  };
   plantsTodayLoading.style.display = 'none';
 
   for(const plant of nextSevenDayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsNextSevenDays.appendChild(plantElement);
   }
-  if(nextSevenDayPlants.length === 0) noPlantsNextSevenDays.style.display = 'flex';
+  if(nextSevenDayPlants.length === 0) {
+    noPlantsNextSevenDays.style.display = 'flex';
+    plantsNextSevenDays.style.display = 'none';
+  }
   plantsNextSevenDaysLoading.style.display = 'none';
 
   for(const plant of beyondPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsBeyond.appendChild(plantElement);
   }
-  if(beyondPlants.length === 0) noPlantsBeyond.style.display = 'flex';
+  if(beyondPlants.length === 0) {
+    noPlantsBeyond.style.display = 'flex';
+    plantsBeyond.style.display = 'none';
+  }
   plantsBeyondLoading.style.display = 'none';
 });
 

@@ -59,7 +59,7 @@
 .pulse {
   content: ' ';
   height: 90px;
-  width: 100%;
+  width: calc(100% + 7px);
   position: absolute;
   z-index: -1;
   border-radius: 100px;
@@ -86,6 +86,26 @@
   aspect-ratio: 1/1;
   vertical-align: top;
   object-fit: cover;
+}
+
+@media screen and (orientation: landscape) {
+  .plant-image-wrapper {
+    height: calc(100svh - (56px * 2) - 39px);
+  }
+
+  .plant-image-wrapper img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: unset;
+  }
+
+  .stats-wrapper {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .extra-details-wrapper {
+    justify-content: space-between;
+  }
 }
 
 .reminder {
@@ -290,10 +310,6 @@
   font-weight: 700;
   font-size: 25px;
   color: rgb(var(--green-1-rgb));
-}
-
-#plant-image {
-  visibility: hidden;
 }
 
 .tips-wrapper {

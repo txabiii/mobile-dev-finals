@@ -44,22 +44,39 @@
           <label class="actual-password" id="actual-password"></label>
         </div>
       </div>
+
+      <div class="button-container">
+        <div class="notify-message" id="notify-message">
+          <label class="label-notify-message" id="label-notify-message"></label>
+          <img src="" alt="notify-icon" id="notify-icon" />
+        </div>
+        <button class="logout-button" id="logout-button">Log Out</button>
+      </div>
     </div>
 
     <div class="bottom-navbar-filler"></div>
     <div class="bottom-navbar">
-      <a href="home.html">
-        <img class="inactive" src="./assets/icons/home.svg" alt="home">
+      <a class="inactive icon" href="home.html">
+        <img src="./assets/icons/home.svg" alt="home" />
+        <p>Home</p>
       </a>
-      <a href="garden.html">
-        <img class="inactive" src="./assets/icons/garden.svg" alt="garden">
+      <a class="inactive icon" href="garden.html">
+        <img src="./assets/icons/garden.svg" alt="garden" />
+        <p>Garden</p>
       </a>
-      <img id="add-plant-circle-button" class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
-      <a href="reminder.html">        
-        <img class="inactive" src="./assets/icons/can-black.svg" alt="explore">
+      <img
+        id="add-plant-circle-button"
+        class="add-plant-button"
+        src="./assets/icons/add.svg"
+        alt="add"
+      />
+      <a class="inactive icon" href="reminder.html">
+        <img src="./assets/icons/can-black.svg" alt="reminder" />
+        <p>Reminder</p>
       </a>
-      <a href="profile.html">
-        <img class="active" src="./assets/icons/profile.svg" alt="profile">
+      <a class="active icon" href="profile.html">
+        <img src="./assets/icons/profile.svg" alt="profile" />
+        <p>Profile</p>
       </a>
     </div>
 
@@ -67,7 +84,7 @@
       <div class="add-plant-header">
         <h2>Add a new plant!</h2>
         <div class="close-button">
-          <img src="./assets/icons/x.svg" alt="x button">
+          <img src="./assets/icons/x.svg" alt="x button" />
         </div>
       </div>
       <div class="search-section">
@@ -93,7 +110,11 @@
           <h4 class="name">Plant Name</h4>
           <h4 class="water-schedule">Water Schedule</h4>
         </div>
-          <img id="plant-image" src="./assets/missing-image-small.png" alt="missing image" />
+        <img
+          id="plant-image"
+          src="./assets/missing-image-small.png"
+          alt="missing image"
+        />
       </div>
     </template>
 

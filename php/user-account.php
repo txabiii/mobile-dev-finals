@@ -115,6 +115,9 @@ class API extends DB
 			} else {
 				echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'User not found.'));
 			}
+		} else if ($action === 'logout') {
+			session_destroy();
+			echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Log out successfully.'));
 		} else {
 			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
@@ -124,136 +127,145 @@ class API extends DB
 
 	public function httpPut($payload)
 	{
-		$action = $payload['action'];
+		
+		// $action = $payload['action'];
 
-		if($action === 'verify_email') {
-			$user_id = $payload['user_id'];
-			$verification_code = $payload['verification_code'];
-			$email_verified_at = date('Y-m-d H:i:s');
+		// if($action === 'verify_email') {
+		// 	$user_id = $payload['user_id'];
+		// 	$verification_code = $payload['verification_code'];
+		// 	$email_verified_at = date('Y-m-d H:i:s');
 
-			$statement = $this->connection->prepare("SELECT verification_code FROM user_accounts_tb WHERE user_id = ?");
-			$statement->bind_param("s", $user_id);
-			$statement->execute();
-			$result = $statement->get_result();
-			$row = $result->fetch_assoc();
+		// 	$statement = $this->connection->prepare("SELECT verification_code FROM user_accounts_tb WHERE user_id = ?");
+		// 	$statement->bind_param("s", $user_id);
+		// 	$statement->execute();
+		// 	$result = $statement->get_result();
+		// 	$row = $result->fetch_assoc();
 
-			if ($row && $verification_code === $row['verification_code']) {
-				$verify_account_query = "UPDATE user_accounts_tb SET email_verified_at = ? WHERE user_id = ?";
-				$statement = $this->connection->prepare($verify_account_query);
-				$statement->bind_param("ss", $email_verified_at, $user_id);
-				$statement->execute();
+		// 	if ($row && $verification_code === $row['verification_code']) {
+		// 		$verify_account_query = "UPDATE user_accounts_tb SET email_verified_at = ? WHERE user_id = ?";
+		// 		$statement = $this->connection->prepare($verify_account_query);
+		// 		$statement->bind_param("ss", $email_verified_at, $user_id);
+		// 		$statement->execute();
 
-				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'You have successfully verified your account.'));
-			} else {
-				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Verification code failed.'));
-			}
-		} else if ($action === 'resend_code') {
-			$user_id = $payload['user_id'];
-			$email = $payload['email'];
-			$verification_code = $this->emailVerification($email);
-			$email_verified_at = null;
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'You have successfully verified your account.'));
+		// 	} else {
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Verification code failed.'));
+		// 	}
+		// } else if ($action === 'resend_code') {
+		// 	$user_id = $payload['user_id'];
+		// 	$email = $payload['email'];
+		// 	$verification_code = $this->emailVerification($email);
+		// 	$email_verified_at = null;
 
-			$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ?, email_verified_at = ? WHERE user_id = ?";
-			$statement = $this->connection->prepare($resend_code_query);
-			$statement->bind_param("sss", $verification_code, $email_verified_at, $user_id);
-			$execution = $statement->execute();
+		// 	$resend_code_query = "UPDATE user_accounts_tb SET verification_code = ?, email_verified_at = ? WHERE user_id = ?";
+		// 	$statement = $this->connection->prepare($resend_code_query);
+		// 	$statement->bind_param("sss", $verification_code, $email_verified_at, $user_id);
+		// 	$execution = $statement->execute();
 
-			if ($execution) {
-				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Verification code successfully resent to your email address.'));
-			} else {
-				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to resend the verification code to your email address.'));
-			}
-		} else if ($action === 'new_password') {
-			$user_id = $payload['user_id'];
-			$password = $payload['newPassword'];
-			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+		// 	if ($execution) {
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Verification code successfully resent to your email address.'));
+		// 	} else {
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to resend the verification code to your email address.'));
+		// 	}
+		// } else if ($action === 'new_password') {
+		// 	$user_id = $payload['user_id'];
+		// 	$password = $payload['newPassword'];
+		// 	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-			$new_password_query = "UPDATE user_accounts_tb SET password = ? WHERE user_id = ?";
-			$statement = $this->connection->prepare($new_password_query);
-			$statement->bind_param("ss", $hashed_password, $user_id);
-			$execution = $statement->execute();
+		// 	$new_password_query = "UPDATE user_accounts_tb SET password = ? WHERE user_id = ?";
+		// 	$statement = $this->connection->prepare($new_password_query);
+		// 	$statement->bind_param("ss", $hashed_password, $user_id);
+		// 	$execution = $statement->execute();
 
-			if ($execution) {
-				echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Password changed successfully.'));
-			} else {
-				echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to change password. Please try again.'));
-			}
-		} else if ($action === 'update_user_credentials') {
-			$user_id = $payload['user_id'];
+		// 	if ($execution) {
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'Password changed successfully.'));
+		// 	} else {
+		// 		echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to change password. Please try again.'));
+		// 	}
+		// } else if ($action === 'update_user_credentials') {
+		// 	print_r($payload);
+		// 	// $user_id = $payload['user_id'];
 
-			$search_existing_user = "SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?";
-			$statement = $this->connection->prepare($search_existing_user);
-			$statement->bind_param("ss", $payload['email'], $payload['username']);
-			$statement->execute();
-			$result = $statement->get_result();
+		// 	// $search_existing_user = 'SELECT username, email FROM user_accounts_tb WHERE email = ? OR username = ?';
+		// 	// $statement = $this->connection->prepare($search_existing_user);
+		// 	// $statement->bind_param('ss', $payload['email'], $payload['username']);
+		// 	// $statement->execute();
+		// 	// $result = $statement->get_result();
 
-			if ($result->num_rows > 0) {
-				$existing_user = $result->fetch_assoc();
+		// 	// if ($result->num_rows > 0) {
+		// 	// 	$existing_user = $result->fetch_assoc();
 
-				if ($existing_user['email'] === $payload['email']) {
-					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Email is already existing.', 'error' => 'email'));
-				} else if ($existing_user['username'] === $payload['username']) {
-					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Username is already taken.', 'error' => 'username'));
-				}
-			} else {
-				$update_user_credentials_query = "UPDATE user_accounts_tb SET ";
-				$update_params = array();
-				$param_types = "";
+		// 	// 	if ($existing_user['email'] === $payload['email']) {
+		// 	// 		echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Email is already existing.', 'error' => 'email'));
+		// 	// 	} else if ($existing_user['username'] === $payload['username']) {
+		// 	// 		echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Username is already taken.', 'error' => 'username'));
+		// 	// 	}
+		// 	// } else {
+		// 	// 	$update_user_credentials_query = "UPDATE user_accounts_tb SET ";
+		// 	// 	$update_params = array();
+		// 	// 	$param_types = '';
 
-				if (isset($payload['username'])) {
-					$update_user_credentials_query .= "username = ?, ";
-					$update_params[] = $payload['username'];
-					$param_types .= "s";
-				}
+		// 	// 	if (isset($payload['username'])) {
+		// 	// 		$update_user_credentials_query .= "username = ?, ";
+		// 	// 		$update_params[] = $payload['username'];
+		// 	// 		$param_types .= 's';
+		// 	// 	}
 
-				if (isset($payload['email'])) {
-					$update_user_credentials_query .= "email = ?, ";
-					$update_params[] = $payload['email'];
-					$param_types .= "s";
-				}
+		// 	// 	if (isset($payload['email'])) {
+		// 	// 		$update_user_credentials_query .= "email = ?, ";
+		// 	// 		$update_params[] = $payload['email'];
+		// 	// 		$param_types .= 's';
+		// 	// 	}
 
-				if (isset($payload['password'])) {
-					$hashed_password = password_hash($payload['password'], PASSWORD_DEFAULT);
-					$update_user_credentials_query .= "password = ?, ";
-					$update_params[] = $hashed_password;
-					$param_types .= "s";
-					$user_data['password'] = $payload['password'];
-				}
+		// 	// 	if (isset($payload['password'])) {
+		// 	// 		$hashed_password = password_hash($payload['password'], PASSWORD_DEFAULT);
+		// 	// 		$update_user_credentials_query .= "password = ?, ";
+		// 	// 		$update_params[] = $hashed_password;
+		// 	// 		$param_types .= 's';
+		// 	// 		$user_data['password'] = $payload['password'];
+		// 	// 	}
 
-				$update_user_credentials_query = rtrim($update_user_credentials_query, ", ");
-				$update_user_credentials_query .= " WHERE user_id = $user_id";
-				$statement = $this->connection->prepare($update_user_credentials_query);
+		// 	// 	// if (isset($payload['profilePictureFile'])) {
+		// 	// 	// 	$update_user_credentials_query .= "profile_image_url = ?, ";
+		// 	// 	// 	$update_params[] = './assets/users/' . $payload['profilePictureFile'];
+		// 	// 	// 	$param_types .= 's';
+		// 	// 	// }
 
-				foreach ($update_params as $key => $value) {
-					$statement->bind_param($param_types, ...$update_params);
-				}
+		// 	// 	$update_user_credentials_query = rtrim($update_user_credentials_query, ', ');
+		// 	// 	$update_user_credentials_query .= " WHERE user_id = $user_id";
+		// 	// 	$statement = $this->connection->prepare($update_user_credentials_query);
 
-				$execution = $statement->execute();
+		// 	// 	foreach ($update_params as $key => $value) {
+		// 	// 		$statement->bind_param($param_types, ...$update_params);
+		// 	// 	}
 
-				if ($execution) {
-					$search_user = "SELECT * FROM user_accounts_tb WHERE user_id = ?";
-					$statement = $this->connection->prepare($search_user);
-					$statement->bind_param("s", $user_id);
-					$statement->execute();
-					$result = $statement->get_result();
+		// 	// 	$execution = $statement->execute();
 
-					$user = $result->fetch_assoc();
+		// 	// 	if ($execution) {
+		// 	// 		$search_user = 'SELECT * FROM user_accounts_tb WHERE user_id = ?';
+		// 	// 		$statement = $this->connection->prepare($search_user);
+		// 	// 		$statement->bind_param('s', $user_id);
+		// 	// 		$statement->execute();
+		// 	// 		$result = $statement->get_result();
 
-					$user_data = array(
-						'user_id' => $user['user_id'],
-						'username' => $user['username'],
-						'email' => $user['email'],
-					);
-					echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
-				} else {
-					echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to update user profile.'));
-				}
-			}
-		} else {
-			echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Unknown action.'));
-		}
+		// 	// 		$user = $result->fetch_assoc();
 
-		$this->connection->close();
+		// 	// 		$user_data = array(
+		// 	// 			'user_id' => $user['user_id'],
+		// 	// 			'username' => $user['username'],
+		// 	// 			'email' => $user['email'],
+		// 	// 			'profile_image_url' => $user['profile_image_url']
+		// 	// 		);
+		// 	// 		echo json_encode(array('method' => 'PUT', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
+		// 	// 	} else {
+		// 	// 		echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Failed to update user profile.'));
+		// 	// 	}
+		// 	// }
+		// } else {
+		// 	echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Unknown action.'));
+		// }
+
+		// $this->connection->close();
 	}
 
 	public function httpDelete($payload)

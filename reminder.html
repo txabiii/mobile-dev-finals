@@ -32,7 +32,7 @@
     <div id="reminder-container">
       <h3 class="section-name">Today</h3>
 
-      <div id="plants-today"></div>
+      <div id="plants-today" class="grid-on-landscape"></div>
 
       <div id="plants-today-loading" class="green-loading"></div>
 
@@ -44,7 +44,7 @@
 
       <h3 class="section-name">Next 7 days</h3>
 
-      <div id="plants-next-seven-days"></div>
+      <div id="plants-next-seven-days" class="grid-on-landscape"></div>
 
       <div id="plants-next-seven-days-loading" class="green-loading"></div>
 
@@ -56,13 +56,13 @@
 
       <h3 class="section-name">Beyond</h3>
 
-      <div id="plants-beyond"></div>
+      <div id="plants-beyond" class="grid-on-landscape"></div>
 
       <div id="plants-beyond-loading" class="green-loading"></div>
 
       <div id="no-plants-beyond" class="reminder-no-plants center-items">
         <img src="./assets/icons/garden.svg" alt="garden">
-        <p>No plants to water this week</p>
+        <p>No plants to water beyond seven days from now</p>
         <p><b>Keep on growing!</b></p>
       </div>
     </div>
@@ -70,18 +70,22 @@
 
   <div class="bottom-navbar-filler"></div>
   <div class="bottom-navbar">
-    <a href="home.html">
-      <img class="inactive" src="./assets/icons/home.svg" alt="home">
+    <a class="inactive icon" href="home.html">
+      <img src="./assets/icons/home.svg" alt="home">
+      <p>Home</p>
     </a>
-    <a href="garden.html">
-      <img class="inactive" src="./assets/icons/garden.svg" alt="garden">
+    <a class="inactive icon" href="garden.html">
+      <img src="./assets/icons/garden.svg" alt="garden">
+      <p>Garden</p>
     </a>
-    <img id="add-plant-circle-button" class="active add-plant-button" src="./assets/icons/add.svg" alt="add">
-    <a href="reminder.html">        
-      <img class="active" src="./assets/icons/can-black.svg" alt="explore">
+    <img id="add-plant-circle-button" class="add-plant-button" src="./assets/icons/add.svg" alt="add">
+    <a class="active icon" href="reminder.html">        
+      <img src="./assets/icons/can-black.svg" alt="reminder">
+      <p>Reminder</p>
     </a>
-    <a href="profile.html">
-      <img class="inactive" src="./assets/icons/profile.svg" alt="profile">
+    <a class="inactive icon" href="profile.html">
+      <img src="./assets/icons/profile.svg" alt="profile">
+      <p>Profile</p>
     </a>
   </div>
 
