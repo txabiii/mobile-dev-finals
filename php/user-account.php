@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 session_start();
 date_default_timezone_set('Asia/Singapore');
 
@@ -104,7 +104,7 @@ class userAccounts extends DB
 				
 				if ($user['profile_image_url'] !== null) {
 					$user_data['profile_image_url'] = $user['profile_image_url'];
-				}			
+				}
 
 				if ($user['email_verified_at'] !== null) {
 					if (password_verify($password, $user['password'])) {
@@ -236,11 +236,11 @@ class userAccounts extends DB
 
 				if (isset($_FILES['profilePictureFile'])) {
 					$fileType = pathinfo($_FILES['profilePictureFile']['name'], PATHINFO_EXTENSION);
-					$allowTypes = array('jpg','png','jpeg','gif','pdf');
+					$allowTypes = array('jpg','png','jpeg');
 
 					if(in_array($fileType, $allowTypes)){
 						$update_user_credentials_query .= "profile_image_url = ?, ";
-						$update_params[] = './assets/users/' . $_FILES['profilePictureFile']['name'];
+						$update_params[] = 'https://plantparenthoodassistant.000webhostapp.com/php/uploads/' . $_FILES['profilePictureFile']['name'];
 						$param_types .= 's';
 					} else {
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Sorry, only JPG, JPEG, & PNG files are allowed file extensions to upload.', 'error' => 'file extension'));
@@ -260,14 +260,18 @@ class userAccounts extends DB
 
 				if ($execution) {
 					if (isset($_FILES['profilePictureFile'])) {
-						$filename = basename($_FILES['profilePictureFile']["name"]);
-						$tempname = $_FILES['profilePictureFile']["tmp_name"];
-						$folder = '../assets/users/' . $filename;
+						$filename = $_FILES['profilePictureFile']['name'];
+						$tempname = $_FILES['profilePictureFile']['tmp_name'];
 
-						if(!move_uploaded_file($tempname, $folder)) {
+						$uploadDirectory = __DIR__ . '/uploads/';
+						$destination = $uploadDirectory . $filename;
+
+						if(move_uploaded_file($tempname, $destination)) {
+							echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.'));
+						} else {
 							echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to upload image.'));
 							return;
-						} 
+						}
 					}
 
 					$search_user = 'SELECT * FROM user_accounts_tb WHERE user_id = ?';
@@ -286,7 +290,7 @@ class userAccounts extends DB
 					
 					if ($user['profile_image_url'] !== null) {
 						$user_data['profile_image_url'] = $user['profile_image_url'];
-					}	
+					}
 
 					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
 				} else {
