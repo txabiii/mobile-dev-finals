@@ -266,9 +266,7 @@ class userAccounts extends DB
 						$uploadDirectory = __DIR__ . '/uploads/';
 						$destination = $uploadDirectory . $filename;
 
-						if(move_uploaded_file($tempname, $destination)) {
-							echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.'));
-						} else {
+						if(!move_uploaded_file($tempname, $destination)) {
 							echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to upload image.'));
 							return;
 						}
