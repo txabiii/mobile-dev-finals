@@ -45,30 +45,50 @@ export function loginAccount(payload) {
   });
 }
 
-// export function updateUserAccount(payload) {
-//   return new Promise((resolve, reject) => {
-//     fetch("./php/user-account.php", {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(payload),
-//       credentials: "include",
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         resolve(data);
-//       })
-//       .catch((error) => {
-//         reject(error);
-//       });
-//   });
-// }
+export function logoutAccount(payload) {
+  return new Promise((resolve, reject) => {
+    fetch("./php/user-account.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 
 export function updateUserAccount(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/user-account.php`, {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function updateUserCredentials(payload) {
+  return new Promise((resolve, reject) => {
+    fetch("./php/user-account.php", {
+      method: "POST",
       body: payload,
     })
       .then((response) => response.json())

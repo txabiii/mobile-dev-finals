@@ -1,9 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="./styles/dashboard.css" />
         <link rel="stylesheet" type="text/css" href="./styles/styleguide.css" />
         <link rel="stylesheet" type="text/css" href="./styles/globals.css" />
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {packages: ['corechart', 'line']});
+          google.charts.setOnLoadCallback(drawBackgroundColor);
+
+            function drawBackgroundColor() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'X');
+                data.addColumn('number', 'New Users');
+
+                data.addRows([
+                    [new Date(2023, 5, 29), 5],  [new Date(2023, 5, 30), 10], [new Date(2023, 6, 1), 5],
+                    [new Date(2023, 6, 2), 15], [new Date(2023, 6, 3), 10], [new Date(2023, 6, 4), 30],
+                    [new Date(2023, 6, 5), 25]
+                ]);
+
+                var options = {
+                    legend: 'none',
+                    series: {
+                        0: { color: '#054d3b' },
+                    },
+                    hAxis: {
+                    format: 'MMM dd, yyyy',
+                    gridlines: {count: 7}
+                    },
+                    'chartArea': {'width': '80%', 'height': '80%'},
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+                }
+        </script>
     </head>
     <body>
         <div class="usertab">
@@ -45,38 +78,54 @@
             <header class="header-text valign-text-middle">Hello, Admin Full Name</header>
             <p class="header-subtext valign-text-middle">Today is Wednesday, 28 June 2023</p>
         </div>
-        <div class="dashboard-info">
-            <div class="green-box">
-                <div class="green-box-format">
-                    <img class="green-box-img" src="img/ph-users-fill.svg" alt="Number of Users" />
-                    <div class="green-box-txt barlow-medium-aqua-deep-15px">Number of Users</div>
+        <div class="whole-dashboard">
+            <div class="dashboard-info">
+                <div class="green-box">
+                    <div class="green-box-format">
+                        <img class="green-box-img" src="img/ph-users-fill.svg" alt="Number of Users" />
+                        <div class="green-box-txt barlow-medium-aqua-deep-15px">Number of Users</div>
+                    </div>
+                    <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">100</div>
                 </div>
-                <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">100</div>
-            </div>
-
-            <div class="green-box">
-                <div class="green-box-format">
-                    <img class="green-box-img" src="img/material-symbols-potted-plant-rounded.svg" alt="Number of Plants"/>
-                    <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Plants</div>
+    
+                <div class="green-box">
+                    <div class="green-box-format">
+                        <img class="green-box-img" src="img/material-symbols-potted-plant-rounded.svg" alt="Number of Plants"/>
+                        <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Plants</div>
+                    </div>
+                    <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">50</div>
                 </div>
-                <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">50</div>
-            </div>
-
-            <div class="green-box">
-                <div class="green-box-format">
-                    <img class="green-box-img" src="img/mdi-post-it-note.svg" alt="Number of Posts" />
-                    <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Posts</div>
+    
+                <div class="green-box">
+                    <div class="green-box-format">
+                        <img class="green-box-img" src="img/mdi-post-it-note.svg" alt="Number of Posts" />
+                        <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Posts</div>
+                    </div>
+                    <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">70</div>
                 </div>
-                <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">70</div>
-            </div>
-
-            <div class="green-box">
-                <div class="green-box-format">
-                    <img class="green-box-img" src="img/ph-users-fill-1.svg" alt="Number of Report Users" />
-                    <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Report Users</div> 
+    
+                <div class="green-box">
+                    <div class="green-box-format">
+                        <img class="green-box-img" src="img/ph-users-fill-1.svg" alt="Number of Report Users" />
+                        <div class="green-box-txt valign-text-middle barlow-medium-aqua-deep-15px">Number of Report Users</div> 
+                    </div>
+                    <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">20</div>
                 </div>
-                <div class="green-box-number valign-text-middle barlow-bold-aqua-deep-30px">20</div>
             </div>
-        </div>           
+            <h1 class="analytics-name">Analytics</h1>
+            <div class="green-dashboard-box">
+                <div class="dashboard-buttons">
+                    <button class="dashboard-button-left-selected">New Users</button>
+                    <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Popular Plant</button>
+                    <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Number of Post</button> 
+                    <div class="right-side">
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px">Today</button>
+                        <button class="dashboard-button-right-selected" type="button">7 Days</button>
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px" type="button">Last Month</button> 
+                    </div>
+                </div>
+                <div id="chart_div" style="width: 99%; height: 575px"></div>
+            </div>
+        </div>
     </body>
 </html>

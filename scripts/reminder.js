@@ -12,10 +12,23 @@ const userData = JSON.parse(localStorage.getItem("user_data"));
 makeSearchInputsWork();
 
 /**
+ * Waits for the home page to finish loading, retrieves the profile image from sessionStorage.
+ */
+window.addEventListener("load", function () {
+  const userData = JSON.parse(this.localStorage.getItem("user_data"));
+
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-img");
+    profileImgElement.src = userData.profile_image_url;
+  }
+});
+
+/**
  * Select add plant buttons and add the `toggleAddPlants` event
  */
-Array.from(document.getElementsByClassName('add-plant-button'))
-  .forEach(button => button.addEventListener('click', toggleAddPlants));
+Array.from(document.getElementsByClassName("add-plant-button")).forEach(
+  (button) => button.addEventListener("click", toggleAddPlants)
+);
 
 // Time basis
 const anHour = 60 * 60 * 1000;
@@ -29,12 +42,16 @@ const plantsBeyond = document.getElementById("plants-beyond");
 
 // HTML elements when there are no plants in the schedule group
 const noPlantsToday = document.getElementById("no-plants-today");
-const noPlantsNextSevenDays = document.getElementById("no-plants-next-seven-days");
+const noPlantsNextSevenDays = document.getElementById(
+  "no-plants-next-seven-days"
+);
 const noPlantsBeyond = document.getElementById("no-plants-beyond");
 
 // HTML loading elements
 const plantsTodayLoading = document.getElementById("plants-today-loading");
-const plantsNextSevenDaysLoading = document.getElementById("plants-next-seven-days-loading");
+const plantsNextSevenDaysLoading = document.getElementById(
+  "plants-next-seven-days-loading"
+);
 const plantsBeyondLoading = document.getElementById("plants-beyond-loading");
 
 // Arrays to store plants by watering shcedule group
@@ -52,66 +69,66 @@ getUserPlants({
     const noPlantsMessage = document.getElementById('no-plants');
     noPlantsMessage.style.display = 'flex';
 
-    const reminderContainer = document.getElementById('reminder-container');
-    reminderContainer.style.display = 'none';
+    const reminderContainer = document.getElementById("reminder-container");
+    reminderContainer.style.display = "none";
     return;
   }
 
   // Sort plants by next watering time
-  for(const plant of plants) {
+  for (const plant of plants) {
     const nextWateringTime = getNextWateringTime(plant);
 
     // Add the nextWateringTime value to the plant
     Object.assign(plant, {
-      nextWateringTime: nextWateringTime
-    })
+      nextWateringTime: nextWateringTime,
+    });
   }
-  
+
   // Sort plants by nextWateringTime value
-  plants.sort(function(a, b) {
-    return a.nextWateringTime - b.nextWateringTime
+  plants.sort(function (a, b) {
+    return a.nextWateringTime - b.nextWateringTime;
   });
 
   // Sort plants by schedule group
-  for(const plant of plants) {
-    if(plant.nextWateringTime < aDay){
-      todayPlants.push(plant)
-    } else if(plant.nextWateringTime < aWeek) {
-      nextSevenDayPlants.push(plant)
+  for (const plant of plants) {
+    if (plant.nextWateringTime < aDay) {
+      todayPlants.push(plant);
+    } else if (plant.nextWateringTime < aWeek) {
+      nextSevenDayPlants.push(plant);
     } else {
       beyondPlants.push(plant);
     }
   }
 
-  for(const plant of todayPlants) {
+  for (const plant of todayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsToday.appendChild(plantElement);
   }
-  if(todayPlants.length === 0) {
-    noPlantsToday.style.display = 'flex';
-    plantsToday.style.display = 'none';
-  };
-  plantsTodayLoading.style.display = 'none';
+  if (todayPlants.length === 0) {
+    noPlantsToday.style.display = "flex";
+    plantsToday.style.display = "none";
+  }
+  plantsTodayLoading.style.display = "none";
 
-  for(const plant of nextSevenDayPlants) {
+  for (const plant of nextSevenDayPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsNextSevenDays.appendChild(plantElement);
   }
-  if(nextSevenDayPlants.length === 0) {
-    noPlantsNextSevenDays.style.display = 'flex';
-    plantsNextSevenDays.style.display = 'none';
+  if (nextSevenDayPlants.length === 0) {
+    noPlantsNextSevenDays.style.display = "flex";
+    plantsNextSevenDays.style.display = "none";
   }
-  plantsNextSevenDaysLoading.style.display = 'none';
+  plantsNextSevenDaysLoading.style.display = "none";
 
-  for(const plant of beyondPlants) {
+  for (const plant of beyondPlants) {
     const plantElement = generatePlantReminder(plant);
     plantsBeyond.appendChild(plantElement);
   }
-  if(beyondPlants.length === 0) {
-    noPlantsBeyond.style.display = 'flex';
-    plantsBeyond.style.display = 'none';
+  if (beyondPlants.length === 0) {
+    noPlantsBeyond.style.display = "flex";
+    plantsBeyond.style.display = "none";
   }
-  plantsBeyondLoading.style.display = 'none';
+  plantsBeyondLoading.style.display = "none";
 });
 
 // Generate the plant reminder HTML elemt
@@ -119,35 +136,39 @@ function generatePlantReminder(plant) {
   // Plant data to display
   const plantImageUrl = plant.image_url;
   const plantName = plant.name;
-  const scheduledWateringTime = getFormattedTime(plant.datetime_added.split(' ')[1]);
+  const scheduledWateringTime = getFormattedTime(
+    plant.datetime_added.split(" ")[1]
+  );
 
   // Clone the HTML template
-  const plantReminderTemplate = document.getElementById("plant-reminder-template");
+  const plantReminderTemplate = document.getElementById(
+    "plant-reminder-template"
+  );
   const plantReminder = plantReminderTemplate.content.cloneNode(true);
 
   // Insert plant data to the HTML element
   const plantImageElement = plantReminder.querySelector('#plant-reminder-image');
   plantImageElement.src = plantImageUrl;
 
-  const plantNameElement = plantReminder.querySelector('.plant-name');
+  const plantNameElement = plantReminder.querySelector(".plant-name");
   plantNameElement.textContent = plantName;
 
-  const waterReminderText = plantReminder.querySelector('.water-reminder-text');
+  const waterReminderText = plantReminder.querySelector(".water-reminder-text");
   waterReminderText.textContent = getWaterReminder(getNextWateringTime(plant));
 
-  const waterScheduleData = plantReminder.querySelector('.water-schedule-data');
+  const waterScheduleData = plantReminder.querySelector(".water-schedule-data");
   waterScheduleData.textContent = scheduledWateringTime;
 
   // Handle links
-  const linkToUserPlantPage = plantReminder.querySelector('#plant-link');
+  const linkToUserPlantPage = plantReminder.querySelector("#plant-link");
   linkToUserPlantPage.addEventListener("click", () => {
-    window.location.href = `own-plant.html?plant_id=${plant.plant_id}`
-  })
+    window.location.href = `own-plant.html?plant_id=${plant.plant_id}`;
+  });
 
-  const linkToExplorePlantPage = plantReminder.querySelector('#plant-info');
+  const linkToExplorePlantPage = plantReminder.querySelector("#plant-info");
   linkToExplorePlantPage.addEventListener("click", () => {
-    window.location.href = `explore-plant.html?plant_id=${plant.plant_id}`
-  })
+    window.location.href = `explore-plant.html?plant_id=${plant.plant_id}`;
+  });
 
   return plantReminder;
 }

@@ -4,6 +4,18 @@ import { displayUserPlants, toggleAddPlants, makeSearchInputsWork, createPlantSe
 const userData = JSON.parse(localStorage.getItem("user_data"));
 
 /**
+ * Waits for the home page to finish loading, retrieves the profile image from sessionStorage.
+ */
+window.addEventListener("load", function () {
+  const userData = JSON.parse(this.localStorage.getItem("user_data"));
+
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-img");
+    profileImgElement.src = userData.profile_image_url;
+  }
+});
+
+/**
  * Select add plant buttons and add the `toggleAddPlants` event
  */
 Array.from(document.getElementsByClassName('add-plant-button'))
@@ -21,15 +33,16 @@ getUserPlants({
   const loading = document.querySelector("#garden-plants-loading-group");
   loading.style.display = "none";
 
-  if(userPlants.length === 0) {
-    const searchPlant = document.getElementById('search-plant');
-    searchPlant.style.display = 'none';
-    
-    const noPlantsMessage = document.getElementById('no-plants');
-    noPlantsMessage.style.display = 'flex';
+  if (userPlants.length === 0) {
+    const searchPlant = document.getElementById("search-plant");
+    searchPlant.style.display = "none";
 
-    const exploreNewPlantsButton = document.getElementById('explore-new-plants');
-    exploreNewPlantsButton.style.display = 'none';
+    const noPlantsMessage = document.getElementById("no-plants");
+    noPlantsMessage.style.display = "flex";
+
+    const exploreNewPlantsButton =
+      document.getElementById("explore-new-plants");
+    exploreNewPlantsButton.style.display = "none";
     return;
   }
 

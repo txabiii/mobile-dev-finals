@@ -4,5 +4,3 @@
 export const SERVER_URL = 'http://localhost/plant-parenthood/php'; // Local server backend endpoint of Txabi
 
 // export const SERVER_URL = 'https://trousered-frames.000webhostapp.com/php' // Production server #1 backend endpoint
-
-// export const SERVER_URL = 
