@@ -39,7 +39,12 @@ window.addEventListener("load", function () {
   const userCredentials = {
     username: document.getElementById("actual-username"),
     email: document.getElementById("actual-email-address"),
+    profileImgElement: document.getElementById("profile-image"),
   };
   userCredentials.username.textContent = userData.username;
   userCredentials.email.textContent = userData.email;
+
+  if (userData.profile_image_url) {
+    userCredentials.profileImgElement.src = userData.profile_image_url;
+  }
 });

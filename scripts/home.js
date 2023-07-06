@@ -1,5 +1,9 @@
 import { userData } from "./data.js";
-import { displayUserPlants, displayAllPlants, toggleAddPlants } from "./utils.js";
+import {
+  displayUserPlants,
+  displayAllPlants,
+  toggleAddPlants,
+} from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
@@ -12,14 +16,21 @@ import { createReport } from "./api/reportApi.js";
 window.addEventListener("load", function () {
   const userData = JSON.parse(this.localStorage.getItem("user_data"));
   const usernameElement = document.getElementById("name");
+
   usernameElement.textContent = userData.username + `!`;
+
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-img");
+    profileImgElement.src = userData.profile_image_url;
+  }
 });
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event
  */
-Array.from(document.getElementsByClassName('add-plant-button'))
-  .forEach(button => button.addEventListener('click', toggleAddPlants));
+Array.from(document.getElementsByClassName("add-plant-button")).forEach(
+  (button) => button.addEventListener("click", toggleAddPlants)
+);
 
 /**
  * Get data of user's plants

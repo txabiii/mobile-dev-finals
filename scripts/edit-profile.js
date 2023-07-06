@@ -1,4 +1,3 @@
-import { updateUserAccount } from "./api/userAccountAPI.js";
 import { updateUserCredentials } from "./api/userAccountAPI.js";
 import {
   displayErrorMessage,
@@ -88,6 +87,11 @@ function validateEditForm() {
 window.addEventListener("load", function () {
   formFields.username.value = userData.username;
   formFields.email.value = userData.email;
+
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-image");
+    profileImgElement.src = userData.profile_image_url;
+  }
 });
 
 cancelButton.addEventListener("click", function () {
@@ -101,7 +105,7 @@ saveButton.addEventListener("click", function () {
       if (data.status === "success") {
         localStorage.setItem("user_data", JSON.stringify(data.data));
         displaySuccessMessage(data.message);
-        // redirectWithTimeout(formFields, "profile.html");
+        redirectWithTimeout(formFields, "profile.html");
       } else {
         if (data.error === "username") {
           formFields.username.classList.add("error");
