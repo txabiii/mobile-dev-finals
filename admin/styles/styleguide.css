@@ -17,12 +17,36 @@
   --font-family-barlow: "Barlow", Helvetica;
   --font-family-rajdhani: "Rajdhani", Helvetica;
 }
+.barlow-medium-white-18px {
+  color: var(--white);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: normal;
+}
+
+.barlow-medium-aqua-deep-16px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 500;
+}
+
 .barlow-medium-aqua-deep-18px {
   color: var(--aqua-deep);
   font-family: var(--font-family-barlow);
   font-size: var(--font-size-xl);
   font-style: normal;
   font-weight: 500;
+}
+
+.barlow-medium-heavy-aqua-deep-18px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 700;
 }
 
 .barlow-medium-aqua-deep-15px {

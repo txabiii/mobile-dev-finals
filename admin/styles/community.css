@@ -278,25 +278,47 @@ textarea:focus, input:focus{
   width: 80%;
 }
 
-tr {
-  padding-top: 20px;
+table {
+  width: 100%;
+}
+
+th {
+  color: white;
+  text-align: left;
+  background-color: #82A69D;
   text-align: center;
 }
+
+tr {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.rowcenter {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 
 tr:hover {
   background-color: #ddd;
 }
 
-th {
-  color: white;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  padding-top: 25px;
-  padding-bottom: 12px;
-  padding:50px;
-  text-align: left;
-  background-color: #82A69D;
-  text-align: center;
+
+.rowpadding {
+  padding-top: 15px;
+  padding-bottom: 15px;
   vertical-align: middle;
 }
+
+.table-row{
+  padding-top:50px;
+}
+
+button {
+  border: none;
+  padding: none;
+  background: none;
+}
+
+
