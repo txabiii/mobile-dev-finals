@@ -87,7 +87,7 @@ export function updateUserAccount(payload) {
 
 export function updateUserCredentials(payload) {
   return new Promise((resolve, reject) => {
-    fetch("./php/user-account.php", {
+    fetch(`${SERVER_URL}/user-account.php`, {
       method: "POST",
       body: payload,
     })
