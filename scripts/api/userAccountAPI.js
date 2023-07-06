@@ -1,7 +1,5 @@
 import { SERVER_URL } from "../config.js";
 
-import { SERVER_URL } from "../config.js";
-
 export function getUserAccount(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/user-account.php?email=${encodeURIComponent(payload.email)}&action=${encodeURIComponent(payload.action)}`)
