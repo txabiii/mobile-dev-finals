@@ -241,12 +241,12 @@ class userAccounts extends DB
 					if(in_array($fileType, $allowTypes)){
 						$update_user_credentials_query .= "profile_image_url = ?, ";
 						$update_params[] = './assets/users/' . $_FILES['profilePictureFile']['name'];
+						$update_params[] = 'https://plantparenthoodassistant.000webhostapp.com/php/upload/' . $_FILES['profilePictureFile']['name'];
 						$param_types .= 's';
 					} else {
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Sorry, only JPG, JPEG, & PNG files are allowed file extensions to upload.', 'error' => 'file extension'));
 						return;
 					}
-					
 				}
 
 				$update_user_credentials_query = rtrim($update_user_credentials_query, ', ');
@@ -261,11 +261,16 @@ class userAccounts extends DB
 
 				if ($execution) {
 					if (isset($_FILES['profilePictureFile'])) {
-						$filename = $_FILES['profilePictureFile']["name"];
-						$tempname = $_FILES['profilePictureFile']["tmp_name"];
-						$folder = './assets/users/' . $filename;
+						$filename = $_FILES['profilePictureFile']['name'];
+						$tempname = $_FILES['profilePictureFile']['tmp_name'];
 
-						if(move_uploaded_file($tempname, $folder)) {
+						$uploadDirectory = __DIR__ . '/uploads/';
+
+						$newFileName = uniqid() . '_' . $filename;
+						$destination = $uploadDirectory . $newFileName;
+						// $folder = '../assets/users/' . $filename;
+
+						if(move_uploaded_file($tempname, $destination)) {
 							echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.'));
 						} else {
 							echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to upload image.'));
