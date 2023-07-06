@@ -25,9 +25,9 @@ logoutButton.addEventListener("click", function () {
   logoutAccount(payload).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.message);
-      // setTimeout(() => {
-      //   window.location.href = "login.html";
-      // }, 2000);
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000);
     } else {
       displayErrorMessage(data.message);
     }
@@ -39,7 +39,12 @@ window.addEventListener("load", function () {
   const userCredentials = {
     username: document.getElementById("actual-username"),
     email: document.getElementById("actual-email-address"),
+    profileImgElement: document.getElementById("profile-image"),
   };
   userCredentials.username.textContent = userData.username;
   userCredentials.email.textContent = userData.email;
+
+  if (userData.profile_image_url) {
+    userCredentials.profileImgElement.src = userData.profile_image_url;
+  }
 });
