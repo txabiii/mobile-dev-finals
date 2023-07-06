@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 session_start();
 date_default_timezone_set('Asia/Singapore');
 
@@ -104,7 +104,7 @@ class userAccounts extends DB
 				
 				if ($user['profile_image_url'] !== null) {
 					$user_data['profile_image_url'] = $user['profile_image_url'];
-				}
+				}			
 
 				if ($user['email_verified_at'] !== null) {
 					if (password_verify($password, $user['password'])) {
@@ -246,7 +246,6 @@ class userAccounts extends DB
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Sorry, only JPG, JPEG, & PNG files are allowed file extensions to upload.', 'error' => 'file extension'));
 						return;
 					}
-					
 				}
 
 				$update_user_credentials_query = rtrim($update_user_credentials_query, ', ');
@@ -261,16 +260,14 @@ class userAccounts extends DB
 
 				if ($execution) {
 					if (isset($_FILES['profilePictureFile'])) {
-						$filename = $_FILES['profilePictureFile']["name"];
+						$filename = basename($_FILES['profilePictureFile']["name"]);
 						$tempname = $_FILES['profilePictureFile']["tmp_name"];
-						$folder = './assets/users/' . $filename;
+						$folder = '../assets/users/' . $filename;
 
-						if(move_uploaded_file($tempname, $folder)) {
-							echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.'));
-						} else {
+						if(!move_uploaded_file($tempname, $folder)) {
 							echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to upload image.'));
 							return;
-						}
+						} 
 					}
 
 					$search_user = 'SELECT * FROM user_accounts_tb WHERE user_id = ?';
@@ -289,7 +286,7 @@ class userAccounts extends DB
 					
 					if ($user['profile_image_url'] !== null) {
 						$user_data['profile_image_url'] = $user['profile_image_url'];
-					}
+					}	
 
 					echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.', 'data' => $user_data));
 				} else {
