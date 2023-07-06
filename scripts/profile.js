@@ -25,9 +25,9 @@ logoutButton.addEventListener("click", function () {
   logoutAccount(payload).then((data) => {
     if (data.status === "success") {
       displaySuccessMessage(data.message);
-      // setTimeout(() => {
-      //   window.location.href = "login.html";
-      // }, 2000);
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000);
     } else {
       displayErrorMessage(data.message);
     }
