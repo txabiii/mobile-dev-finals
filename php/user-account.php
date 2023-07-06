@@ -236,11 +236,10 @@ class userAccounts extends DB
 
 				if (isset($_FILES['profilePictureFile'])) {
 					$fileType = pathinfo($_FILES['profilePictureFile']['name'], PATHINFO_EXTENSION);
-					$allowTypes = array('jpg','png','jpeg','gif','pdf');
+					$allowTypes = array('jpg','png','jpeg');
 
 					if(in_array($fileType, $allowTypes)){
 						$update_user_credentials_query .= "profile_image_url = ?, ";
-						// $update_params[] = './assets/users/' . $_FILES['profilePictureFile']['name'];
 						$update_params[] = 'https://plantparenthoodassistant.000webhostapp.com/php/uploads/' . $_FILES['profilePictureFile']['name'];
 						$param_types .= 's';
 					} else {
@@ -265,12 +264,9 @@ class userAccounts extends DB
 						$tempname = $_FILES['profilePictureFile']['tmp_name'];
 
 						$uploadDirectory = __DIR__ . '/uploads/';
-
 						$destination = $uploadDirectory . $filename;
 
-						if(move_uploaded_file($tempname, $destination)) {
-							echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'User profile updated successfully.'));
-						} else {
+						if(!move_uploaded_file($tempname, $destination)) {
 							echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to upload image.'));
 							return;
 						}
