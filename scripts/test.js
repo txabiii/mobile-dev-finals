@@ -2,23 +2,25 @@ import { uploadFileToServer } from "./api/userAccountAPI.js";
 
 const tryButton = document.getElementById("try-button");
 tryButton.addEventListener("click", () => {
-  console.log("hello")
-  //try to upload a file
-  const fileContent = 'This is the content of the file.';
-  const fileName = 'dummy.txt';
-  const fileType = 'text/plain';
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0]; // Get the selected file from the input field
 
-  const file = new File([fileContent], fileName, { type: fileType });
+  if (!file) {
+    // No file selected, handle the error
+    console.error("No file selected.");
+    return;
+  }
 
-  // Use the file in your upload function
-  const dummyPayload = new FormData();
-  dummyPayload.append('file', file);
+  const payload = new FormData();
+  payload.append('image', file);
 
-  uploadFileToServer(dummyPayload)
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-})
+  uploadFileToServer(payload)
+    .then((response) => {
+      console.log(response);
+      // Handle the response here
+    })
+    .catch((error) => {
+      console.error(error);
+      // Handle the error here
+    });
+});

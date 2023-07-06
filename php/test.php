@@ -4,9 +4,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
 // Check if a file was uploaded
-if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-    $tempFile = $_FILES['file']['tmp_name'];
-    $originalFileName = $_FILES['file']['name'];
+if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $tempFile = $_FILES['image']['tmp_name'];
+    $originalFileName = $_FILES['image']['name'];
     
     // Specify the directory where you want to save the uploaded file
     $uploadDirectory = __DIR__ . '/uploads/';
