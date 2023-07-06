@@ -8,6 +8,7 @@ import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
 import { createReport } from "./api/reportApi.js";
+import { uploadFileToServer } from "./api/userAccountAPI.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 

@@ -100,3 +100,19 @@ export function updateUserCredentials(payload) {
       });
   });
 }
+
+export function uploadFileToServer(payload) {
+  return new Promise((resolve, reject) => {
+    fetch(`${SERVER_URL}/test.php`, {
+      method: "POST",
+      body: payload,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  })
+}
