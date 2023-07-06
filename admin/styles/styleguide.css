@@ -89,3 +89,10 @@
   font-weight: 500;
 }
 
+.barlow-medium-thick-aqua-deep-20px {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-barlow);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 800;
+}

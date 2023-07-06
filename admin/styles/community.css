@@ -1,4 +1,24 @@
 /* screen - usertab */
+:root { 
+  --apple: #4caf50;
+  --aqua-deep: #054d3b;
+  --green-apple: #799E29;
+  --crimson: #AD343E;
+  --black: #000000;
+  --white: #ffffff;
+ 
+  --font-size-l: 16px;
+  --font-size-m: 15px;
+  --font-size-s: 14px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 20px;
+  --font-size-24: 24px;
+  --font-size-xxxl: 30px;
+ 
+  --font-family-barlow: "Barlow", Helvetica;
+  --font-family-rajdhani: "Rajdhani", Helvetica;
+}
+
 
 body {
   align-items: center;
@@ -176,4 +196,107 @@ a:hover {
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
+}
+
+.page-name {
+  color: var(--aqua-deep);
+  font-family: var(--font-family-rajdhani);
+  font-size: var(--font-size-xxxl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+  min-height: 38px;
+  min-width: 113px;
+  padding-left: 300px;
+  padding-top: 120px;
+  padding-bottom: 10px;
+}
+
+.search-position {
+  align-items: flex-end;
+  display: flex;
+  padding-left: 280px;
+}
+
+.search-container {
+  background-color: #DDE4C9;
+  width: 25%;
+  min-height: 60px;
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.search-input {
+  background-color: transparent;
+  letter-spacing: 0;
+  line-height: normal;
+  min-height: normal;
+  min-width: 200px;
+  border: none;
+  padding-left: 10px;
+  position: relative;
+}
+
+.search-icon {
+  margin-top: 10px;
+  margin-left: 20px;
+  height: 30px;
+  width: 30px;
+  top: 5px;
+  position: relative;
+}
+
+.report-container {
+  background-color: #DDE4C9;
+  width: 20%;
+  min-height: 60px;
+  border-radius: 10px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.report-text {
+  padding-left: 10px;
+  position: relative;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.status-choices{
+  outline: none;
+  margin-left: auto;
+  margin-right: 10px;
+  background-color: none;
+}
+
+.report-table {
+  padding-top: 20px;
+  padding-left: 300px;
+  width: 80%;
+}
+
+tr {
+  padding-top: 20px;
+  text-align: center;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  color: white;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  padding-top: 25px;
+  padding-bottom: 12px;
+  padding:50px;
+  text-align: left;
+  background-color: #82A69D;
+  text-align: center;
+  vertical-align: middle;
 }
