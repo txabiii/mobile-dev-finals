@@ -39,6 +39,14 @@
   filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }
 
-h3 {
+.your-plans-label {
   padding: 0px 20px 10px 20px;
+}
+
+#garden-icon {
+  height: 32px;
+  width: auto;
+  aspect-ratio: 1/1;
+  align-self: center;
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
 }

@@ -393,6 +393,19 @@ input:focus {
   display: flex;
 }
 
+.result-item .filler {
+  flex: 1;
+}
+
+.result-item #info-icon {
+  margin-right: 10px;
+  height: 32px;
+  width: auto;
+  aspect-ratio: 1/1;
+  align-self: center;
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
 .result-item:last-child {
   margin: 0px;
 }
@@ -543,6 +556,25 @@ h3 {
   width: 24px;
 }
 
+.plant-item .plus-image-wrapper {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 100px;
+  background-color: rgb(var(--green-2-rgb));
+  padding: 5px;
+}
+
+.plant-item .plus-image-wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+}
+
 /* SHARED CSS BETWEEN OWN_PLANT.HTML AND EXPLORE-PLANT.HTML */
 
 .go-back {
@@ -628,6 +660,10 @@ h3 {
   padding: 0px;
   padding-bottom: 20px;
   height: 60px;
+}
+
+.add-plant-wrapper .search-icon {
+  top: 15px !important;
 }
 
 .add-plant-wrapper .search-section img {

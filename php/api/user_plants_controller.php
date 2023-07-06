@@ -91,7 +91,7 @@ class UserPlantController extends DB {
       $stmt->bind_param("iis", $user_id, $plant_id, $date_time_added);
 
       if ($stmt->execute()) {
-        echo json_encode(array('success' => true, 'message' => 'User plant record created'));
+        echo json_encode(array('success' => true, 'message' => 'This plant has been added to your garden'));
       } else {
         echo json_encode(array('success' => false, 'message' => 'Failed to create user plant record.'));
       }

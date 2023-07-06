@@ -1,4 +1,7 @@
 import { getPlant } from '../scripts/api/plantApi.js';
+import { createUserPlant } from '../scripts/api/userPlantsApi.js'
+
+const userData = JSON.parse(localStorage.getItem("user_data"));
 
 export const notifyElements = {
   notifyMessageElement: document.getElementById("notify-message"),
@@ -253,7 +256,7 @@ export function displayAllPlants(plants) {
  * @param {Object} plant 
  * @returns {HTML} 
  */
-function createPlantItem(plant) {
+function createPlantItem(plant, plusIcon = false) {
   const template = document.getElementById("plant-item-template");
   const plantItem = template.content.cloneNode(true);
 
@@ -273,6 +276,17 @@ function createPlantItem(plant) {
   nameElement.addEventListener("click", function () {
     window.location.href = "explore-plant.html?plant_id=" + plant.plant_id;
   });
+
+  if(plusIcon) {
+    const plusIcon = plantItem.querySelector('.plus-image-wrapper');
+    plusIcon.style.display = 'block';
+    plusIcon.addEventListener('click', () => createUserPlant({
+      action: 'create-plant',
+      plantId: plant.plant_id,
+      userId: userData.user_id,
+      dateTime: generateDateTime()
+    }))
+  }
 
   return plantItem;
 }
@@ -339,7 +353,7 @@ export function toggleAddPlants () {
       .then((plants) => {
         plantsContainer.innerHTML = '';
         for(const plant of plants) {
-          const plantItem = createPlantItem(plant);
+          const plantItem = createPlantItem(plant, true);
           plantsContainer.appendChild(plantItem);
         }
   
@@ -416,10 +430,23 @@ export function createPlantSearchResultItem(plant) {
   const image = resultItem.querySelector("img");
   const name = resultItem.querySelector(".name");
   const wateringFrequency = resultItem.querySelector(".watering-frequency");
+  const infoIcon = resultItem.querySelector('#info-icon');
+  const gardenIcon = resultItem.querySelector('#garden-icon');
 
   image.src = plant.image_url;
   name.textContent = plant.name;
   wateringFrequency.textContent = `Water every ${plant.watering_frequency} days`;
+  if(infoIcon) {
+    infoIcon.addEventListener('click', () => {
+      window.location.href = `explore-plant.html?plant_id=${plant.plant_id}`
+    })
+  }
+
+  if(gardenIcon) {
+    gardenIcon.addEventListener('click', () => {
+      window.location.href = `own-plant.html?plant_id=${plant.plant_id}`
+    })
+  }
 
   return resultItem;
 }

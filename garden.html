@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <h3>Your plants</h3>
+  <h3 class="your-plans-label">Your plants</h3>
 
   <div id="garden-plants-loading-group" class="grid-layout">
     <div class="loading-box loading"></div>
@@ -118,19 +118,25 @@
         <h3 class="name"></h3>
         <p class="watering-frequency"></p>
       </div>
+      <div class="filler"></div>
+      <!-- <img id="info-icon" src="./assets/icons/info.png" alt="info"> -->
+      <img id="garden-icon" src="./assets/icons/garden.svg" alt="garden">
     </div>
   </template>
 
   <template id="plant-item-template">
-      <div class="plant-item">
-        <div class="small-water-reminder">
-          <img src="./assets/icons/can.svg" alt="can">
-        </div>
-        <div class="details">
+    <div class="plant-item">
+      <div class="plus-image-wrapper">
+        <img src="./assets/plus-icon.svg" alt="plus">
+      </div>
+      <div class="small-water-reminder">
+        <img src="./assets/icons/can.svg" alt="can">
+      </div>
+      <div class="details">
         <h4 class="name">Plant Name</h4>
         <h4 class="water-schedule">Water Schedule</h4>
       </div>
-        <img id="plant-image" src="./assets/missing-image-small.png" alt="missing image" />
+      <img id="plant-image" src="./assets/missing-image-small.png" alt="missing image" />
     </div>
   </template>
 
