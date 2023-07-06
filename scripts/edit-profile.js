@@ -1,4 +1,5 @@
 import { updateUserAccount } from "./api/userAccountAPI.js";
+import { updateUserCredentials } from "./api/userAccountAPI.js";
 import {
   displayErrorMessage,
   displaySuccessMessage,
@@ -20,42 +21,9 @@ const formFields = {
 
 addFocusEventListenerToFields(formFields);
 
-// function getFormInputValues() {
-//   const payload = {
-//     action: "update_user_credentials",
-//     user_id: userData.user_id,
-//   };
-
-//   const newUsername = formFields.username.value.trim();
-//   const newEmail = formFields.email.value.trim();
-//   const newPassword = formFields.password.value.trim();
-//   const newProfilePictureFile = JSON.stringify(
-//     formFields.profilePictureFile.files[0]
-//   );
-
-//   if (newUsername !== userData.username) {
-//     payload.username = newUsername;
-//   }
-
-//   if (newEmail !== userData.email) {
-//     payload.email = newEmail;
-//   }
-
-//   if (newPassword !== "") {
-//     payload.password = newPassword;
-//   }
-
-//   if (newProfilePictureFile) {
-//     payload.profilePictureFile = newProfilePictureFile;
-//   }
-
-//   return payload;
-// }
-
 function getFormInputValues() {
   const payload = new FormData();
 
-  payload.append("action", "update_user_credentials");
   payload.append("user_id", userData.user_id);
 
   const newUsername = formFields.username.value.trim();
@@ -84,10 +52,10 @@ function getFormInputValues() {
 
 function validateEditForm() {
   const form = getFormInputValues();
-  const keys = Object.keys(form);
+  const keys = Array.from(form.keys());
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  if (keys.length === 2 && keys[0] === "action" && keys[1] === "user_id") {
+  if (keys.length === 1 && keys[0] === "user_id") {
     displayWarningMessage("No changes.");
   } else if (!formFields.username.value && !formFields.email.value) {
     formFields.username.classList.add("error");
@@ -128,25 +96,20 @@ cancelButton.addEventListener("click", function () {
 
 saveButton.addEventListener("click", function () {
   const form = getFormInputValues();
-  updateUserAccount(form);
+  if (validateEditForm()) {
+    updateUserCredentials(form).then((data) => {
+      if (data.status === "success") {
+        localStorage.setItem("user_data", JSON.stringify(data.data));
+        displaySuccessMessage(data.message);
+        // redirectWithTimeout(formFields, "profile.html");
+      } else {
+        if (data.error === "username") {
+          formFields.username.classList.add("error");
+        } else if (data.error === "email") {
+          formFields.email.classList.add("error");
+        }
+        displayErrorMessage(data.message);
+      }
+    });
+  }
 });
-
-// saveButton.addEventListener("click", function () {
-//   const form = getFormInputValues();
-//   if (validateEditForm()) {
-//     updateUserAccount(form).then((data) => {
-//       if (data.status === "success") {
-//         localStorage.setItem("user_data", JSON.stringify(data.data));
-//         displaySuccessMessage(data.message);
-//         redirectWithTimeout(formFields, "profile.html");
-//       } else {
-//         if (data.error === "username") {
-//           formFields.username.classList.add("error");
-//         } else {
-//           formFields.email.classList.add("error");
-//         }
-//         displayErrorMessage(data.message);
-//       }
-//     });
-//   }
-// });
