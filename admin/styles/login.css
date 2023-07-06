@@ -81,7 +81,6 @@ body {
     letter-spacing: 0;
     line-height: normal;
     min-height: 24px;
-    opacity: 0.7;
     white-space: nowrap;
     width: 133px;
 }
@@ -98,15 +97,6 @@ body {
     width: 30px;
 }
 
-.username-or-email-address {
-    letter-spacing: 0;
-    line-height: normal;
-    min-height: normal;
-    min-width: 235px;
-    opacity: 0.7;
-    white-space: nowrap;
-}
-
 .group-12 {
     align-items: flex-start;
     display: flex;
@@ -119,7 +109,7 @@ body {
     letter-spacing: 0;
     line-height: normal;
     min-height: 22px;
-    opacity: 0.7;
+    text-decoration: none;
 }
 
 .group-11 {
@@ -128,6 +118,11 @@ body {
     gap: 7px;
     height: 22px;
     min-width: 194px;
+}
+
+input[type="checkbox"] {
+    accent-color: rgba(5, 77, 59, 1);
+    cursor: pointer;
 }
 
 .rectangle-21 {
@@ -153,32 +148,43 @@ body {
     margin-left: 3px;
     margin-top: 152px;
     min-width: 329px;
+    
 }
 
 .overlap-group2 {
     align-items: center;
     background-color: var(--aqua-deep);
-    border-radius: 20px;
+    border-radius: 25px;
     display: flex;
-    height: 45px;
+    height: 50px;
     justify-content: center;
     min-width: 100px;
     padding: 8px 129px;
-}
-
-.title {
     color: var(--white);
     font-family: var(--font-family-rajdhani);
-    font-size: var(--font-size-l);
-    font-weight: 700;
+    font-size: var(--font-size-m);
     letter-spacing: 0;
-    line-height: normal;
-    min-height: 38px;
-    min-width: 68px; 
+    font-weight: 700;
 }
 
 .plant-parenthood-1 {
     align-self: center;
     height: 381px;
     width: 674px;
+}
+
+.username-input,
+.password-input {
+  background-color: transparent;
+  letter-spacing: 0;
+  line-height: normal;
+  min-height: normal;
+  min-width: 235px;
+  white-space: nowrap;
+  border: none;
+  padding-left: 25px; 
+}
+
+textarea:focus, input:focus{
+    outline: none;
 }
