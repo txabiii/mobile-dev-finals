@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rajdhani:wght@300;400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -48,6 +48,7 @@ input:focus {
 .navbar img {
   height: 100%;
   width: auto;
+  border-radius: 50%;
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 100px;
@@ -60,18 +61,18 @@ input:focus {
   }
 }
 
-
 /* BANNER */
 
 .banner {
   height: 245px;
   padding: 20px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../assets/home-banner.png"); 
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+    url("../assets/home-banner.png");
 }
 
 .banner h2 {
   color: white;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-size: 30px;
   font-weight: 700;
   max-width: 269px;
@@ -79,7 +80,7 @@ input:focus {
 
 .banner h1 {
   color: rgb(var(--green-1-rgb));
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-size: 40px;
   font-weight: 700;
 }
@@ -117,7 +118,7 @@ input:focus {
 }
 
 .green-loading {
-  background: linear-gradient(to right, #D2EBD3 8%, #E5FAEA 18%, #D2EBD3 33%);
+  background: linear-gradient(to right, #d2ebd3 8%, #e5faea 18%, #d2ebd3 33%);
   background-size: 800px 104px;
   animation: shimmer 1.5s infinite linear;
 }
@@ -162,7 +163,7 @@ input:focus {
 
 .pop-up h2 {
   text-align: center;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-weight: 700;
   color: rgb(var(--green-2-rgb));
   font-size: 30px;
@@ -205,7 +206,7 @@ input:focus {
 .standard-button {
   color: white;
   background-color: rgb(var(--red-rgb));
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-size: 16px;
   font-weight: 600;
   height: 35px;
@@ -258,12 +259,14 @@ input:focus {
 }
 
 .bottom-navbar .active img {
-  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg)
+    brightness(81%) contrast(60%);
 }
 
 .bottom-navbar .inactive {
   transition: all 300ms ease;
-  filter: invert(59%) sepia(1%) saturate(22%) hue-rotate(354deg) brightness(96%) contrast(97%);
+  filter: invert(59%) sepia(1%) saturate(22%) hue-rotate(354deg) brightness(96%)
+    contrast(97%);
 }
 
 .bottom-navbar .inactive:hover {
@@ -281,13 +284,14 @@ input:focus {
 }
 
 .bottom-navbar .icon p {
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-weight: 700;
   font-size: 14px;
 }
 
 .bottom-navbar .add-plant-button {
-  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg) brightness(81%) contrast(60%);
+  filter: invert(85%) sepia(11%) saturate(4749%) hue-rotate(61deg)
+    brightness(81%) contrast(60%);
 }
 
 @media screen and (orientation: landscape) {
@@ -305,7 +309,6 @@ input:focus {
     height: 56px;
   }
 }
-
 
 /* SEARCH */
 
@@ -325,7 +328,7 @@ input:focus {
   background-color: rgb(var(--green-3-rgb));
   color: rgb(var(--green-2-rgb));
 
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-weight: 700;
   font-size: 15px;
 
@@ -445,10 +448,10 @@ input:focus {
 
 h3 {
   font-size: 20px;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
 }
 
-.plants-list   {
+.plants-list {
   white-space: nowrap;
   overflow-x: auto;
 }
@@ -462,7 +465,7 @@ h3 {
 }
 
 .no-plants p {
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-weight: 400;
   line-height: 14px;
   color: rgb(var(--green-1-rgb));
@@ -485,7 +488,8 @@ h3 {
 .add-first-plant img {
   width: 23.33px;
   height: 23.33px;
-  filter: invert(22%) sepia(25%) saturate(1396%) hue-rotate(115deg) brightness(96%) contrast(96%);
+  filter: invert(22%) sepia(25%) saturate(1396%) hue-rotate(115deg)
+    brightness(96%) contrast(96%);
 }
 
 .plant-item {
@@ -493,7 +497,7 @@ h3 {
   position: relative;
   height: 120px;
   width: 120px;
-  
+
   border-radius: 10px;
   overflow: hidden;
 
@@ -509,7 +513,7 @@ h3 {
   bottom: 0;
 
   background-color: rgba(var(--green-2-rgb), 0.6);
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-size: 15px;
   color: white;
 
@@ -580,14 +584,15 @@ h3 {
 
 .go-back {
   background-color: rgb(var(--green-1-rgb));
-  padding: 10px 20px; 
+  padding: 10px 20px;
 
   display: flex;
   align-items: center;
 }
 
 .go-back img {
-  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg) brightness(123%) contrast(100%);
+  filter: invert(99%) sepia(83%) saturate(167%) hue-rotate(226deg)
+    brightness(123%) contrast(100%);
 }
 
 /* SHARED CSS BETWEEN GARDEN.HTML AND REMINDER.HTML */
@@ -625,7 +630,6 @@ h3 {
   }
 }
 
-
 /** FORDA ADD PLANT BUTTON **/
 .add-plant-wrapper {
   display: none;
@@ -637,20 +641,20 @@ h3 {
   bottom: 75px;
   background-color: white;
   width: 100%;
-  border-top: 2px solid #D9D9D9;
+  border-top: 2px solid #d9d9d9;
   border-radius: 20px 20px 0px 0px;
-  filter: drop-shadow(0px -20px 12px rgba(0,0,0,0.1));
+  filter: drop-shadow(0px -20px 12px rgba(0, 0, 0, 0.1));
 
   animation: all 300ms ease;
 }
 
-.add-plant-header{
+.add-plant-header {
   display: flex;
   justify-content: space-between;
 }
 
 .add-plant-wrapper h2 {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: "Rajdhani", sans-serif;
   font-weight: 700;
   color: rgb(var(--green-2-rgb));
   font-size: 30px;
