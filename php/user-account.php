@@ -10,30 +10,46 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class userAccounts extends DB
 {
+
 	public function httpGet()
 	{
-		$email = $_GET['email'];
+		$action = $_GET['action'];
 
-		$search_email_address_query = "SELECT user_id, username, email FROM user_accounts_tb WHERE email = ?";
-		$statement = $this->connection->prepare($search_email_address_query);
-		$statement->bind_param("s", $email);
-		$statement->execute();
-		$result = $statement->get_result();
-
-		if ($result->num_rows > 0) {
-			$user = $result->fetch_assoc();
-
-			$user_data = array(
-				'action' => 'resend_code',
-				'action2' => 'forgot_password',
-				'user_id' => $user['user_id'],
-				'email' => $user['email']
-			);
-
-			echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.', 'data' => $user_data));
-		} else {
-			echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
+		if($action === 'get-all-users') {
+		  $query = "SELECT * FROM user_accounts_tb";
+		  $result = $this->connection->query($query);
+	
+		  if ($result) {
+			$users = $result->fetch_all(MYSQLI_ASSOC);
+			echo json_encode(array('success' => true, "message" => "Users retrieved successfully", "data" => $users));
+		  } else {
+			echo json_encode(array('success' => false, "message" => "Failed to retrieve users"));
+		  }
+		  $this->connection->close();
 		}
+		// elseif ($action === 'get-email'){
+		// 	$email = $_GET['email'];
+
+		// 	$search_email_address_query = "SELECT user_id, username, email FROM user_accounts_tb WHERE email = ?";
+		// 	$statement = $this->connection->prepare($search_email_address_query);
+		// 	$statement->bind_param("s", $email);
+		// 	$statement->execute();
+		// 	$result = $statement->get_result();
+	
+		// 	if ($result->num_rows > 0) {
+		// 		$user = $result->fetch_assoc();
+	
+		// 		$user_data = array(
+		// 			'action' => 'resend_code',
+		// 			'action2' => 'forgot_password',
+		// 			'user_id' => $user['user_id'],
+		// 			'email' => $user['email']
+		// 		);
+	
+		// 		echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.', 'data' => $user_data));
+		// 	} else {
+		// 		echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
+		// 	}
 	}
 
 	public function httpPost($payload)

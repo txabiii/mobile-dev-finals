@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="./styles/analytics.css" />
-        <link rel="stylesheet" type="text/css" href="./styles/styleguide.css" />
-        <link rel="stylesheet" type="text/css" href="./styles/globals.css" />
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="./styles/analytics.css">
+        <link rel="stylesheet" type="text/css" href="./styles/styleguide.css">
+        <link rel="stylesheet" type="text/css" href="./styles/globals.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {packages: ['corechart', 'line']});
@@ -42,9 +43,9 @@
             <img class="logo" src="img/plant-parenthood.png" alt="logo" />  
             <img class="separator" src="img/separator.svg" alt="Separator" />
             <div class="profile">
-                <img class="profile_photo" src="img/ellipse-1.svg" alt="Ellipse 1" />
-                <div class="full_name">Admin Full Name</div>
-                <div class="email">test@gmail.com</div>
+                <img class="profile_photo" src="img/ellipse-1.svg" id="profile-image" alt="Ellipse 1" />
+                <div class="full_name" id="actual-username">Admin Full Name</div>
+                <div class="email" id="actual-email-address">test@gmail.com</div>
             </div>
             <div class="menu">
                 <div class="dashboard">
@@ -70,7 +71,7 @@
             </div>
             <div class="logout">
                 <img class="tablerlogout" src="img/tabler-logout.svg" alt="tabler:logout" />
-                <a class="barlow-medium-aqua-deep-18px" href="./login.html">Logout</a>
+                <button class="barlow-medium-aqua-deep-18px" type="button" id="logout-button">Logout</button>
             </div>
         </div>
         <div class="header">
@@ -94,4 +95,5 @@
             </div>
         </div>                   
     </body>
+    <script defer src="./scripts/analytics.js" type="module"></script>
 </html>
