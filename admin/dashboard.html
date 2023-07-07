@@ -8,34 +8,6 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
           google.charts.load('current', {packages: ['corechart', 'line']});
-          google.charts.setOnLoadCallback(drawBackgroundColor);
-
-            function drawBackgroundColor() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('date', 'X');
-                data.addColumn('number', 'New Users');
-
-                data.addRows([
-                    [new Date(2023, 5, 29), 5],  [new Date(2023, 5, 30), 10], [new Date(2023, 6, 1), 5],
-                    [new Date(2023, 6, 2), 15], [new Date(2023, 6, 3), 10], [new Date(2023, 6, 4), 30],
-                    [new Date(2023, 6, 5), 25]
-                ]);
-
-                var options = {
-                    legend: 'none',
-                    series: {
-                        0: { color: '#054d3b' },
-                    },
-                    hAxis: {
-                    format: 'MMM dd, yyyy',
-                    gridlines: {count: 7}
-                    },
-                    'chartArea': {'width': '80%', 'height': '80%'},
-                };
-
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
-                }
         </script>
     </head>
     <body>
@@ -119,9 +91,9 @@
                     <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Popular Plant</button>
                     <button class="dashboard-button-left-not barlow-medium-aqua-deep-20px">Number of Post</button> 
                     <div class="right-side">
-                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px">Today</button>
-                        <button class="dashboard-button-right-selected" type="button">7 Days</button>
-                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px" type="button">Last Month</button> 
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px" id="last_1">Today</button>
+                        <button class="dashboard-button-right-selected" type="button" id="last_7">7 Days</button>
+                        <button class="dashboard-button-right-not barlow-medium-aqua-deep-20px" type="button" id="last_30">Last Month</button> 
                     </div>
                 </div>
                 <div id="chart_div" style="width: 100%; height: 575px"></div>
