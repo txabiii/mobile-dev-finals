@@ -2,10 +2,6 @@ import { loginAccount } from "../../scripts/api/userAccountAPI.js";
 import {
   showErrorBorderColor,
   displayErrorMessage,
-  displaySuccessMessage,
-  displayWarningMessage,
-  addFocusEventListenerToFields,
-  redirectWithTimeout,
 } from "../../scripts/utils.js";
 
 const loginButton = document.getElementById("login-button");
@@ -13,16 +9,6 @@ const formFields = {
   usernameOrEmail: document.getElementById("username-input"),
   password: document.getElementById("password-input"),
 };
-
-addFocusEventListenerToFields(formFields);
-
-document.addEventListener("click", function (event) {
-  if (event.target.matches("#label-forgot-password")) {
-    window.location.href = "forgot-password.html";
-  } else if (event.target.matches("#sign-up")) {
-    window.location.href = "signup.html";
-  }
-});
 
 function getFormInputValues() {
   return {
@@ -60,14 +46,10 @@ loginButton.addEventListener("click", function () {
       localStorage.setItem("user_data", JSON.stringify(data.data));
 
       if (data.status === "success") {
-        displaySuccessMessage(data.message);
-        redirectWithTimeout(formFields, "home.html");
-      } else if (data.status === "warning") {
-        displayWarningMessage(data.message);
-        redirectWithTimeout(formFields, "verification.html");
+        window.alert("Login success.")
+        window.location.href = "dashboard.html"
       } else {
-        showErrorBorderColor(formFields);
-        displayErrorMessage(data.message);
+        window.alert("There is an error while logging in.")
       }
     });
   }
