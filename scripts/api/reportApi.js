@@ -44,3 +44,17 @@ export function deleteReport(payload) {
       });
   });
 }
+
+export function getReports(payload) {
+  return new Promise((resolve, reject) => {
+    fetch(`${SERVER_URL}/api/posts_controller.php?action=${payload.action}`)
+    .then(response => response.json())
+    .then(data => {
+      const posts = data.data;
+      resolve({ posts });
+    })
+    .catch(error => {
+      reject();
+    });
+  });
+}

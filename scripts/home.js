@@ -7,7 +7,15 @@ import {
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { createReport } from "./api/reportApi.js";
+import { createReport, getReports } from "./api/reportApi.js";
+
+getReports({
+  action: 'get-all-reports'
+})
+.then((data) => {
+  console.log(data)
+})
+
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 
