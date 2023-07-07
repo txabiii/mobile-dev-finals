@@ -60,7 +60,7 @@ export function getReports(payload) {
       resolve({ report });
     })
     .catch(error => {
-      reject();
+      reject(error);
     });
   });
 }

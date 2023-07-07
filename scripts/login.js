@@ -29,6 +29,7 @@ function getFormInputValues() {
     action: "login",
     usernameOrEmail: formFields.usernameOrEmail.value.trim(),
     password: formFields.password.value.trim(),
+    rememberMe: document.getElementById("remember-password-checkbox").checked,
   };
 }
 

@@ -47,14 +47,9 @@ export function deletePost(postId) {
   });
 }
 
-export function getPosts() {
+export function getPosts(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts_controller.php`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(`${SERVER_URL}/api/posts_controller.php?`)
     .then(response => response.json())
     .then(data => {
       const posts = data.data;

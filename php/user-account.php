@@ -10,7 +10,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class userAccounts extends DB
 {
-
 	public function httpGet()
 	{
 		$action = $_GET['action'];
@@ -25,31 +24,31 @@ class userAccounts extends DB
 		  } else {
 			echo json_encode(array('success' => false, "message" => "Failed to retrieve users"));
 		  }
-		  $this->connection->close();
-		}
-		// elseif ($action === 'get-email'){
-		// 	$email = $_GET['email'];
+		} else {
+			$email = $_GET['email'];
 
-		// 	$search_email_address_query = "SELECT user_id, username, email FROM user_accounts_tb WHERE email = ?";
-		// 	$statement = $this->connection->prepare($search_email_address_query);
-		// 	$statement->bind_param("s", $email);
-		// 	$statement->execute();
-		// 	$result = $statement->get_result();
+			$search_email_address_query = "SELECT user_id, username, email FROM user_accounts_tb WHERE email = ?";
+			$statement = $this->connection->prepare($search_email_address_query);
+			$statement->bind_param("s", $email);
+			$statement->execute();
+			$result = $statement->get_result();
 	
-		// 	if ($result->num_rows > 0) {
-		// 		$user = $result->fetch_assoc();
+			if ($result->num_rows > 0) {
+				$user = $result->fetch_assoc();
 	
-		// 		$user_data = array(
-		// 			'action' => 'resend_code',
-		// 			'action2' => 'forgot_password',
-		// 			'user_id' => $user['user_id'],
-		// 			'email' => $user['email']
-		// 		);
+				$user_data = array(
+					'action' => 'resend_code',
+					'action2' => 'forgot_password',
+					'user_id' => $user['user_id'],
+					'email' => $user['email']
+				);
 	
-		// 		echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.', 'data' => $user_data));
-		// 	} else {
-		// 		echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
-		// 	}
+				echo json_encode(array('method' => 'GET', 'status' => 'success', 'message' => 'We found your email address. Please verify your email address.', 'data' => $user_data));
+			} else {
+				echo json_encode(array('method' => 'GET', 'status' => 'failed', 'message' => 'User not found'));
+			}
+		}
+		$this->connection->close();
 	}
 
 	public function httpPost($payload)
@@ -101,6 +100,7 @@ class userAccounts extends DB
 		} else if ($action === 'login') {
 			$usernameOrEmail = $payload['usernameOrEmail'];
 			$password = $payload['password'];
+			$rememberMe = $payload['rememberMe'] ?? null;
 
 			$search_user = "SELECT * FROM user_accounts_tb WHERE (username = ? OR email = ?)";
 			$statement = $this->connection->prepare($search_user);
@@ -115,7 +115,6 @@ class userAccounts extends DB
 					'user_id' => $user['user_id'],
 					'username' => $user['username'],
 					'email' => $user['email'],
-					'password' => $password
 				);
 				
 				if ($user['profile_image_url'] !== null) {
@@ -124,6 +123,26 @@ class userAccounts extends DB
 
 				if ($user['email_verified_at'] !== null) {
 					if (password_verify($password, $user['password'])) {
+
+						$_SESSION['SES'] = $user;
+
+						if($rememberMe && $user['token_key'] === null)
+						{
+							$expires = time() + ((60*60*24) * 7);
+							$salt = "*&salt#@";
+							
+							$token_key = hash('sha256', (time() . $salt));
+							$token_value = hash('sha256', ('Logged_in' . $salt));
+
+							setcookie('SES', $token_key.':'.$token_value, $expires, '/', $_SERVER['SERVER_NAME'], true, true);
+							
+							$id = $user['user_id'];
+							$remember_me_query = "UPDATE user_accounts_tb SET token_key = ?, token_value = ? WHERE user_id = ?";
+							$statement = $this->connection->prepare($remember_me_query);
+							$statement->bind_param("sss", $token_key, $token_value, $id);
+							$statement->execute();
+						}
+
 						echo json_encode(array('method' => 'POST', 'status' => 'success', 'message' => 'Login successful.', 'data' => $user_data));
 					} else {
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Incorrect username/email address or password.'));
