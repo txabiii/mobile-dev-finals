@@ -1,4 +1,6 @@
-import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
+import { logoutAccount, getUserAccount } from "./api/userAccountAPI.js";
+import { getPlant } from "./api/plantApi.js"
+
 
 const logoutButton = document.getElementById("logout-button");
 logoutButton.addEventListener("click", function () {
@@ -18,6 +20,18 @@ logoutButton.addEventListener("click", function () {
 
 
 window.addEventListener("load", function () {
+    getPlant({
+      action:"get-all-plants"
+    }).then((data) => {
+      console.log(data)
+    })
+
+    getUserAccount({
+      action:"get-all-users"
+    }).then((data) => {
+      console.log(data)
+    })
+
     const userData = JSON.parse(this.localStorage.getItem("user_data"));
     const userCredentials = {
       username: document.getElementById("actual-username"),
