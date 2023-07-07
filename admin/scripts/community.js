@@ -155,7 +155,11 @@ let reportId = null;
 const searchInput = document.getElementById('search-report');
 
 searchInput.addEventListener('input', () => {
-  if(searchInput.value === '') return;
+  if(!searchInput.value) {
+  debounce(
+    displayReports(status, dateRange, null)
+  , 300)
+  };
   debounce(
     displayReports(status, dateRange, searchInput.value)
   , 300)

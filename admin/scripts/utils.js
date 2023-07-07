@@ -56,21 +56,3 @@ export function debounce(func, delay) {
     }, delay);
   };
 }
-
-/**
- * A helper function to delay events
- * @param {number} func 
- * @param {number} delay 
- * @returns 
- */
-export function debounce(func, delay) {
-  let timer;
-  return function () {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(context, args);
-    }, delay);
-  };
-}
