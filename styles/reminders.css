@@ -72,10 +72,14 @@
   display: flex;
   gap: 5px;
   align-items: center;
+  max-height: 20px;
 }
 
 .plant-reminder .data .water-schedule p {
   font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .plant-reminder .buttons {
