@@ -21,9 +21,6 @@ export function displayResultPopup(result) {
 
     const closeButtonElement = popupElement.querySelector(".close-button");
     buttonElement.addEventListener("click", () => removeDisplayResultPopup());
-    closeButtonElement.addEventListener("click", () =>
-      removeDisplayResultPopup()
-    );
 
     const body = document.getElementsByTagName("body")[0];
     const firstChild = body.firstChild;

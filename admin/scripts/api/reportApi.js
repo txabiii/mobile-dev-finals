@@ -67,7 +67,7 @@ export function getReports(payload) {
 
 export function updateReport(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/reports_controller.php?action=${payload.action}&id=${payload.reportId}`, {
+    fetch(`${SERVER_URL}/api/reports_controller.php?action=${payload.action}&id=${payload.reportId}&postId=${payload.postId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
