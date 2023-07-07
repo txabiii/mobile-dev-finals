@@ -7,15 +7,7 @@ import {
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
-import { createReport, getReports } from "./api/reportApi.js";
-
-getReports({
-  action: 'get-all-reports'
-})
-.then((data) => {
-  console.log(data)
-})
-
+import { createReport } from "./api/reportApi.js";
 
 /**
  * Waits for the home page to finish loading, retrieves a username from sessionStorage.

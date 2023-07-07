@@ -3,22 +3,14 @@ require_once '../db.php';
 
 class ReportsController extends DB {
 
-  public function httpGet($payload) {
-    if ($payload['action'] === 'get-all-reports') {
-      $offsetProvided = isset($payload['offset']);
-      $limitProvided = isset($payload['limit']);
+  public function httpGet() {
+    if ($_GET['action'] === 'get-all-reports') {
   
       $query = "SELECT r.id AS report_id, p.content, u_reported.user_id AS reported_user_id, u_reported.username AS reported_username, r.reason, r.reporter_id, u_reporter.username AS reporter_username
                 FROM reports_tb r
                 INNER JOIN posts_tb p ON p.id = r.post_id
                 INNER JOIN user_accounts_tb u_reported ON u_reported.user_id = p.user_id
                 INNER JOIN user_accounts_tb u_reporter ON u_reporter.user_id = r.reporter_id";
-  
-      if ($offsetProvided && $limitProvided) {
-        $offset = intval($payload['offset']);
-        $limit = intval($payload['limit']);
-        $query .= " LIMIT $limit OFFSET $offset";
-      }
   
       $result = $this->connection->query($query);
   
@@ -94,10 +86,13 @@ $reportsController = new ReportsController();
 
 $received_data = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $reportsController->httpGet();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $reportsController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $reportsController->httpDelete($received_data);
 } else {
   echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
 }
+?>
