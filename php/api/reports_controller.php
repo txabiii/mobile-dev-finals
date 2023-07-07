@@ -4,11 +4,15 @@ require_once '../db.php';
 class ReportsController extends DB {
 
   public function httpGet($payload) {
-    if ($payload['action'] === 'getReports') {
+    if ($payload['action'] === 'get-all-reports') {
       $offsetProvided = isset($payload['offset']);
       $limitProvided = isset($payload['limit']);
   
-      $query = "SELECT * FROM reports_tb";
+      $query = "SELECT r.id AS report_id, p.content, u_reported.user_id AS reported_user_id, u_reported.username AS reported_username, r.reason, r.reporter_id, u_reporter.username AS reporter_username
+                FROM reports_tb r
+                INNER JOIN posts_tb p ON p.id = r.post_id
+                INNER JOIN user_accounts_tb u_reported ON u_reported.user_id = p.user_id
+                INNER JOIN user_accounts_tb u_reporter ON u_reporter.user_id = r.reporter_id";
   
       if ($offsetProvided && $limitProvided) {
         $offset = intval($payload['offset']);
