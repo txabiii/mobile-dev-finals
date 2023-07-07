@@ -6,7 +6,6 @@ import { displayResultPopup } from "../../../scripts/utils.js";
  * @returns {Promise<Array<Object>>} A promise that resolves with an array of plant objects if the request is successful, or rejects with an error message if the request fails.
  */
 
-
 export function getPlant(payload) {
   return new Promise((resolve, reject) => {
     fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
