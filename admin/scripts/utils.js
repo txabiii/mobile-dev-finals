@@ -19,21 +19,10 @@ export function displayResultPopup(result) {
       ? "rgb(var(--green-1-rgb))"
       : "rgb(var(--red-rgb))";
 
-    const closeButtonElement = popupElement.querySelector(".close-button");
-    buttonElement.addEventListener("click", () => removeDisplayResultPopup());
-
     const body = document.getElementsByTagName("body")[0];
     const firstChild = body.firstChild;
     body.insertBefore(popupElement, firstChild);
   }
-}
-
-/**
- * Helper function to remove pop-up
- */
-function removeDisplayResultPopup() {
-  const popupElement = document.querySelector(".pop-up-wrapper");
-  popupElement.remove();
 }
 
 /**

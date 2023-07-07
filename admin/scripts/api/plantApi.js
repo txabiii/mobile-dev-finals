@@ -1,5 +1,5 @@
 import { SERVER_URL } from "../../../scripts/config.js";
-import { displayResultPopup } from "../../../scripts/utils.js";
+import { displayResultPopup } from "../utils.js";
 
 /**
  * Retrieves all plants by sending a GET request to the server.
@@ -41,7 +41,6 @@ export function createPlant(plantData) {
       resolve(data)
     })
     .catch(error => {        
-      displayResultPopup(result);
       reject(error)
     });
   });
@@ -80,7 +79,7 @@ export function updatePlant(plantId, updatedData) {
  */
 export function deletePlant(plantId) {
   return new Promise((resolve, reject) => {
-    fetch(`/api/plants_controller.php/${plantId}`, {
+    fetch(`${SERVER_URL}/api/plants_controller.php?plant_id=${plantId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

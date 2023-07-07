@@ -1,6 +1,6 @@
 import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
-import { generateDateTimeGreeting, debounce } from "./utils.js"
-import { getPlant } from './api/plantApi.js'
+import { generateDateTimeGreeting, debounce, displayResultPopup } from "./utils.js"
+import { getPlant, deletePlant } from './api/plantApi.js'
 
 const logoutButton = document.getElementById("logout-button");
 logoutButton.addEventListener("click", function () {
@@ -78,6 +78,15 @@ function createPlantItem(plant) {
 
   tipsButton.addEventListener("click", () => {
     window.location.href = `tips.html?plant_id=${plant.plant_id}&plant_name=${plant.name}`;
+  })
+
+  deleteButton.addEventListener("click", () => {
+    deletePlant(plant.plant_id).then(() => {
+      displayResultPopup({success: true, message: 'Plant deleted. (This page will refresh)'});
+      setTimeout(() => {
+        location.reload();
+      }, 5000);
+    })
   })
 
   return clone;

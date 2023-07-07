@@ -102,10 +102,9 @@ addNewTipButton.addEventListener("click", () => {
     content: newTipContentInput.value
   })
   .then(() => {
-    displayResultPopup({success: true, message: 'New tip addedd. (This page will refresh data)'});
     setTimeout(() => {
       location.reload();
-    }, 5000);
+    }, 3000);
   })
 })
 
