@@ -3,8 +3,6 @@
 /* The following line is used to measure usage of this code. You can remove it if you want. */
 @import url("https://px.animaapp.com/64a38661f3958b4e80f479f0.64a3866375b42910a8772dd3.CFD7Xgy.hcp.png");
 
-
-
 .screen a {
   display: contents;
   text-decoration: none;
@@ -32,3 +30,83 @@
 * {
   box-sizing: border-box;
 }
+
+/* POPUPS */
+
+.dark-background {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 6;
+  width: 100vw;
+}
+
+.pop-up {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 20px;
+  padding: 20px;
+  background-color: white;
+  z-index: 7;
+  width: calc(100vw - 40px);
+}
+
+.pop-up h2 {
+  text-align: center;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  color: rgb(var(--green-2-rgb));
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.pop-up h3 {
+  margin-bottom: 5px;
+}
+
+.pop-up .button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.pop-up .button-group button {
+  margin-top: 0px;
+}
+
+.pop-up .main-text {
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.pop-up .button-group {
+  justify-content: center;
+  margin-top: 20px;
+  display: flex;
+}
+
+/* BUTTONS */
+
+.standard-button {
+  color: white;
+  background-color: rgb(var(--red-rgb));
+  font-family: "Rajdhani", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 35px;
+  width: 150px;
+  border-radius: 200px;
+  border: none;
+}
+
