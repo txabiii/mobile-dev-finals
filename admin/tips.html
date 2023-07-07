@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./styles/community.css" />
+        <link rel="stylesheet" type="text/css" href="./styles/styleguide.css" />
+        <link rel="stylesheet" type="text/css" href="./styles/globals.css" />
+    </head>
+    <body>
+      <div class="usertab">
+        <img class="logo" src="img/plant-parenthood.png" alt="logo" />
+        <div class="profile">
+            <img class="profile_photo" src="img/ellipse-1.svg" id="profile-image" alt="Ellipse 1" />
+            <div class="full_name" id="actual-username">Admin Full Name</div>
+            <div class="email" id="actual-email-address">test@gmail.com</div>
+        </div>
+        <div class="menu">
+            <div class="dashboard">
+                <img class="vector" src="img/dashboard.svg" alt="Vector" />
+                <a class="barlow-medium-aqua-deep-18px" href="./dashboard.html">Dashboard</a>
+            </div>
+            <div class="menu-text">
+                <img class="vector" src="img/analytics.svg" alt="Vector" />
+                <a class="barlow-medium-aqua-deep-18px" href="./analytics.html">Analytics</a>
+            </div>
+            <div class="menu-text">
+                <img class="vector" src="img/plant-library-filled.svg" alt="Vector" />
+                <a class="highlighted-menu-text" href="./plant-library.html">Plant Library</a>
+            </div>
+            <div class="menu-text">
+                <img class="vector" src="img/community.svg" alt="Vector" />
+                <a class="barlow-medium-aqua-deep-18px" href="./community.html">Community</a>
+            </div>
+            <div class="menu-text">
+                <img class="vector" src="img/database.svg" alt="Vector" />
+                <a class="barlow-medium-aqua-deep-18px" href="./database.html">Database</a>
+            </div>
+        </div>
+        <div class="logout">
+            <img class="tablerlogout" src="img/tabler-logout.svg" alt="tabler:logout" />
+            <button class="barlow-medium-aqua-deep-18px" type="button" id="logout-button">Logout</button>
+        </div>
+    </div>
+      <div class="management">
+        <div class="header">
+          <header class="header-text valign-text-middle">Hello, Admin Full Name</header>
+          <p class="header-subtext valign-text-middle">Today is Wednesday, 28 June 2023</p>
+        </div>
+        <div class="whole-community">
+          <h1 class="page-name">Tips Management</h1>
+          <div class="report-table">
+            <table>
+                <tr>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:10%">Tip ID</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:20%">Tip Title</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:60%">Content</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:10%">Action</th>
+                </tr>
+                <tbody id="table-body">
+                  <tr>
+                    <td name="tip-id" class="rowpadding barlow-medium-heavy-aqua-deep-18px">New</td>
+                    <td name="tip-title" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"><input id="new-tip-title-input" type="text"></td>
+                    <td name="content" class="rowpadding barlow-medium-aqua-deep-16px"><input name="new-tip-content-input" type="text"></td>
+                    <td name="action" class="rowpadding barlow-medium-aqua-deep-16px">
+                      <button id="add-new-tip" type="button">
+                          <img class="vector" src="./assets/plus-icon.svg" alt="Vector" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+      </div>
+
+      <!-- TEMPLATES -->
+      <template class="tips-table-row-template">
+        <tr>
+          <td name="tip-id" class="rowpadding barlow-medium-heavy-aqua-deep-18px"></td>
+          <td name="tip-title" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"><input name="tip-title-input" type="text"></td>
+          <td name="content" class="rowpadding barlow-medium-aqua-deep-16px"><input name="tip-content-input" type="text"></td>
+          <td name="action" class="rowpadding barlow-medium-aqua-deep-16px">
+            <button id="edit" type="button">
+                <img class="vector" src="./assets/icons/edit_square_FILL0_wght600_GRAD0_opsz48.svg" alt="Vector" />
+            </button>
+            <button id="delete" type="button">
+                <img class="vector" src="img/delete.svg" alt="Vector" />
+            </button>
+          </td>
+        </tr>
+      </template>
+
+      <template id="pop-up-template">
+        <div class="pop-up-wrapper">
+          <div class="dark-background"></div>
+          <div class="pop-up">
+            <h2></h2>
+            <p class="main-text"></p>
+            <div class="button-group">
+              <button class="standard-button">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </template>
+      <script src="./scripts/tips.js" type="module"></script>
+  </body>
+</html>

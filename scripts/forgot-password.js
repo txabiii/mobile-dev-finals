@@ -38,6 +38,7 @@ sendButton.addEventListener("click", function () {
       if (data.status === "success") {
         localStorage.setItem("user_data", JSON.stringify(data.data));
         const userData = JSON.parse(localStorage.getItem("user_data"));
+        displaySuccessMessage(data.message);
 
         updateUserAccount(userData).then((data) => {
           if (data.status === "success") {

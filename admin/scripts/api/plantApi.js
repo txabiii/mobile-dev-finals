@@ -1,15 +1,14 @@
 import { SERVER_URL } from "../../../scripts/config.js";
-import { displayResultPopup } from "../../../scripts/utils.js";
+import { displayResultPopup } from "../utils.js";
 
 /**
  * Retrieves all plants by sending a GET request to the server.
  * @returns {Promise<Array<Object>>} A promise that resolves with an array of plant objects if the request is successful, or rejects with an error message if the request fails.
  */
 
-
 export function getPlant(payload) {
   return new Promise((resolve, reject) => {
-    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
+    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}&search=${payload.search}`)
       .then(response => response.json())
       .then(result => {
         if(!result.success) displayResultPopup(data);
@@ -42,7 +41,6 @@ export function createPlant(plantData) {
       resolve(data)
     })
     .catch(error => {        
-      displayResultPopup(result);
       reject(error)
     });
   });
@@ -81,7 +79,7 @@ export function updatePlant(plantId, updatedData) {
  */
 export function deletePlant(plantId) {
   return new Promise((resolve, reject) => {
-    fetch(`/api/plants_controller.php/${plantId}`, {
+    fetch(`${SERVER_URL}/api/plants_controller.php?plant_id=${plantId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -92,8 +90,7 @@ export function deletePlant(plantId) {
       displayResultPopup(data);
       resolve(data)
     })
-    .catch(error => {        
-      displayResultPopup(result);
+    .catch(error => {
       reject(error)
     });
   });

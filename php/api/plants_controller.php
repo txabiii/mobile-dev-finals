@@ -37,6 +37,11 @@ class PlantController extends DB {
               $plants[] = $row;
           }
           echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
+          $plants = array();
+          while ($row = $result->fetch_assoc()) {
+              $plants[] = $row;
+          }
+          echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
       } else {
           echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
       }
@@ -113,10 +118,10 @@ class PlantController extends DB {
     $this->connection->close();
   }
 
-  public function httpDelete($payload) {
-    $id = $payload['plant_id'];
+  public function httpDelete() {
+    $id = $_GET['plant_id'];
 
-    $query = "DELETE FROM plants_tb WHERE id=?";
+    $query = "DELETE FROM plants_tb WHERE plant_id=?";
 
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("i", $id);
@@ -141,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
   $plantController->httpPut($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-  $result = $plantController->deletePlant($received_data);
+  $result = $plantController->httpDelete();
 } else {
   echo json_encode(array('success' => false, 'message' => 'Invalid request method'));
 }

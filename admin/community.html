@@ -7,8 +7,7 @@
     </head>
     <body>
         <div class="usertab">
-            <img class="logo" src="img/plant-parenthood.png" alt="logo" />  
-            <img class="separator" src="img/separator.svg" alt="Separator" />
+            <img class="logo" src="img/plant-parenthood.png" alt="logo" />
             <div class="profile">
                 <img class="profile_photo" src="img/ellipse-1.svg" id="profile-image" alt="Ellipse 1" />
                 <div class="full_name" id="actual-username">Admin Full Name</div>
@@ -41,94 +40,89 @@
                 <button class="barlow-medium-aqua-deep-18px" type="button" id="logout-button">Logout</button>
             </div>
         </div>
-        <div class="header">
+        <div class="management">
+          <div class="header">
             <header class="header-text valign-text-middle">Hello, Admin Full Name</header>
             <p class="header-subtext valign-text-middle">Today is Wednesday, 28 June 2023</p>
-        </div>
-        <div class="whole-community">
-            <h1 class="page-name">Community</h1>
-            <div class="search-position">
-                <div class="search-container">
-                    <img class="search-icon" src="../assets/search-icon.svg" alt="Search Icon"/>
-                    <input class="search-input barlow-medium-aqua-deep-20px" id="search-plant" type="text" placeholder="Search Report ID">
-                </div>
-                <div class="report-container">
-                    <label class="report-text barlow-medium-thick-aqua-deep-20px" for="status">Report Status</label>
-                    <select class="status-choices" name="status" id="status">
+          </div>
+          <div class="whole-community">
+              <h1 class="page-name">Community</h1>
+              <div class="search-position">
+                  <div class="search-container">
+                      <img class="search-icon" src="../assets/search-icon.svg" alt="Search Icon"/>
+                      <input class="search-input sort-fonts" id="search-report" type="number" placeholder="Search Report ID">
+                  </div>
+                  <div class="report-container">
+                      <label class="report-text sort-fonts" for="status">Report Status</label>
+                      <select class="sort-fonts status-choices" name="status" id="report-status">
                         <option value="all">All</option>
                         <option value="resolved">Resolved</option>
                         <option value="unresolved">Unresolved</option>
-                    </select>
-                </div>
-                <div class="report-container">
-                    <label class="report-text barlow-medium-thick-aqua-deep-20px" for="status">Report Date</label>
-                    <select class="status-choices" name="status" id="status">
-                        <option value="all">All</option>
-                        <option value="today">Today</option>
-                        <option value="yesterday">Yesterday</option>
-                        <option value="last7">7 Days</option>
-                        <option value="last30">30 Days</option>
-                    </select>
-                </div>
+                      </select>
+                  </div>
+                  <div class="report-container">
+                      <label class="report-text sort-fonts" for="status">Report Date</label>
+                      <select class="sort-fonts status-choices" name="status" id="report-date">
+                          <option value="all">All</option>
+                          <option value="today">Today</option>
+                          <option value="last7">7 Days</option>
+                          <option value="last30">30 Days</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="report-table">
+                  <table>
+                      <tr>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:10%">Report ID</th>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:25%">Posted Content</th>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:15%">Reported User</th>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:20%">Reason</th>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:15%">Reporter</th>
+                        <th class="rowpadding barlow-medium-white-18px" style="width:15%">Action</th>
+                      </tr>
+                      <tbody id="table-body"></tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+
+        <!-- TEMPLATES -->
+        <template class="report-table-row-template">
+          <tr>
+            <td name="report-id" class="rowpadding barlow-medium-heavy-aqua-deep-18px"></td>
+            <td name="content" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"></td>
+            <td name="reported user" class="rowpadding barlow-medium-aqua-deep-16px"></td>
+            <td name="reason" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"></td>
+            <td name="reporter user" class="rowpadding barlow-medium-aqua-deep-16px"></td>
+            <td name="action" class="rowpadding barlow-medium-aqua-deep-16px">
+              <button id="resolve" type="button">
+                  <img class="vector" src="img/complete.svg" alt="Vector" />
+              </button>
+              <button id="delete" type="button">
+                  <img class="vector" src="img/delete.svg" alt="Vector" />
+              </button>
+            </td>
+          </tr>
+        </template>
+
+        <template class="no-report-template">
+          <tr>
+            <td colspan="6" class="no-result-cell rowcenter barlow-medium-aqua-deep-16px">No Result</td>
+          </tr>
+        </template>
+
+        <template id="pop-up-template">
+          <div class="pop-up-wrapper">
+            <div class="dark-background"></div>
+            <div class="pop-up">
+              <h2></h2>
+              <p class="main-text"></p>
+              <div class="button-group">
+                <button class="standard-button">Confirm</button>
+              </div>
             </div>
-            <div class="report-table">
-                <table>
-                    <tr>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:10%">Report ID</th>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:25%">Posted Content</th>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:15%">Reported User</th>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:20%">Reason</th>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:15%">Reporter</th>
-                      <th class="rowpadding barlow-medium-white-18px" style="width:15%">Action</th>
-                    </tr>
-                    <tr>
-                      <td class="rowpadding barlow-medium-heavy-aqua-deep-18px">01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam in arcu cursus euismod quis viverra nibh cras pulvinar.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000001 - draco01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000002 - Ryujin</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/complete.svg" alt="Vector" />
-                        </button>
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/delete.svg" alt="Vector" />
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="rowpadding barlow-medium-heavy-aqua-deep-18px">01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam in arcu cursus euismod quis viverra nibh cras pulvinar.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000001 - draco01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000002 - Ryujin</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/complete.svg" alt="Vector" />
-                        </button>
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/delete.svg" alt="Vector" />
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="rowpadding barlow-medium-heavy-aqua-deep-18px">01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam in arcu cursus euismod quis viverra nibh cras pulvinar.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000001 - draco01</td>
-                      <td class="rowcenter rowpadding barlow-medium-aqua-deep-16px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">#000002 - Ryujin</td>
-                      <td class="rowpadding barlow-medium-aqua-deep-16px">
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/complete.svg" alt="Vector" />
-                        </button>
-                        <button id="delete" type="button">
-                            <img class="vector" src="img/delete.svg" alt="Vector" />
-                        </button>
-                      </td>
-                    </tr>
-                </table>
-            </div>
-        </div>                   
+          </div>
+        </template>
+        <script src="./scripts/community.js" type="module"></script>
     </body>
-    <script defer src="./scripts/community.js" type="module"></script>
 </html>

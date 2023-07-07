@@ -8,7 +8,6 @@ import { displayResultPopup } from "../utils.js";
  */
 export function createReport(payload) {
   return new Promise((resolve, reject) => {
-
     fetch(`${SERVER_URL}/api/reports_controller.php`, {
       method: 'POST',
       headers: {
@@ -52,15 +51,36 @@ export function deleteReport(payload) {
 }
 
 export function getReports(payload) {
+  console.log(payload)
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/posts_controller.php?action=${payload.action}`)
+    fetch(`${SERVER_URL}/api/reports_controller.php?action=${payload.action}&status=${payload.status}&date_range=${payload.dateRange}&report_id=${payload.reportId}`)
     .then(response => response.json())
     .then(data => {
-      const posts = data.data;
-      resolve({ posts });
+      const report = data.data;
+      resolve({ report });
     })
     .catch(error => {
-      reject();
+      reject(error);
     });
+  });
+}
+
+export function updateReport(payload) {
+  return new Promise((resolve, reject) => {
+    fetch(`${SERVER_URL}/api/reports_controller.php?action=${payload.action}&id=${payload.reportId}&postId=${payload.postId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        displayResultPopup(data);
+        resolve(data);
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 }
