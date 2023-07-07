@@ -1,21 +1,12 @@
-import { 
-  displayUserPlants, 
-  displayAllPlants, 
+import {
+  displayUserPlants,
+  displayAllPlants,
   toggleAddPlants,
-  makeSearchInputsWork
 } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
 import { getUserPlants } from "./api/userPlantsApi.js";
 import { createReport, getReports } from "./api/reportApi.js";
-
-getReports({
-  action: 'get-all-reports'
-})
-.then((data) => {
-  console.log(data)
-})
-
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 
@@ -24,7 +15,6 @@ const userData = JSON.parse(localStorage.getItem("user_data"));
  * Display the username followed by an exclamation mark in an HTML element with the ID "name".
  */
 window.addEventListener("load", function () {
-  const userData = JSON.parse(this.localStorage.getItem("user_data"));
   const usernameElement = document.getElementById("name");
 
   usernameElement.textContent = userData.username + `!`;
@@ -61,6 +51,7 @@ getUserPlants({
  */
 getPlant({
   action: "get-all-plants",
+  plantId: null,
 }).then((plants) => {
   const loading = document.querySelector("#explore-plants-loading-group");
   loading.style.display = "none";
@@ -115,7 +106,7 @@ function displayPlantParentsPosts() {
 
     const reportElement = postElement.querySelector("#report");
     reportElement.addEventListener("click", () => reportPost(post));
-    if (post.user_id == userData.user_id) reportElement.style.display = "none";
+    if (post.user_id == userData.id) reportElement.style.display = "none";
 
     postContent.textContent = post.content;
     postCreator.textContent = post.username;
@@ -158,7 +149,7 @@ function addPost() {
   });
 
   createPost({
-    userId: userData.user_id,
+    userId: userData.id,
     content: content,
     dateTime: now,
   }).then((newId) => {
@@ -166,7 +157,7 @@ function addPost() {
       id: newId,
       content: content,
       profile_image_url: userData.profile_image_url,
-      user_id: userData.user_id,
+      user_id: userData.id,
       username: userData.username,
       datetime_posted: formattedDate,
     };
@@ -226,7 +217,7 @@ function reportPost(post) {
     const payload = {
       action: "submit-report",
       postId: post.id,
-      reporterId: userData.user_id,
+      reporterId: userData.id,
       reason: reasonElement.value,
     };
     createReport(payload).then(() => {
@@ -245,5 +236,3 @@ function closeReport() {
   const removeReportElement = document.querySelector(".report-wrapper");
   removeReportElement.remove();
 }
-
-makeSearchInputsWork();

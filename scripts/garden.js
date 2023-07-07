@@ -2,13 +2,10 @@ import { getUserPlants } from "./api/userPlantsApi.js";
 import { displayUserPlants, toggleAddPlants, makeSearchInputsWork, createPlantSearchResultItem, debounce} from "./utils.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
-
 /**
  * Waits for the home page to finish loading, retrieves the profile image from sessionStorage.
  */
 window.addEventListener("load", function () {
-  const userData = JSON.parse(this.localStorage.getItem("user_data"));
-
   if (userData.profile_image_url) {
     const profileImgElement = document.getElementById("profile-img");
     profileImgElement.src = userData.profile_image_url;
