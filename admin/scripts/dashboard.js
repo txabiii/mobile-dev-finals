@@ -1,5 +1,7 @@
 import { logoutAccount, getUserAccount } from "./api/userAccountAPI.js";
 import { getPlant } from "./api/plantApi.js"
+import { getPosts } from "./api/postAPI.js"
+import { getReports } from "./api/reportApi.js";
 
 
 const logoutButton = document.getElementById("logout-button");
@@ -28,6 +30,18 @@ window.addEventListener("load", function () {
 
     getUserAccount({
       action:"get-all-users"
+    }).then((data) => {
+      console.log(data)
+    })
+
+    getPosts().then((data) => {
+      console.log(data)
+    }).catch(e => {
+      console.log(e)
+    });
+
+    getReports({
+      action:"get-all-reports"
     }).then((data) => {
       console.log(data)
     })
