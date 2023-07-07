@@ -3,6 +3,15 @@ import { createUserPlant } from './api/userPlantsApi.js';
 import { generateDateTime, toggleAddPlants, makeSearchInputsWork } from './utils.js';
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
+/**
+ * Waits for the home page to finish loading, retrieves the profile image from sessionStorage.
+ */
+window.addEventListener("load", function () {
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-img");
+    profileImgElement.src = userData.profile_image_url;
+  }
+});
 
 /**
  * Select add plant buttons and add the `toggleAddPlants` event

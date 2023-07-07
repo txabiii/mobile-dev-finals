@@ -11,6 +11,15 @@ import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
+/**
+ * Waits for the home page to finish loading, retrieves the profile image from sessionStorage.
+ */
+window.addEventListener("load", function () {
+  if (userData.profile_image_url) {
+    const profileImgElement = document.getElementById("profile-img");
+    profileImgElement.src = userData.profile_image_url;
+  }
+});
 
 makeSearchInputsWork();
 
