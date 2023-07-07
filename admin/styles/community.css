@@ -73,9 +73,20 @@ body {
 }
 
 .profile_photo {
-  height: 70px;
+  border-radius: 50%;
+  height: 90px;
   margin-right: 7.0px;
-  width: 70px;
+  width: 90px;
+}
+
+button {
+  border: none;
+  padding: none;
+  background: none;
+}
+
+button:hover {
+  font-weight: 700;
 }
 
 .full_name {
