@@ -2,22 +2,17 @@ import { SERVER_URL } from "../config.js";
 import { displayResultPopup } from "../utils.js";
 
 // Function to create a new tip
-export function createTip(plant_id, title, content) {
+export function createTip(payload) {
   return new Promise((resolve, reject) => {
     fetch(`${SERVER_URL}/api/tips_controller.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        plant_id: plant_id,
-        title: title,
-        content: content,
-      }),
+      body: JSON.stringify(payload),
     })
       .then(response => response.text())
       .then(result => {
-        displayResultPopup(result);
         resolve(result)
       })
       .catch(error => reject(error));
@@ -41,21 +36,19 @@ export function getTips(payload) {
 }
 
 // Function to update a particular tip
-export function updateTip(tip_id, title, content) {
+export function updateTip(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/tips_controller.php`, {
+    fetch(`${SERVER_URL}/api/tips_controller.php?tipId=${payload.tipId}&title=${payload.title}&content=${payload.content}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        tip_id: tip_id,
-        title: title,
-        content: content,
-      }),
+      body: JSON.stringify(payload),
     })
       .then(response => response.text())
-      .then(result => resolve(result))
+      .then(result => {
+        resolve(result)
+      })
       .catch(error => reject(error));
   });
 }
@@ -69,11 +62,13 @@ export function deleteTip(tip_id) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        tip_id: tip_id,
+        tipId: tip_id,
       }),
     })
       .then(response => response.text())
-      .then(result => resolve(result))
+      .then(result => {
+        resolve(result)
+      })
       .catch(error => reject(error));
   });
 }

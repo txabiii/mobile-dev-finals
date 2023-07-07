@@ -46,36 +46,46 @@
           <p class="header-subtext valign-text-middle">Today is Wednesday, 28 June 2023</p>
         </div>
         <div class="whole-community">
-          <h1 class="page-name">Plant Library</h1>
-          <div class="plant-search search-position">
-              <div class="search-container">
-                  <img class="search-icon" src="../assets/search-icon.svg" alt="Search Icon"/>
-                  <input id="plant-search" class="plant-search search-input barlow-medium-aqua-deep-20px" id="search-plant" type="text" placeholder="Search a Plant">
-              </div>
-          </div>
-          <div class="grid-layoout result-position"></div>
+          <h1 class="page-name">Tips Management</h1>
+          <div class="report-table">
+            <table>
+                <tr>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:10%">Tip ID</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:20%">Tip Title</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:60%">Content</th>
+                  <th class="rowpadding barlow-medium-white-18px" style="width:10%">Action</th>
+                </tr>
+                <tbody id="table-body">
+                  <tr>
+                    <td name="tip-id" class="rowpadding barlow-medium-heavy-aqua-deep-18px">New</td>
+                    <td name="tip-title" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"><input id="new-tip-title-input" type="text"></td>
+                    <td name="content" class="rowpadding barlow-medium-aqua-deep-16px"><input name="new-tip-content-input" type="text"></td>
+                    <td name="action" class="rowpadding barlow-medium-aqua-deep-16px">
+                      <button id="add-new-tip" type="button">
+                          <img class="vector" src="./assets/plus-icon.svg" alt="Vector" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
         </div>
       </div>
 
       <!-- TEMPLATES -->
-      <template class="plant-container-template">
-        <div class="plant-container">
-          <img class="plant-image" src="../assets/plants/bougainvillea.png" alt="Plant Image"/>
-          <div class="plant-name-container">
-              <h1 class="plant-name barlow-bold-aqua-deep-24px">Bougainvillea</h1>
-              <p id="Scientific-name" class="barlow-medium-italic-apple-16px">Scientific Name</p>
-          </div>
-          <div class="plant-buttons">
-               <button class="green-button barlow-medium-green-apple-18px" id="edit-plant" type="button">Edit</button>
-               <button class="green-button barlow-medium-green-apple-18px" id="tip-link" type="button">Tips Management</button>  
-               <button class="red-button barlow-medium-crimson-18px" id="delete-plant" type="button">Delete</button>     
-          </div>
-        </div>
-      </template>
-
-      <template class="no-report-template">
+      <template class="tips-table-row-template">
         <tr>
-          <td colspan="6" class="no-result-cell rowcenter barlow-medium-aqua-deep-16px">No Result</td>
+          <td name="tip-id" class="rowpadding barlow-medium-heavy-aqua-deep-18px"></td>
+          <td name="tip-title" class="rowcenter rowpadding barlow-medium-aqua-deep-16px"><input name="tip-title-input" type="text"></td>
+          <td name="content" class="rowpadding barlow-medium-aqua-deep-16px"><input name="tip-content-input" type="text"></td>
+          <td name="action" class="rowpadding barlow-medium-aqua-deep-16px">
+            <button id="edit" type="button">
+                <img class="vector" src="./assets/icons/edit_square_FILL0_wght600_GRAD0_opsz48.svg" alt="Vector" />
+            </button>
+            <button id="delete" type="button">
+                <img class="vector" src="img/delete.svg" alt="Vector" />
+            </button>
+          </td>
         </tr>
       </template>
 
@@ -91,6 +101,6 @@
           </div>
         </div>
       </template>
-      <script src="./scripts/plant-library.js" type="module"></script>
+      <script src="./scripts/tips.js" type="module"></script>
   </body>
 </html>

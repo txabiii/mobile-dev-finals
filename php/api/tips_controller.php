@@ -57,14 +57,15 @@ class TipsController extends DB {
     }
   }
 
-  public function httpPut($payload) {
-    $tip_id = $payload['tipId'];
-    $title = $payload['title'];
-    $content = $payload['content'];
+  public function httpPut() {
+    $tip_id = $_GET['tipId'];
+    $title = $_GET['title'];
+    $content = $_GET['content'];
 
     $query = "UPDATE tips_tb SET title = ?, content = ? WHERE tip_id = ?";
     $stmt = $this->connection->prepare($query);
     $stmt->bind_param("ssi", $title, $content, $tip_id);
+    
     if ($stmt->execute()) {
       return json_encode(array('success' => true, 'message' => 'Tip updated successfully'));
     } else {
@@ -95,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $tipController->httpGet();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  $tipController->httpPut($received_data);
+  $tipController->httpPut();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $tipController->httpDelete($received_data);
 } else {

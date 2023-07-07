@@ -8,7 +8,7 @@ import { displayResultPopup } from "../../../scripts/utils.js";
 
 export function getPlant(payload) {
   return new Promise((resolve, reject) => {
-    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
+    fetch(SERVER_URL + `/api/plants_controller.php?action=${payload.action}&plant_id=${payload.plantId}&search=${payload.search}`)
       .then(response => response.json())
       .then(result => {
         if(!result.success) displayResultPopup(data);
@@ -91,8 +91,7 @@ export function deletePlant(plantId) {
       displayResultPopup(data);
       resolve(data)
     })
-    .catch(error => {        
-      displayResultPopup(result);
+    .catch(error => {
       reject(error)
     });
   });

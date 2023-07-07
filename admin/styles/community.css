@@ -432,3 +432,14 @@ button {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 }
+
+#table-body input {
+  width: 95%;
+  padding: 20px;
+  border: none;
+  text-align: center;
+}
+
+#table-body img {
+  cursor: pointer;
+}

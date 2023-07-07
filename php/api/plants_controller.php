@@ -32,10 +32,13 @@ class PlantController extends DB {
       $result = $this->connection->query($query);
 
       if ($result) {
-        $plants = $result->fetch_all(MYSQLI_ASSOC);
-        echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
+          $plants = array();
+          while ($row = $result->fetch_assoc()) {
+              $plants[] = $row;
+          }
+          echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
       } else {
-        echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
+          echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
       }
       $this->connection->close();
 
@@ -55,7 +58,34 @@ class PlantController extends DB {
         echo json_encode(array('success' => false, "message" => "Failed to retrieve plant"));
       }
       $this->connection->close();
-    }
+      
+    } else if ($action === 'search-plants') {
+      $query = "SELECT name, plant_id, watering_frequency, image_url FROM plants_tb WHERE name LIKE ? OR description LIKE ?";
+      var_dump($_GET['search']);
+      if (isset($_GET['search'])) {
+          $search = '%' . $_GET['search'] . '%';
+          
+          $stmt = $this->connection->prepare($query);
+          $stmt->bind_param("ss", $search, $search);
+          $stmt->execute();
+
+          $result = $stmt->get_result();
+  
+          if ($result) {
+              $plants = array();
+              while ($row = $result->fetch_assoc()) {
+                  $plants[] = $row;
+              }
+              echo json_encode(array('success' => true, "message" => "Searched plants retrieved successfully", "data" => $plants));
+          } else {
+              echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
+          }  
+          $stmt->close();
+      } else {
+          echo json_encode(array('success' => false, "message" => "No search term provided"));
+      }
+      $this->connection->close();
+    }  
   }  
 
   public function httpPut($payload) {
