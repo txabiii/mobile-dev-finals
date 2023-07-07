@@ -275,7 +275,7 @@ class userAccounts extends DB
 
 					if(in_array($fileType, $allowTypes)){
 						$update_user_credentials_query .= "profile_image_url = ?, ";
-						$update_params[] = 'https://plantparenthoodassistant.000webhostapp.com/php/uploads/' . $_FILES['profilePictureFile']['name'];
+						$update_params[] = 'https://php.brayn.dev/php/uploads/' . $_FILES['profilePictureFile']['name'];
 						$param_types .= 's';
 					} else {
 						echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Sorry, only JPG, JPEG, & PNG files are allowed file extensions to upload.', 'error' => 'file extension'));
