@@ -83,12 +83,19 @@ function createReportTableRow(report) {
   const reason = row.querySelector('[name="reason"]');
   const reporterUser = row.querySelector('[name="reporter user"]');
   const action = row.querySelector('[name="action"]');
+  const resolveButton = action.querySelector('#resolve');
   
   reportId.textContent = report.report_id;
   content.textContent = report.content;
   reportedUser.textContent = `#${report.reported_user_id} - ${report.reported_username}`;
   reason.textContent = report.reason;
   reporterUser.textContent = `#${report.reporter_id} - ${report.reporter_username}`;
+  resolveButton.addEventListener("click", () => {
+    updateReport({
+      action: 'resolve-report',
+      reportId: report.report_id
+    })
+  })
 
   return row;
 }
@@ -155,7 +162,7 @@ let reportId = null;
 const searchInput = document.getElementById('search-report');
 
 searchInput.addEventListener('input', () => {
-  if(!searchInput.value) {
+  if(!searchInput.value || searchInput.value === '') {
   debounce(
     displayReports(status, dateRange, null)
   , 300)

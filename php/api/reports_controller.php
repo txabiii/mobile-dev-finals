@@ -126,23 +126,19 @@ class ReportsController extends DB {
     }
   }
 
-  public function httpPut($payload) {
-    $action = $payload['action'];
+  public function httpPut() {
+    $action = $_GET['action'];
 
     if($action === 'resolve-report') {
-      $reportId = $payload['id'] ?? null;
+      $reportId = $_GET['id'];
   
-      if ($reportId !== null) {
-        $query = "UPDATE reports_tb SET resolved = 1 WHERE id = $reportId";
-        $result = $this->connection->query($query);
-    
-        if ($result) {
-          echo json_encode(array('success' => true, "message" => "Report updated successfully"));
-        } else {
-          echo json_encode(array('success' => false, "message" => "Failed to update report"));
-        }
+      $query = "UPDATE reports_tb SET resolved = 1 WHERE id = $reportId";
+      $result = $this->connection->query($query);
+  
+      if ($result) {
+        echo json_encode(array('success' => true, "message" => "Report updated successfully"));
       } else {
-        echo json_encode(array('success' => false, "message" => "Invalid report ID"));
+        echo json_encode(array('success' => false, "message" => "Failed to update report"));
       }
       $this->connection->close();
     }  
@@ -158,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $reportsController->httpPost($received_data);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-  $reportsController->httpPut($received_data);
+  $reportsController->httpPut();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   $reportsController->httpDelete($received_data);
 } else {
