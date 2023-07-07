@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class userAccounts extends DB
 {
+
 	public function httpGet()
 	{
 		$action = $_GET['action'];
@@ -222,7 +223,6 @@ class userAccounts extends DB
 		} else {
 			echo json_encode(array('method' => 'PUT', 'status' => 'failed', 'message' => 'Unknown action.'));
 		}
-
 		$this->connection->close();
 	}
 
@@ -330,7 +330,6 @@ class userAccounts extends DB
 					echo json_encode(array('method' => 'POST', 'status' => 'failed', 'message' => 'Failed to update user profile.'));
 				}
 			}
-
 		$this->connection->close();
 	}
 
