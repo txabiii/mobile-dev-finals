@@ -84,6 +84,7 @@ function createReportTableRow(report) {
   const reporterUser = row.querySelector('[name="reporter user"]');
   const action = row.querySelector('[name="action"]');
   const resolveButton = action.querySelector('#resolve');
+  const deleteButton = action.querySelector('#delete');
   
   reportId.textContent = report.report_id;
   content.textContent = report.content;
@@ -94,6 +95,13 @@ function createReportTableRow(report) {
     updateReport({
       action: 'resolve-report',
       reportId: report.report_id
+    })
+  })
+  deleteButton.addEventListener("click", () => {
+    updateReport({
+      action: 'resolve-report-and-delete-post',
+      reportId: report.report_id,
+      postId: report.post_id
     })
   })
 
