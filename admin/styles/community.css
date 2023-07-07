@@ -312,6 +312,8 @@ textarea:focus, input:focus{
   color: white;
   background-color: #054D3B;
   border-radius: 0px;
+  border: transparent;
+  margin: 0px 10px;
 }
 
 .report-table {

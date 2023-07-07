@@ -9,7 +9,7 @@ class ReportsController extends DB {
       $dateRange = $_GET['date_range'] ?? ''; // Get the optional "date_range" parameter from the query string
       $reportId = $_GET['report_id'] ?? ''; // Get the optional "report_id" parameter from the query string
     
-      $query = "SELECT r.id AS report_id, p.content, u_reported.user_id AS reported_user_id, u_reported.username AS reported_username, r.reason, r.reporter_id, u_reporter.username AS reporter_username
+      $query = "SELECT r.id AS report_id, p.id AS post_id, p.content, u_reported.user_id AS reported_user_id, u_reported.username AS reported_username, r.reason, r.reporter_id, u_reporter.username AS reporter_username
                 FROM reports_tb r
                 INNER JOIN posts_tb p ON p.id = r.post_id
                 INNER JOIN user_accounts_tb u_reported ON u_reported.user_id = p.user_id
@@ -66,7 +66,7 @@ class ReportsController extends DB {
         echo json_encode(array('success' => false, "message" => "Failed to retrieve reports"));
       }
       $this->connection->close();
-    }    
+    } 
   }   
 
   public function httpPost($payload) {
@@ -128,20 +128,42 @@ class ReportsController extends DB {
 
   public function httpPut() {
     $action = $_GET['action'];
+    $report_id = $_GET['id'];
 
     if($action === 'resolve-report') {
-      $reportId = $_GET['id'];
-  
-      $query = "UPDATE reports_tb SET resolved = 1 WHERE id = $reportId";
+      $query = "UPDATE reports_tb SET resolved = 1 WHERE id = $report_id";
       $result = $this->connection->query($query);
   
       if ($result) {
-        echo json_encode(array('success' => true, "message" => "Report updated successfully"));
+        echo json_encode(array('success' => true, "message" => "Report resolved successfully"));
       } else {
-        echo json_encode(array('success' => false, "message" => "Failed to update report"));
+        echo json_encode(array('success' => false, "message" => "Failed to resolve report"));
       }
       $this->connection->close();
-    }  
+    } elseif ($action === 'resolve-report-and-delete-post') {
+      $post_id = $_GET['postId'];
+
+      $delete_report_query = "DELETE FROM reports_tb WHERE id = ?";
+      $stmt_report = $this->connection->prepare($delete_report_query);
+      $stmt_report->bind_param("i", $report_id);
+      $result_report = $stmt_report->execute();
+      
+      if ($result_report) {
+        // Delete the post
+        $delete_post_query = "DELETE FROM posts_tb WHERE id = ?";
+        $stmt_post = $this->connection->prepare($delete_post_query);
+        $stmt_post->bind_param("i", $post_id);
+        $result_post = $stmt_post->execute();
+      
+        if ($result_post) {
+          echo json_encode(array('success' => true, 'message' => 'Reported post deleted successfully'));
+        } else {
+          echo json_encode(array('success' => false, 'message' => 'Failed to delete reported post'));
+        }
+      } else {
+        echo json_encode(array('success' => false, 'message' => 'Failed to delete report'));
+      }   
+    }
   }
 }
 
