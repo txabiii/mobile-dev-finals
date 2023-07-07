@@ -2,6 +2,7 @@ import {
   displayUserPlants,
   displayAllPlants,
   toggleAddPlants,
+  makeSearchInputsWork
 } from "./utils.js";
 import { getPosts, createPost } from "./api/postApi.js";
 import { getPlant } from "./api/plantApi.js";
@@ -9,6 +10,8 @@ import { getUserPlants } from "./api/userPlantsApi.js";
 import { createReport } from "./api/reportApi.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
+
+makeSearchInputsWork();
 
 /**
  * Waits for the home page to finish loading, retrieves a username from sessionStorage.
