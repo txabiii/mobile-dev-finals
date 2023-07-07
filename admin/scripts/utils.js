@@ -53,3 +53,9 @@ export function debounce(func, delay) {
     }, delay);
   };
 }
+
+export function generateDateTimeGreeting() {
+  const today = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  return 'Today is ' + today.toLocaleDateString('en-US', options);
+}

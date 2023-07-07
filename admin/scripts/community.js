@@ -1,6 +1,6 @@
 import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
 import { getReports, updateReport } from "./api/reportApi.js";
-import { debounce } from "./utils.js";
+import { debounce, generateDateTimeGreeting } from "./utils.js";
 
 const logoutButton = document.getElementById("logout-button");
 logoutButton.addEventListener("click", function () {
@@ -31,6 +31,12 @@ window.addEventListener("load", function () {
     if (userData.profile_image_url) {
       userCredentials.profileImgElement.src = userData.profile_image_url;
     }
+
+    const headerElement = this.document.querySelector('.header-text');
+    headerElement.innerHTML = `Hello, ${userData.username}`
+
+    const datetimeElement = this.document.querySelector('.header-subtext');
+    datetimeElement.textContent = generateDateTimeGreeting();
 });
 
 /**

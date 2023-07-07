@@ -23,10 +23,6 @@
   --font-family-rajdhani: "Rajdhani", Helvetica;
 }
 
-/* * {
-  background-color: rgba(212, 178, 223, 0.2);
-} */
-
 body {
   display: flex;
   height: 100svh;
@@ -35,7 +31,7 @@ body {
 .usertab {
   background-color: var(--white);
   border: 1px none;
-  padding: 24px;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
@@ -148,7 +144,7 @@ button:hover {
 .highlighted-menu-text {
   color: var(--aqua-deep);
   font-family: var(--font-family-barlow);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-l);
   font-weight: 700;
   height: 22px;
   letter-spacing: 0;
@@ -373,4 +369,66 @@ button {
   background: none;
 }
 
+/** PLANT-LIBRARY PINAGHALO KO NA KASI NAGMAMADALI NAKO **/
 
+.plant-search .search-container {
+  width: 100%;
+}
+
+.plant-search input {
+  width: 100%;
+}
+
+.plant-container {
+  margin-top: 15px;
+  display: flex;
+  background-color: #FFFFFF;
+  width: 100%;
+  min-height: 100px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.plant-image {
+  margin-top: 10px;
+  margin-left: 10px;
+  object-fit: cover;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+
+.plant-name-container {
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.plant-name-container p {
+  font-weight: 500;
+}
+
+.plant-name {
+  margin-bottom: 3px;
+}
+
+.plant-buttons {
+  margin-left: auto; 
+  margin-right: 30px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.green-button {
+  margin-left: 15px;
+}
+
+.red-button {
+  margin-left: 15px;
+}
+
+.grid-layoout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
