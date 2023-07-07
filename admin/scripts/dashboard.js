@@ -2,31 +2,83 @@ import { logoutAccount, getUserAccount } from "./api/userAccountAPI.js";
 import { getPlant } from "./api/plantApi.js"
 import { getPosts } from "./api/postAPI.js"
 import { getReports } from "./api/reportApi.js";
+import { getUserPlants } from "./api/userPlantsApi.js";
 
 
-google.charts.setOnLoadCallback(draw7);
 var accStorage = new Array(); 
+var plantStorage = new Array(); 
+var postStorage = new Array(); 
+var analyticsActiveID = 1;
 
 function draw1() {
   var data = new google.visualization.DataTable();
-  data.addColumn('date', 'X');
-  data.addColumn('number', 'New Users');
 
-  data.addRows([
-      [new Date(2023, 6, 6), 5],  [new Date.now(), 10]
-  ]);
+  if (analyticsActiveID == 1){
+    var now = new Date();
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'New Users');
 
-  var options = {
-      legend: 'none',
-      series: {
-          0: { color: '#054d3b' },
-      },
-      hAxis: {
-      format: 'MMM dd, yyyy',
-      gridlines: {count: 12}
-      },
-      'chartArea': {'width': '80%', 'height': '80%'},
-  };
+    for (let i = 2; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      accStorage.forEach(element => {
+        var matchingDate = new Date(element["date_created"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      //console.log("Current Date: " + priorDate.toDateString() + " " + matches);
+      data.addRows([[priorDate, matches]])
+    }
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'hh a',
+        gridlines: {count: 12}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
+  }
+  else if(analyticsActiveID == 2){
+
+  }
+  else {
+    var now = new Date();
+  
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'Posts Added');
+
+    for (let i = 2; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      postStorage.forEach(element => {
+        var matchingDate = new Date(element["datetime_posted"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      // console.log("Current Date: " + priorDate.toDateString() + " " + matches + " | " + analyticsActiveID);
+      data.addRows([[priorDate, matches]])
+    }
+  
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd',
+        gridlines: {count: 15}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };    
+  }
+
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
   chart.draw(data, options);
@@ -34,26 +86,72 @@ function draw1() {
 
 function draw7() {
   var data = new google.visualization.DataTable();
-  data.addColumn('date', 'X');
-  data.addColumn('number', 'New Users');
 
-  data.addRows([
-      [new Date(2023, 5, 29), 5],  [new Date(2023, 5, 30), 10], [new Date(2023, 6, 1), 5],
-      [new Date(2023, 6, 2), 15], [new Date(2023, 6, 3), 10], [new Date(2023, 6, 4), 30],
-      [new Date(2023, 6, 5), 25]
-  ]);
+  if (analyticsActiveID == 1){
+    var now = new Date();
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'New Users');
+  
+    for (let i = 7; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      accStorage.forEach(element => {
+        var matchingDate = new Date(element["date_created"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      //console.log("Current Date: " + priorDate.toDateString() + " " + matches);
+      data.addRows([[priorDate, matches]])
+    }
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd, hh a',
+        gridlines: {count: 7}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
+  }
+  else if(analyticsActiveID == 2){
 
-  var options = {
-      legend: 'none',
-      series: {
-          0: { color: '#054d3b' },
-      },
-      hAxis: {
-      format: 'MMM dd, yyyy',
-      gridlines: {count: 7}
-      },
-      'chartArea': {'width': '80%', 'height': '80%'},
-  };
+  }
+  else {
+    var now = new Date();
+  
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'Posts Added');
+
+    for (let i = 7; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      postStorage.forEach(element => {
+        var matchingDate = new Date(element["datetime_posted"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      // console.log("Current Date: " + priorDate.toDateString() + " " + matches + " | " + analyticsActiveID);
+      data.addRows([[priorDate, matches]])
+    }
+  
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd',
+        gridlines: {count: 7}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
+  }
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
   chart.draw(data, options);
@@ -61,37 +159,148 @@ function draw7() {
 
 
 function draw30() {
-  var now = new Date();
   var data = new google.visualization.DataTable();
-  data.addColumn('date', 'X');
-  data.addColumn('number', 'New Users');
+  
+  if (analyticsActiveID == 1){
+    var now = new Date();
+  
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'New Users');
 
-  for (let i = 30; i > 0; i--){
-    var priorDate  = new Date(new Date().setDate(now.getDate() - i));
-    accStorage.forEach(element => console.log(element));
-    //var count = 0;
-      //var count = accStorage.filter(x => x === "2023-06-26 08:09:19").length;
-      //console.log(count);
-    //var curDate = new Date(accStorage[0]["date_created"]).toDateString();
-    data.addRows([[priorDate, i]])
+    for (let i = 30; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      accStorage.forEach(element => {
+        var matchingDate = new Date(element["date_created"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      //console.log("Current Date: " + priorDate.toDateString() + " " + matches);
+      data.addRows([[priorDate, matches]])
+    }
+  
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd',
+        gridlines: {count: 15}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
+  }
+  else if(analyticsActiveID == 2){
+    var now = new Date();
+  
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'Plants Added');
+
+    for (let i = 30; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      console.log(plantStorage)
+      plantStorage.forEach(element => {
+        var matchingDate = new Date(element["datetime_added"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      // console.log("Current Date: " + priorDate.toDateString() + " " + matches + " | " + analyticsActiveID);
+      data.addRows([[priorDate, matches]])
+    }
+  
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd',
+        gridlines: {count: 15}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
+  }
+  else {
+    var now = new Date();
+  
+    data.addColumn('date', 'X');
+    data.addColumn('number', 'Posts Added');
+
+    for (let i = 30; i > 0; i--){
+      var matches = 0;
+      var priorDate  = new Date(new Date().setDate(now.getDate() - i));
+      postStorage.forEach(element => {
+        var matchingDate = new Date(element["datetime_posted"]);
+         if (priorDate.toDateString() === matchingDate.toDateString()) {
+           matches = matches + 1;
+         }
+      });
+      // console.log("Current Date: " + priorDate.toDateString() + " " + matches + " | " + analyticsActiveID);
+      data.addRows([[priorDate, matches]])
+    }
+  
+  
+    var options = {
+        legend: 'none',
+        series: {
+            0: { color: '#054d3b' },
+        },
+        hAxis: {
+        format: 'MMM dd',
+        gridlines: {count: 15}
+        },
+        'chartArea': {'width': '80%', 'height': '80%'},
+    };
   }
 
 
-  var options = {
-      legend: 'none',
-      series: {
-          0: { color: '#054d3b' },
-      },
-      hAxis: {
-      format: 'MMM dd, yyyy',
-      gridlines: {count: 30}
-      },
-      'chartArea': {'width': '80%', 'height': '80%'},
-  };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
   chart.draw(data, options);
 }
+
+const newUsersButton = document.getElementById("new_users");
+const popularPlantButton = document.getElementById("popular_plant");
+const postCountButton = document.getElementById("post_number");
+
+newUsersButton.addEventListener("click", function () {
+  newUsersButton.style.fontWeight = "700";
+  newUsersButton.style.textDecoration = "underline";
+  popularPlantButton.style.fontWeight = "500";
+  popularPlantButton.style.textDecoration = "none";
+  postCountButton.style.fontWeight = "500";
+  postCountButton.style.textDecoration = "none";
+  analyticsActiveID = 1;
+  draw1();
+});
+
+popularPlantButton.addEventListener("click", function () {
+  newUsersButton.style.fontWeight = "500";
+  newUsersButton.style.textDecoration = "none";
+  popularPlantButton.style.fontWeight = "700";
+  popularPlantButton.style.textDecoration = "underline";
+  postCountButton.style.fontWeight = "500";
+  postCountButton.style.textDecoration = "none";
+  analyticsActiveID = 2;
+  draw7();
+});
+
+postCountButton.addEventListener("click", function () {
+  newUsersButton.style.fontWeight = "500";
+  newUsersButton.style.textDecoration = "none";
+  popularPlantButton.style.fontWeight = "500";
+  popularPlantButton.style.textDecoration = "none";
+  postCountButton.style.fontWeight = "700";
+  postCountButton.style.textDecoration = "underline";
+  analyticsActiveID = 3;
+  draw30();
+});
 
 const last1Button = document.getElementById("last_1");
 const last7Button = document.getElementById("last_7");
@@ -127,10 +336,18 @@ last30Button.addEventListener("click", function () {
   draw30();
 });
 
+function savePosts(posts){
+  postStorage = posts
+}
+
+function savePlants(plants){
+  plantStorage = plants
+}
 
 function saveAccounts(accounts){
-  accStorage = accounts;
-  console.log(accounts[1]);
+  accStorage = accounts; 
+  google.charts.setOnLoadCallback(draw7);
+  //console.log(accounts[1]);
 }
 
 
@@ -163,7 +380,7 @@ window.addEventListener("load", function () {
       action:"get-all-users"
     }).then((data) => {
       dashboardInfo.user_num.innerHTML = data.length
-      console.log("userCount: " + data.length)
+      //console.log("userCount: " + data.length)
       saveAccounts(data);
     })
 
@@ -171,19 +388,26 @@ window.addEventListener("load", function () {
       action:"get-all-plants"
     }).then((data) => {
       dashboardInfo.plant_num.innerHTML = data.length
-      console.log("plantCount: " + data.length)
+      //console.log("plantCount: " + data.length)
+    })
+
+    getUserPlants({
+      action:"get-all-user-plants"
+    }).then((data) => {
+      savePlants(data);
+      //console.log(data);
     })
 
     getPosts().then((data) => {
       dashboardInfo.post_num.innerHTML = data.posts.length
-      console.log("postCount: " + data.posts.length)
+      savePosts(data.posts);
+      //console.log("postCount: " + data.posts.length)
     })
 
     getReports({
       action:"get-all-reports"
     }).then((data) => {
       dashboardInfo.report_num.innerHTML = data.data.length
-      console.log("reportCount: " + data.data.length)
     })
 
 
