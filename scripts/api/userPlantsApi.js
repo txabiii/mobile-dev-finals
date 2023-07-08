@@ -62,10 +62,11 @@ export function getUserPlants(payload) {
       .then(response => response.json())
       .then(result => {
         if (result.success) {
+          console.log(result.data)
           resolve(result.data);
         } else {
           displayResultPopup(result);
-          reject(result.message);
+          reject(result);
         }
       })
       .catch(error => {

@@ -31,8 +31,9 @@ getUserPlants({
   loading.style.display = "none";
 
   if (userPlants.length === 0) {
-    const searchPlant = document.getElementById("search-plant");
-    searchPlant.style.display = "none";
+    const myPlant = document.getElementById('my-plants');
+    myPlant.style.display = 'none';
+    myPlant.style.minHeight = 'unset';
 
     const noPlantsMessage = document.getElementById("no-plants");
     noPlantsMessage.style.display = "flex";
