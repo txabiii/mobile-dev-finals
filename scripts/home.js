@@ -109,7 +109,7 @@ function displayPlantParentsPosts() {
 
     const reportElement = postElement.querySelector("#report");
     reportElement.addEventListener("click", () => reportPost(post));
-    if (post.user_id == userData.id) reportElement.style.display = "none";
+    if (post.user_id == userData.user_id) reportElement.style.display = "none";
 
     postContent.textContent = post.content;
     postCreator.textContent = post.username;
@@ -152,7 +152,7 @@ function addPost() {
   });
 
   createPost({
-    userId: userData.id,
+    userId: userData.user_id,
     content: content,
     dateTime: now,
   }).then((newId) => {
@@ -160,7 +160,7 @@ function addPost() {
       id: newId,
       content: content,
       profile_image_url: userData.profile_image_url,
-      user_id: userData.id,
+      user_id: userData.user_id,
       username: userData.username,
       datetime_posted: formattedDate,
     };
@@ -220,7 +220,7 @@ function reportPost(post) {
     const payload = {
       action: "submit-report",
       postId: post.id,
-      reporterId: userData.id,
+      reporterId: userData.user_id,
       reason: reasonElement.value,
     };
     createReport(payload).then(() => {
