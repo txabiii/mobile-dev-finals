@@ -62,8 +62,9 @@ export function getUserPlants(payload) {
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-          console.log(result.data)
-          resolve(result.data);
+          const data = result.data
+          console.log(data)
+          resolve(data);
         } else {
           displayResultPopup(result);
           reject(result);
