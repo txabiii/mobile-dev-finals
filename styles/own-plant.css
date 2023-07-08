@@ -444,3 +444,50 @@
   line-height: normal;
   text-align: center;
 }
+
+#troubleshoot-guide-label {
+  margin-bottom: 20px;
+}
+
+.troubleshoot-wrapper {
+  margin-bottom: 20px;
+}
+
+.question-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  color: rgb(var(--green-2-rgb));
+  padding: 20px 0px;
+  border-bottom: 1px solid black;
+}
+
+.question-wrapper img {
+  height: 24px;
+  width: 24px;
+  padding: 5px;
+  filter: invert(23%) sepia(24%) saturate(1855%) hue-rotate(119deg) brightness(91%) contrast(96%);
+}
+
+.answer-wrapper {
+  position: relative;
+  background-color: rgb(var(--green-1-rgb));
+  color: white;
+  width: 100vw;
+  margin-left: -20px;
+  padding: 20px;
+  overflow: hidden;
+
+  height: 0px;
+  padding: 0px;
+  animation: all 300ms ease;
+}
+
+.answer-wrapper p {
+  font-family: Rajdhani;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

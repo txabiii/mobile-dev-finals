@@ -37,11 +37,6 @@ class PlantController extends DB {
               $plants[] = $row;
           }
           echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
-          $plants = array();
-          while ($row = $result->fetch_assoc()) {
-              $plants[] = $row;
-          }
-          echo json_encode(array('success' => true, "message" => "Plants retrieved successfully", "data" => $plants));
       } else {
           echo json_encode(array('success' => false, "message" => "Failed to retrieve plants"));
       }

@@ -9,6 +9,7 @@ import {
 import { getUserPlants, deleteUserPlant } from './api/userPlantsApi.js';
 import { getTips } from "./api/tipsApi.js";
 import { createWateringHistory, getWateringHistory } from './api/wateringHistoryApi.js'
+import { getTroubleshoots } from "./api/troubleshootsApi.js";
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 /**
@@ -381,3 +382,41 @@ function styleFloatingReminderGreen() {
   waterReminderWrapper.querySelector('.pulse').style.display = 'none';
   waterReminderWrapper.querySelector('p').style.color = 'white';
 }
+
+// Get the template element
+const template = document.querySelector('.troubleshoot-template');
+const troubleShootList = document.querySelector('#troubleshoot-list');
+
+/**
+ * Get troubleshooting guide
+ */
+getTroubleshoots(plantId)
+.then(data => {
+  for(const troubleshoot of data) {
+    // Clone the template
+    const clone = template.content.cloneNode(true);
+
+    // Access the relevant HTML elements within the clone
+    const questionWrapper = clone.querySelector('.question-wrapper');
+    const answerWrapper = clone.querySelector('.answer-wrapper');
+    const questionElement = clone.querySelector('.question');
+    const answerElement = clone.querySelector('.answer');
+
+    // Do something with the elements
+    questionElement.textContent = troubleshoot.question;
+    answerElement.textContent = troubleshoot.answer;
+
+    let visibility = false;
+
+    questionWrapper.addEventListener("click", () => {
+      visibility = !visibility;
+      console.log(visibility)
+
+      questionWrapper.style.borderBottom = visibility ? 'none' : '1px solid black';
+      answerWrapper.style.height = visibility ? 'auto' : '0px';
+      answerWrapper.style.padding = visibility ? '20px' : '0px';
+    })
+
+    troubleShootList.appendChild(clone);
+  }
+})

@@ -13,11 +13,7 @@ export function getPlant(payload) {
         if(!result.success) displayResultPopup(data);
         resolve(result.data)
       }) 
-      .catch(error => {        
-        displayResultPopup({
-          success: false,
-          message: 'Failed to get plant'
-        });
+      .catch(error => {
         reject(error)
       });
   });

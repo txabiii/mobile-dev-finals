@@ -24,9 +24,7 @@ export function createTip(plant_id, title, content) {
 // Function to get tips for a certain plant ID
 export function getTips(payload) {
   return new Promise((resolve, reject) => {
-    fetch(`${SERVER_URL}/api/tips_controller.php?action=${payload.action}&plant_id=${payload.plantId}`, {
-      method: 'GET',
-    })
+    fetch(`${SERVER_URL}/api/tips_controller.php?action=${payload.action}&plant_id=${payload.plantId}`)
       .then(response => response.json())
       .then(result => {
         if(!result.success) displayResultPopup(result);
