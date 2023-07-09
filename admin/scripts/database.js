@@ -1,4 +1,4 @@
-import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
+import { logoutAccount } from "./api/userAccountAPI.js";
 
 const logoutButton = document.getElementById("logout-button");
 logoutButton.addEventListener("click", function () {

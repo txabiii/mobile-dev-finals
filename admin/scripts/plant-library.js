@@ -1,4 +1,4 @@
-import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
+import { logoutAccount } from "./api/userAccountAPI.js";
 import { generateDateTimeGreeting, debounce, displayResultPopup } from "./utils.js"
 import { getPlant, deletePlant } from './api/plantApi.js'
 
