@@ -132,6 +132,9 @@ h3 {
 #user-image {
   border-radius: 100px;
   align-self: flex-start;
+  height: 36px;
+  width: auto;
+  aspect-ratio: 1/1;
 }
 
 .report textarea {
