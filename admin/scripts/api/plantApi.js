@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../../../scripts/config.js";
+import { SERVER_URL } from "../config.js";
 import { displayResultPopup } from "../utils.js";
 
 /**
