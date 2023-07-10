@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../../../scripts/config.js";
+import { SERVER_URL } from "../../../mobile app/scripts/config.js";
 
 export function getUserAccount(payload) {
   return new Promise((resolve, reject) => {
