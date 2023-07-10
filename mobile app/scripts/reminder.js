@@ -162,7 +162,7 @@ function generatePlantReminder(plant, scheduleGroup = 'day') {
     waterScheduleData.textContent = new Date(today.getTime() + nextWateringTime).toDateString();
 
     const scheduleImage = plantReminder.querySelector('.water-schedule img');
-    scheduleImage.src = '../assets/icons/calendar-green.svg';
+    scheduleImage.src = './assets/icons/calendar-green.svg';
   }
 
   // Handle links
