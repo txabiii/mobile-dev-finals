@@ -1,5 +1,5 @@
-import { getPlant } from '../scripts/api/plantApi.js';
-import { createUserPlant } from '../scripts/api/userPlantsApi.js'
+import { getPlant } from './api/plantApi.js';
+import { createUserPlant } from './api/userPlantsApi.js'
 
 const userData = JSON.parse(localStorage.getItem("user_data"));
 

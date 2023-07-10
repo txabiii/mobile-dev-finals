@@ -1,8 +1,8 @@
-import { loginAccount } from "../../scripts/api/userAccountAPI.js";
+import { loginAccount } from "./api/userAccountAPI.js";
 import {
   showErrorBorderColor,
   displayErrorMessage,
-} from "../../scripts/utils.js";
+} from "./utils.js";
 
 const loginButton = document.getElementById("login-button");
 const formFields = {

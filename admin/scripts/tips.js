@@ -1,4 +1,4 @@
-import { logoutAccount } from "../../scripts/api/userAccountAPI.js";
+import { logoutAccount } from "./api/userAccountAPI.js";
 import { generateDateTimeGreeting, displayResultPopup } from "./utils.js";
 import { getTips, updateTip, deleteTip, createTip } from './api/tipsApi.js';
 
