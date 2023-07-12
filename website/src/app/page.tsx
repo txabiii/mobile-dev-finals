@@ -9,8 +9,15 @@ import gitHub from '@/assets/icons/gitHub.svg'
 import homePage from '@/assets/home.png'
 import notification from '@/assets/notification.png'
 import reminderCard from '@/assets/reminder-card.png'
+import step1 from '@/assets/Step 1.png'
+import step2 from '@/assets/Step 2.png'
+import step3 from '@/assets/Step 3.png'
+import step4 from '@/assets/Step 4.png'
 
-import BenefitCard from '@/component/benefitCard'
+import BenefitCard from '@/component/benefitCard/benefitCard'
+import ProcessOption from '@/component/processOption/processOption'
+
+import { useState } from 'react'
 
 export default function Home() {
   const benefits = [
@@ -33,6 +40,33 @@ export default function Home() {
       content: "Share and be a part of our growing community"
     }
   ]
+
+  const [processNumber, setProcessNumber] = useState(1);
+
+  const processes = [
+    {
+      step: 1,
+      title: "Create an account and login",
+      content: "Begin your plant parenting journey by creating a personal account."
+    },
+    {
+      step: 2,
+      title: "Browse and add your plant",
+      content: "Explore the plant library, then add your plants to keep track of their progress."
+    },
+    {
+      step: 3,
+      title: "Learn to grow your plant",
+      content: "Browse detailed guides on how to take care of your plant as well as tips and troubleshoots."
+    },
+    {
+      step: 4,
+      title: "Watch out for watering reminders",
+      content: "Stay on top of your plant care routine with timely watering reminders."
+    },
+  ]
+
+  const stepImages = [step1, step2, step3, step4]
 
   return (
     <body>
@@ -117,6 +151,31 @@ export default function Home() {
         <h3>our app’s process</h3>
 
         <h2>How Does Plant Parenthood work?</h2>
+
+        <div className={styles.processWrapper}>
+          <div className={styles.image}>
+            <Image
+              src={stepImages[processNumber-1]}
+              alt='Process Image'
+              width={562}
+              height={1144}
+            ></Image>
+          </div>
+
+          <div className={styles.processList}>
+            {
+              processes.map((process, index) => {
+                return (
+                  <div key={index} onClick={() => setProcessNumber(index+1)}>
+                    {
+                      ProcessOption(process, processNumber)
+                    }
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
       </section>
     </body>
   )

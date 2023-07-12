@@ -1,0 +1,37 @@
+.processWrapper {
+  display: flex;
+  border-radius: 1.25rem;
+}
+
+.processWrapper:hover {
+  background-color: rgba(var(--green-1-rgb), 0.1);
+}
+
+.stepWrapper {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: rgba(var(--green-1-rgb), 0.25);
+  color: rgb(var(--green-2-rgb));
+
+  width: 8.3333rem;
+  height: 8.3333rem;
+  border-radius: 1.25rem;
+
+  flex: 1;
+
+  animation: all 300ms ease;
+}
+
+.processDetails {
+  padding-left: 3rem;
+  flex: 5;
+}
+
+.active {
+  background-color: rgb(var(--green-2-rgb));
+  color: white;
+}

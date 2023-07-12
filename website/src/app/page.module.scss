@@ -27,7 +27,7 @@
       list-style-type: none;
       font-family: var(--font-barlow), sans-serif;
       font-weight: 500;
-      font-size: 1.5rem;
+      font-size: 2rem;
       color: rgb(var(--green-2-rgb));
     }
   }
@@ -46,7 +46,7 @@
 .hero {
   padding: 0px var(--side-margin);
   padding-top: var(--navbar-height);
-  height: 100svh;
+  height: 100vh;
 
   display: flex;
 
@@ -74,6 +74,7 @@
 
     p {
       margin-top: 2rem;
+      line-height: 159.6%;
     }
 
     .buttonGroup {
@@ -148,5 +149,51 @@
     display: flex;
     gap: 5.5rem;
     margin-top: 7.5rem;
+  }
+}
+
+.process {
+  display: flex;
+  flex-direction: column;
+
+  .processWrapper {
+    flex: 1;
+    margin-top: 8rem;
+
+    display: flex;
+
+    .image {
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        max-height: 56rem;
+        width: auto;
+        position: relative;
+      }
+    }
+
+    .image::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+
+      width: 41.25rem;
+      height: 41.25rem;
+      background-color: rgb(var(--green-1-rgb));
+      border-radius: 1000px;
+    }
+
+    .processList {
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8rem;
+    }
   }
 }

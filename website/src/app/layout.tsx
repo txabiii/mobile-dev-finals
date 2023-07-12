@@ -17,7 +17,7 @@ const rajdhani = Rajdhani({
 })
 
 export const metadata: Metadata = {
-  title: 'Plant Parenthood Website',
+  title: 'Plant Parenthood',
   description: 'Showcases the mobile app Plant Parenthood',
 }
 
