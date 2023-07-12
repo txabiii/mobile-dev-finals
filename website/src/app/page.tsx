@@ -1,30 +1,41 @@
+"use client"
+
 import Image from 'next/image'
 import styles from './page.module.scss'
 
-import logo from '../assets/logo.png'
-import android from '../assets/icons/android.svg'
-import gitHub from '../assets/icons/gitHub.svg'
-import homePage from '../assets/home.png'
-import notification from '../assets/notification.png'
-import reminderCard from '../assets/reminder-card.png'
+import logo from '@/assets/logo.png'
+import android from '@/assets/icons/android.svg'
+import gitHub from '@/assets/icons/gitHub.svg'
+import homePage from '@/assets/home.png'
+import notification from '@/assets/notification.png'
+import reminderCard from '@/assets/reminder-card.png'
 
-import { Barlow, Rajdhani } from 'next/font/google'
-
-const barlow = Barlow({
-  subsets: ['latin'],
-  weight: ['400', '500', '700', '800'],
-  variable: '--font-barlow',
-})
-
-const rajdhani = Rajdhani({
-  subsets: ['latin'],
-  weight: ['300', '400'],
-  variable: '--font-rajdhani',
-})
+import BenefitCard from '@/component/benefitCard'
 
 export default function Home() {
+  const benefits = [
+    {
+      iconUrl: 'book.svg',
+      iconName: 'Book',
+      title: 'Learn more',
+      content: 'Gain knowledge on how to take care of your plants'
+    },
+    {
+      iconUrl: 'notification.svg',
+      iconName: 'Bell Notification',
+      title: 'Reminders',
+      content: "Be reminded of your plants' watering time, always."
+    },
+    {
+      iconUrl: 'community.svg',
+      iconName: 'Community',
+      title: 'Community',
+      content: "Share and be a part of our growing community"
+    }
+  ]
+
   return (
-    <body className={`${barlow.variable} ${rajdhani.variable}`}>
+    <body>
       <nav className={styles.navbar}>
         <Image src={logo} alt='logo' height={50} width={50}></Image>
 
@@ -65,21 +76,47 @@ export default function Home() {
               height={761.82}
               className={styles.homePage}
             ></Image>
+            
             <Image
               src={notification}
               alt='App notification popup'
-              width={320}
-              height={60}
+              width={1280}
+              height={240}
               className={styles.notification}
             ></Image>
+
             <Image
               src={reminderCard}
               alt='App reminder card'
-              width={305}
-              height={110}
+              width={1420}
+              height={512}
               className={styles.reminderCard}
             ></Image>
           </div>
+      </section>
+
+      <section className={styles.benefits}>
+        <h3>our app’s benefits to you</h3>
+
+        <h2>Why choose Plant Parenthood?</h2>
+
+        <div className={styles.cardsWrapper}>
+          {
+            benefits.map((benefit, index) => {
+              return (
+                <div key={index}>
+                  { BenefitCard(benefit) }
+                </div>
+              )
+            })
+          }
+        </div>
+      </section>
+
+      <section className={styles.process}>
+        <h3>our app’s process</h3>
+
+        <h2>How Does Plant Parenthood work?</h2>
       </section>
     </body>
   )

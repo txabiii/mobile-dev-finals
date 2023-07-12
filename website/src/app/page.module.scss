@@ -1,3 +1,7 @@
+.flexFiller {
+  flex: 1;
+}
+
 .navbar {
   height: var(--navbar-height);
   background-color: white;
@@ -5,6 +9,7 @@
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 1;
 
   padding-left: 10rem;
   padding-right: 10rem;
@@ -36,10 +41,6 @@
     font-size: 1.5rem;
     font-weight: 700;
   }
-}
-
-.flexFiller {
-  flex: 1;
 }
 
 .hero {
@@ -91,7 +92,7 @@
         }
       }
 
-      button:last-of-type {
+      button:last-of-type {        
         color: rgb(var(--green-2-rgb));
         background-color: rgba(var(--green-1-rgb), 0.25);
 
@@ -125,12 +126,27 @@
     .notification {
       top: 35%;
       left: 0;
+      width: 26.66rem;
+      height: 5rem;
     }
 
     .reminderCard {
       bottom: 20%;
       right: 0;
+      width: 25.4rem;
+      height: 9.16rem;
     }
   }
 }
 
+.benefits, .process {
+  padding: 6rem var(--side-margin);
+}
+
+.benefits {
+  .cardsWrapper {
+    display: flex;
+    gap: 5.5rem;
+    margin-top: 7.5rem;
+  }
+}

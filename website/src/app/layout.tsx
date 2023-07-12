@@ -1,8 +1,20 @@
 import './globals.scss'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Barlow, Rajdhani } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const barlow = Barlow({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '800'],
+  variable: '--font-barlow',
+})
+
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  variable: '--font-rajdhani',
+})
 
 export const metadata: Metadata = {
   title: 'Plant Parenthood Website',
@@ -16,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${barlow.variable} ${rajdhani.variable}`}>{children}</body>
     </html>
   )
 }

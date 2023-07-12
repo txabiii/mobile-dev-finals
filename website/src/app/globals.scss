@@ -47,6 +47,22 @@ h1 {
   font-size: 5.33rem;
 }
 
+h2 {
+  color: rgb(var(--green-2-rgb));
+  font-family: var(--font-barlow), sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+h3 {
+  color: rgb(var(--green-1-rgb));
+  font-family: var(--font-rajdhani), sans-serif;
+  font-size: 3rem;
+  font-weight: 400;
+  text-align: center;
+}
+
 p {
   font-size: 2rem;
   font-family: var(--font-rajdhani), sans-serif;
@@ -60,7 +76,7 @@ button {
 
   font-family: var(--font-barlow), sans-serif;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.75rem;
 
   border-radius: 0.5rem;
   height: 5.5rem;
