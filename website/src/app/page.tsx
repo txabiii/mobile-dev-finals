@@ -177,6 +177,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <footer className={styles.footer}>
+        <h1>Download Plant Parenthood Now</h1>
+        
+        <p>Transform your plant care experience with the Plant Parenthood app, empowering you to effortlessly nurture your plants, expand your knowledge, and join a thriving community of passionate plant enthusiasts - download now and embark on a rewarding journey of green thumb greatness.</p>
+        
+        <div className={styles.buttonGroup}>
+          <button>
+            <Image src={android} alt='Android' width={36} height={20.62}></Image>
+            Download <span>APK</span>
+          </button>
+          <button>
+            <Image src={gitHub} alt='GitHub' width={36} height={36}></Image>
+            View on <span>GitHub</span></button>
+        </div>
+
+        <div className={styles.line}></div>
+
+        <p>Website Design by Txabi Guerrero | Plant Parenthood designed and developed by Brian Kyle Regacho, Jastine Laplano, John Michael Espiritu and Txabi Guerrero</p>
+      </footer>
     </body>
   )
 }
