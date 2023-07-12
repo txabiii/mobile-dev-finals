@@ -1,13 +1,17 @@
 :root {
   --navbar-height: 64px;
   --side-margin: 10rem;
+  --shadow: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.10));
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 
   --green-1-rgb: 76, 175, 80;
-  --green-2-rgb: 5, 77, 99;
+  --green-2-rgb: 5, 77, 59;
+
+  --svg-fill-white: invert(99%) sepia(38%) saturate(0%) hue-rotate(217deg) brightness(112%) contrast(100%);
+  --svg-fill-green-2: invert(23%) sepia(13%) saturate(4620%) hue-rotate(127deg) brightness(88%) contrast(96%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +41,45 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1 {
+  font-size: 5.33rem;
+}
+
+p {
+  font-size: 2rem;
+  font-family: var(--font-rajdhani), sans-serif;
+  font-weight: 400;
+  line-height: 159.6%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+
+  font-family: var(--font-barlow), sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+
+  border-radius: 0.5rem;
+  height: 5.5rem;
+  padding: 1.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  span {
+    font-weight: 700;
+  }
+
+  img {
+    width: 3rem;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
 }
 
 /* Mobile */
