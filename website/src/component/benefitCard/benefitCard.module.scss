@@ -1,19 +1,20 @@
 .card {
-  background-color: rgb(var(--green-1-rgb));
+  background-color: white;
   border-radius: 2rem;
   padding: 2rem;
   filter: var(--shadow);
 
-  color: white;
+  color: rgb(var(--green-1-rgb));
   text-align: center;
 
   img {
-    filter: var(--svg-fill-white);
+    filter: var(--svg-fill-green-2);
   }
 
   h3 {
     margin-top: 3rem;
-    color: white !important;
+    color: rgb(var(--green-2-rgb)) !important;
+    opacity: 1 !important;
     font-weight: 700;
     font-family: var(--font-barlow), sans-serif;
   }

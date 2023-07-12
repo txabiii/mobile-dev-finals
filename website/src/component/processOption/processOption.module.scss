@@ -1,6 +1,7 @@
 .processWrapper {
   display: flex;
   border-radius: 1.25rem;
+  cursor: pointer;
 }
 
 .processWrapper:hover {
@@ -8,7 +9,6 @@
 }
 
 .stepWrapper {
-  cursor: pointer;
 
   display: flex;
   align-items: center;

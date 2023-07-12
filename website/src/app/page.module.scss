@@ -145,6 +145,16 @@
 }
 
 .benefits {
+  background-color: rgb(var(--green-1-rgb));
+
+  h2, h3 {
+    color: white;
+  }
+
+  h3 {
+    opacity: 0.75;
+  }
+
   .cardsWrapper {
     display: flex;
     gap: 5.5rem;
