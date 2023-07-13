@@ -5,10 +5,10 @@ header("Access-Control-Allow-Methods: GET, POST, UPDATE, DELETE, OPTIONS, PUT");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 class DB {
-  private $host = 'tetra.bloom.host';
-  private $username = 'u9206_FDwUtffAf1';
-  private $password = 'gQTInbDjfubfKlSVcrxsjSql';
-  private $database = 's9206_mobdevdb';
+  private $host = '';
+  private $username = '';
+  private $password = '';
+  private $database = '';
 
   protected $connection;
 
