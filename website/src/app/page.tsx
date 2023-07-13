@@ -17,7 +17,7 @@ import step4 from '@/assets/Step 4.png'
 import BenefitCard from '@/component/benefitCard/benefitCard'
 import ProcessOption from '@/component/processOption/processOption'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import cx from 'classnames'
 
@@ -72,6 +72,24 @@ export default function Home() {
 
   const [displayMenu, setDisplayMenu] = useState(false);
 
+  const heroRef = useRef<HTMLElement>(null);
+  const benefitsRef = useRef<HTMLElement>(null);
+  const processRef = useRef<HTMLElement>(null);
+
+  const scrollToSection = (sectionName: 'home' | 'benefits' | 'process') => {
+    if(sectionName === 'home') {
+      const heroElement = heroRef.current;
+      if(heroElement) heroElement.scrollIntoView({ behavior: 'smooth' });
+    } else if(sectionName === 'benefits') {
+      const benefitsElement = benefitsRef.current;
+      if(benefitsElement) benefitsElement.scrollIntoView({ behavior: 'smooth' });
+    } else if(sectionName === 'process') {
+      const processElement = processRef.current;
+      if(processElement) processElement.scrollIntoView({ behavior: 'smooth' });
+    }
+    setDisplayMenu(false)
+  }
+
   return (
     <body>
       <nav className={styles.navbar}>
@@ -87,16 +105,30 @@ export default function Home() {
         >&#9776;</h2>
 
         <ul className={cx({ [styles.shown] : displayMenu })}>
-          <li>Home</li>
-          <li>About</li>
-          <li>How to use</li>
+          <li
+            onClick={() => {
+              scrollToSection('home')
+            }}
+          >Home</li>
+          <li
+            onClick={() => {
+              scrollToSection('benefits')
+            }}
+          >About</li>
+          <li
+            onClick={() => {
+              scrollToSection('process')
+            }}
+          >How to use</li>
           <li>
-            <button>Download Now</button>
+            <a href="/plant-parenthood.apk" download>
+              <button>Download Now</button>
+            </a>
           </li>
         </ul>
       </nav>
 
-      <section className={styles.hero}>
+      <section className={styles.hero} ref={heroRef}>
           <div className={styles.content}>
             <h1>Grow, Connect, and Thrive: <span>Plant Parenthood!</span></h1>
 
@@ -145,7 +177,7 @@ export default function Home() {
           </div>
       </section>
 
-      <section className={styles.benefits}>
+      <section className={styles.benefits} ref={benefitsRef}>
         <h3>our app’s benefits to you</h3>
 
         <h2>Why choose Plant Parenthood?</h2>
@@ -163,7 +195,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.process}>
+      <section className={styles.process} ref={processRef}>
         <h3>our app’s process</h3>
 
         <h2>How Does Plant Parenthood work?</h2>
