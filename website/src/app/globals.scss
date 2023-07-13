@@ -104,14 +104,15 @@ button {
   }
 }
 
-/* Mobile */
-@media (max-width: 700px) {
-  
-}
+/* Smalller Screens */
+@media (max-width: 1000px) {
+  :root {
+    --side-margin: 2rem;
+  }
 
-/* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1200px) {
-
+  html {
+    font-size: 9px;
+  }
 }
 
 /* DARK MODE OFF FOR NOW

@@ -19,6 +19,8 @@ import ProcessOption from '@/component/processOption/processOption'
 
 import { useState } from 'react'
 
+import cx from 'classnames'
+
 export default function Home() {
   const benefits = [
     {
@@ -68,6 +70,8 @@ export default function Home() {
 
   const stepImages = [step1, step2, step3, step4]
 
+  const [displayMenu, setDisplayMenu] = useState(false);
+
   return (
     <body>
       <nav className={styles.navbar}>
@@ -75,7 +79,14 @@ export default function Home() {
 
         <div className={styles.flexFiller}></div>
 
-        <ul>
+        <h2 
+          className={styles.menu}
+          onClick={() => {
+            setDisplayMenu(prev => !prev)
+          }}
+        >&#9776;</h2>
+
+        <ul className={cx({ [styles.shown] : displayMenu })}>
           <li>Home</li>
           <li>About</li>
           <li>How to use</li>

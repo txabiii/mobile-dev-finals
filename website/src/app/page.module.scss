@@ -9,10 +9,10 @@
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1;
+  z-index: 3;
 
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: var(--side-margin);
+  padding-right: var(--side-margin);
 
   display: flex;
   align-items: center;
@@ -140,6 +140,17 @@
   }
 }
 
+.image::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+
+  width: 38rem;
+  height: 38rem;
+  background-color: rgb(var(--green-1-rgb));
+  border-radius: 1000px;
+}
+
 .benefits, .process, .footer {
   padding: 6rem var(--side-margin);
 }
@@ -224,7 +235,7 @@
 
   p {
     color: rgb(var(--green-2-rgb));
-    width: 83rem;
+    width: 80%;
   }
 
   .buttonGroup {
@@ -234,6 +245,7 @@
     margin-top: 8.75rem;
 
     button {
+      background-color: white;
       color: rgb(var(--green-2-rgb));
       
       img {
@@ -263,5 +275,106 @@
   p:last-of-type {
     width: 100% !important;
     font-size: 1.5rem;
+  }
+}
+
+/* Smalller Screens */
+@media (max-width: 1000px) {
+  .navbar {
+    ul {
+      display: none;
+
+      position: fixed;
+      width: 100%;
+      top: var(--navbar-height);
+      left: 0;
+
+      filter: var(--shadow);
+
+      flex-direction: column;
+      background-color: white;
+      z-index: 1;
+
+      gap: 4rem;
+
+      li {
+        width: 100%;
+        text-align: center;
+      }
+
+      li:first-of-type {
+        margin-top: 4rem;
+      }
+
+      li:last-of-type {
+        padding: 0px;
+        width: 100%;
+
+        button {
+          border-radius: 0px !important;
+          padding: 4rem;
+          width: 100%;
+
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .shown {
+      display: flex;
+    }
+  }
+
+  .hero {
+    display: block;
+    height: unset;
+
+    .content {
+      height: 80svh;
+      justify-content: center;
+
+      padding-right: 0px;
+
+      align-self: unset;
+
+      .buttonGroup {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    .image {
+      padding-top: 0px;
+    }
+  }
+
+  .benefits {
+    .cardsWrapper {
+      flex-direction: column;
+    }
+  }
+
+  .process {
+    .processWrapper {
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .processList {
+      gap: 4rem !important;
+    }
+  }
+
+  .footer {
+    h1 {
+      font-size: 4rem;
+    }
+
+    p {
+      width: 100% !important;
+    }
   }
 }
