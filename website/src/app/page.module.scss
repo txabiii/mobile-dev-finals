@@ -17,6 +17,10 @@
   display: flex;
   align-items: center;
 
+  .menu {
+    display: none;
+  }
+
   ul {
     display: flex;
     align-items: center;
@@ -279,8 +283,12 @@
 }
 
 /* Smalller Screens */
-@media (max-width: 1000px) {
+@media (max-width: 700px) {
   .navbar {
+    .menu {
+      display: block;
+    }
+
     ul {
       display: none;
 
