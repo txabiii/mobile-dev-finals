@@ -82,9 +82,9 @@
     }
 
     .buttonGroup {
+      width: 100%;
       display: flex;
       gap: 1rem;
-      width: 100%;
 
       margin-top: 6.66rem;
 
@@ -92,8 +92,14 @@
         background-color: rgb(var(--green-2-rgb));
         color: white;
 
-        img {
-          filter: var(--svg-fill-white);
+        a {
+          align-items: center;
+          display: flex;
+          gap: 1rem;
+
+          img {
+            filter: var(--svg-fill-white);
+          }
         }
       }
 
@@ -251,9 +257,15 @@
     button {
       background-color: white;
       color: rgb(var(--green-2-rgb));
-      
-      img {
-        filter: var(--svg-fill-green-2);
+
+      a {
+        align-items: center;
+        display: flex;
+        gap: 1rem;
+
+        img {
+          filter: var(--svg-fill-green-2);
+        }
       }
     }
 

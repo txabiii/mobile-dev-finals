@@ -104,12 +104,17 @@ export default function Home() {
           
             <div className={styles.buttonGroup}>
               <button>
-                <Image src={android} alt='Android' width={36} height={20.62}></Image>
-                Download <span>APK</span>
+                <a href="/plant-parenthood.apk" download>
+                  <Image src={android} alt='Android' width={36} height={20.62}></Image>
+                  Download <span>APK</span>
+                </a>
               </button>
               <button>
-                <Image src={gitHub} alt='GitHub' width={36} height={36}></Image>
-                View on <span>GitHub</span></button>
+                <a href="https://github.com/txabiii/mobile-dev-finals">
+                  <Image src={gitHub} alt='GitHub' width={36} height={36}></Image>
+                  View on <span>GitHub</span>
+                </a>
+              </button>
             </div>
           </div>
 
@@ -196,12 +201,17 @@ export default function Home() {
         
         <div className={styles.buttonGroup}>
           <button>
-            <Image src={android} alt='Android' width={36} height={20.62}></Image>
-            Download <span>APK</span>
+            <a href="/plant-parenthood.apk" download>
+              <Image src={android} alt='Android' width={36} height={20.62}></Image>
+              Download <span>APK</span>
+            </a>
           </button>
           <button>
-            <Image src={gitHub} alt='GitHub' width={36} height={36}></Image>
-            View on <span>GitHub</span></button>
+            <a href="https://github.com/txabiii/mobile-dev-finals">
+              <Image src={gitHub} alt='GitHub' width={36} height={36}></Image>
+              View on <span>GitHub</span>
+            </a>
+          </button>
         </div>
 
         <div className={styles.line}></div>
