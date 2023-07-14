@@ -8,6 +8,8 @@ Full disclaimer, this project is a requirement for our Mobile Development class 
 
 This monorepo serves as the codebase for the project including several codes organized in the following folders:
 
+### Folders
+
 - [Admin](#admin)
 - [Mobile app](#mobile-app)
 - [PHP](#php)
@@ -33,6 +35,6 @@ The website is deployed at [here](https://mobile-dev-finals.vercel.app). Feel fr
 
 ## Created by
 
-This project is created by Brian Kyle Regacho, Jastine Laplano, John Michael Espiritu, and Txabi Guerrero as final requirement of our Mobile Development class at the Polytechnic University of the Philippines
+This project was created by Brian Kyle Regacho, Jastine Laplano, John Michael Espiritu, and Txabi Guerrero as final requirement of our Mobile Development course at the Polytechnic University of the Philippines.
 
 © 2023 All rights reserved
